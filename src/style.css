@@ -1,30 +1,30 @@
 /* ==========================================================================
-   RHYTHM KEYS // BORDERLESS SCI-FI RHYTHM GAME DESIGN SYSTEM
-   Dark-Mode Glassmorphism Foundation // Neon Cyan (#00e5ff) & Soft Pink/Purple Accents
+   RHYTHM KEYS // PRECISION SCI-FI RHYTHM GAME DESIGN SYSTEM
+   Strict Monospace Typing // Mathematical Keyboard Layout // Clean Glassmorphism
    ========================================================================== */
 
-/* --- 1. DESIGN TOKENS & PALETTE --- */
+/* --- 1. DESIGN TOKENS & SYSTEM VARIABLES --- */
 :root {
   /* Brand Accents */
   --neon-cyan: #00e5ff;
-  --neon-cyan-glow: rgba(0, 229, 255, 0.55);
+  --neon-cyan-glow: rgba(0, 229, 255, 0.5);
   --soft-pink: #ff66cc;
-  --soft-pink-glow: rgba(255, 102, 204, 0.5);
+  --soft-pink-glow: rgba(255, 102, 204, 0.45);
   --soft-purple: #c499f3;
-  --soft-purple-glow: rgba(196, 153, 243, 0.45);
   --accent-yellow: #ffd54f;
   --accent-mint: #a0e8af;
   --accent-error: #ff3366;
 
-  /* Glassmorphism Dark-Mode Foundation (Borderless & Seamless) */
-  --glass-bg: rgba(10, 18, 38, 0.62);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.12);
-  --glass-blur: blur(16px) saturate(180%);
+  /* Clean Glassmorphism System Tokens */
+  --glass-bg: rgba(10, 18, 38, 0.72);
+  --glass-blur: blur(10px);
+  --glass-border: 1px solid rgba(0, 229, 255, 0.25);
+  --glass-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  --glass-radius: 20px;
 
   /* Typography */
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'Fira Code', Consolas, monospace;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
   --font-brand: 'Space Grotesk', var(--font-ui);
 
   /* Text Colors */
@@ -33,18 +33,18 @@
   --text-muted: #94a3b8;
   --text-cyan: #00e5ff;
 
-  /* Structural Radii */
-  --radius-panel: 24px;
-  --radius-pill: 9999px;
-  --radius-key: 14px;
-  --radius-btn: 12px;
+  /* Keyboard Geometry (Mathematically Uniform) */
+  --key-radius: 12px;
+  --key-height: 44px;
+  --key-width: 48px;
+  --key-depth: 4px;
 
   /* Transitions */
   --trans-fast: 0.08s ease-out;
-  --trans-smooth: 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --trans-smooth: 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* --- 2. GLOBAL RESET & FOUNDATION --- */
+/* --- 2. GLOBAL RESET --- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -77,7 +77,7 @@ html, body {
 }
 
 /* ==========================================================================
-   2. GLASSMORPHIC FLOATING UI (FOREGROUND)
+   2. CLEAN GLASSMORPHISM CONTAINERS
    ========================================================================== */
 .app-ui-container {
   position: relative;
@@ -87,32 +87,32 @@ html, body {
   justify-content: space-between;
   width: 100%;
   height: 100vh;
-  padding: 16px 40px;
+  padding: 16px 36px;
   gap: 12px;
 }
 
-/* True Glassmorphism Card Utility (Borderless & Floating) */
+/* Uniform Glass Panel Base */
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
+  border: var(--glass-border);
   box-shadow: var(--glass-shadow);
-  border-radius: var(--radius-panel);
+  border-radius: var(--glass-radius);
   position: relative;
-  transition: border-color var(--trans-smooth), box-shadow var(--trans-smooth);
+  transition: border-color var(--trans-smooth);
 }
 
 .glass-panel:hover {
-  border-color: rgba(0, 229, 255, 0.35);
+  border-color: rgba(0, 229, 255, 0.45);
 }
 
-/* --- HEADER --- */
+/* --- TOP HEADER --- */
 .ui-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 30px;
+  padding: 10px 28px;
   min-height: 56px;
   flex-shrink: 0;
 }
@@ -126,9 +126,9 @@ html, body {
   font-family: var(--font-brand);
   font-size: 1.3rem;
   font-weight: 700;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   color: var(--neon-cyan);
-  text-shadow: 0 0 12px var(--neon-cyan-glow);
+  text-shadow: 0 0 10px var(--neon-cyan-glow);
 }
 
 .header-center {
@@ -145,14 +145,14 @@ html, body {
 }
 
 .track-title-text {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.3px;
 }
 
 .track-artist-text {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--soft-purple);
 }
@@ -177,7 +177,7 @@ html, body {
   font-size: 0.85rem;
   font-weight: 600;
   padding: 6px 14px;
-  border-radius: var(--radius-pill);
+  border-radius: 9999px;
   cursor: pointer;
   position: relative;
   transition: all var(--trans-smooth);
@@ -192,19 +192,20 @@ html, body {
   color: #ffffff;
   background: linear-gradient(135deg, rgba(255, 102, 204, 0.35) 0%, rgba(196, 153, 243, 0.35) 100%);
   border-color: var(--soft-pink);
-  box-shadow: 0 0 12px var(--soft-pink-glow);
+  box-shadow: 0 0 10px var(--soft-pink-glow);
 }
 
 .nav-divider {
   width: 1px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
 }
 
+/* Correct WPM & Accuracy HUD */
 .header-stats-group {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .stat-unit {
@@ -214,7 +215,7 @@ html, body {
   font-family: var(--font-mono);
   background: rgba(255, 255, 255, 0.04);
   padding: 4px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -222,6 +223,7 @@ html, body {
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--text-muted);
+  letter-spacing: 0.5px;
 }
 
 .stat-unit-val {
@@ -259,7 +261,9 @@ html, body {
   transform: rotate(45deg);
 }
 
-/* --- CENTER STAGE --- */
+/* ==========================================================================
+   3. TYPING AREA (STRICT MONOSPACE & DISCRETE CELL HIGHLIGHTING)
+   ========================================================================== */
 .center-stage {
   flex: 1;
   display: flex;
@@ -272,7 +276,6 @@ html, body {
   margin: 0 auto;
 }
 
-/* Lyrics Panel */
 .lyrics-panel {
   width: 100%;
   padding: 26px 40px;
@@ -282,7 +285,6 @@ html, body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: var(--radius-panel);
 }
 
 .lyric-stream {
@@ -290,12 +292,15 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
 }
 
 .lyric-line {
   font-family: var(--font-mono);
+  font-feature-settings: "liga" 0;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
   transition: all var(--trans-smooth);
 }
 
@@ -308,7 +313,6 @@ html, body {
 .lyric-active {
   font-size: 1.35rem;
   font-weight: 600;
-  letter-spacing: 0.4px;
   line-height: 1.6;
 }
 
@@ -319,31 +323,35 @@ html, body {
   justify-content: center;
 }
 
+/* Strict Character Cells: Fixed width, zero overlapping */
 .char {
   display: inline-block;
+  min-width: 1ch;
+  text-align: center;
   white-space: pre;
   transition: color 0.06s ease, background-color 0.06s ease;
 }
 
 .char-correct {
   color: var(--neon-cyan);
-  text-shadow: 0 0 12px var(--neon-cyan-glow);
+  text-shadow: 0 0 10px var(--neon-cyan-glow);
 }
 
+/* Precise Active Character Cursor (No Bleed) */
 .char-cursor {
   color: #ffffff;
-  background: rgba(0, 229, 255, 0.28);
-  border-bottom: 2.5px solid var(--neon-cyan);
-  border-radius: 4px;
+  background: rgba(0, 229, 255, 0.25);
+  border-bottom: 2px solid var(--neon-cyan);
+  border-radius: 3px;
 }
 
+/* Discrete Error Cell */
 .char-error {
   color: #ffffff;
   background: var(--accent-error);
-  border-radius: 6px;
-  padding: 0 5px;
+  border-radius: 4px;
+  padding: 0 2px;
   animation: errorShake 0.2s ease-in-out;
-  box-shadow: 0 0 10px rgba(255, 51, 102, 0.6);
 }
 
 @keyframes errorShake {
@@ -362,12 +370,13 @@ html, body {
   opacity: 0.85;
 }
 
-/* --- KEYBOARD CONTAINER (ROUNDED, FRIENDLY 3D PASTEL KEYS) --- */
+/* ==========================================================================
+   4. MATHEMATICALLY UNIFORM QWERTY KEYBOARD LAYOUT
+   ========================================================================== */
 .keyboard-panel {
   width: 100%;
   max-width: 680px;
   padding: 16px 20px;
-  border-radius: var(--radius-panel);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -381,16 +390,16 @@ html, body {
   width: 100%;
 }
 
-/* Friendly 3D Squircle Keys */
+/* Mathematically Uniform 3D Squircle Keys */
 .key-3d {
   appearance: none;
   border: none;
   font-family: var(--font-ui);
   font-size: 0.95rem;
   font-weight: 700;
-  height: 44px;
-  width: 48px;
-  border-radius: var(--radius-key);
+  height: var(--key-height);
+  width: var(--key-width);
+  border-radius: var(--key-radius);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -407,11 +416,11 @@ html, body {
   transform: translateY(3px) !important;
 }
 
-/* Friendly Colorful Palette */
+/* Exact 3D Box Shadow Depths */
 .key-cyan {
   background: #70d6ff;
   color: #062b40;
-  box-shadow: 0 4px 0 #3a97c4;
+  box-shadow: 0 var(--key-depth) 0 #3a97c4;
 }
 .key-cyan:active, .key-cyan.key-pressed {
   box-shadow: 0 1px 0 #3a97c4;
@@ -420,7 +429,7 @@ html, body {
 .key-pink {
   background: #ff9ebb;
   color: #4a0d20;
-  box-shadow: 0 4px 0 #c76783;
+  box-shadow: 0 var(--key-depth) 0 #c76783;
 }
 .key-pink:active, .key-pink.key-pressed {
   box-shadow: 0 1px 0 #c76783;
@@ -429,7 +438,7 @@ html, body {
 .key-purple {
   background: #c499f3;
   color: #300c52;
-  box-shadow: 0 4px 0 #8f5dc4;
+  box-shadow: 0 var(--key-depth) 0 #8f5dc4;
 }
 .key-purple:active, .key-purple.key-pressed {
   box-shadow: 0 1px 0 #8f5dc4;
@@ -438,7 +447,7 @@ html, body {
 .key-yellow {
   background: #ffd670;
   color: #523e05;
-  box-shadow: 0 4px 0 #cca23b;
+  box-shadow: 0 var(--key-depth) 0 #cca23b;
 }
 .key-yellow:active, .key-yellow.key-pressed {
   box-shadow: 0 1px 0 #cca23b;
@@ -447,14 +456,15 @@ html, body {
 .key-mint {
   background: #a0e8af;
   color: #0e4218;
-  box-shadow: 0 4px 0 #6ab57a;
+  box-shadow: 0 var(--key-depth) 0 #6ab57a;
 }
 .key-mint:active, .key-mint.key-pressed {
   box-shadow: 0 1px 0 #6ab57a;
 }
 
 .key-mod {
-  width: 48px;
+  width: var(--key-width);
+  font-size: 1.1rem;
 }
 
 .key-space {
@@ -464,14 +474,16 @@ html, body {
   color: #062b40;
   font-size: 0.85rem;
   letter-spacing: 2px;
-  box-shadow: 0 4px 0 #3a97c4;
-  border-radius: var(--radius-pill);
+  box-shadow: 0 var(--key-depth) 0 #3a97c4;
+  border-radius: 9999px;
 }
 .key-space:active, .key-space.key-pressed {
   box-shadow: 0 1px 0 #3a97c4;
 }
 
-/* --- FOOTER --- */
+/* ==========================================================================
+   5. BOTTOM FOOTER & TRANSPORT CONTROLS
+   ========================================================================== */
 .ui-footer {
   display: flex;
   align-items: center;
@@ -492,8 +504,8 @@ html, body {
   font-weight: 700;
   font-size: 0.82rem;
   letter-spacing: 0.5px;
-  padding: 7px 16px;
-  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  border-radius: 9999px;
   cursor: pointer;
   transition: all var(--trans-smooth);
 }
@@ -522,22 +534,19 @@ html, body {
 }
 
 .play-icon-inner {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--soft-pink) 0%, var(--soft-purple) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
   box-shadow: 0 0 16px var(--soft-pink-glow);
+  color: #ffffff;
 }
 
-.pause-bar {
-  width: 3.5px;
-  height: 14px;
-  background: #ffffff;
-  border-radius: 2px;
+.transport-svg {
+  display: block;
 }
 
 .play-btn-label {
@@ -548,7 +557,9 @@ html, body {
   color: var(--soft-pink);
 }
 
-/* --- MODALS (GLASSMORPHISM) --- */
+/* ==========================================================================
+   6. MODALS
+   ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -571,12 +582,12 @@ html, body {
 .modal-card {
   width: 90%;
   max-width: 500px;
-  background: rgba(12, 20, 44, 0.85);
+  background: rgba(12, 20, 44, 0.9);
   backdrop-filter: var(--glass-blur);
-  border: 1px solid rgba(0, 229, 255, 0.5);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 229, 255, 0.25);
+  border: 1px solid var(--neon-cyan);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 16px rgba(0, 229, 255, 0.2);
   padding: 24px;
-  border-radius: var(--radius-panel);
+  border-radius: var(--glass-radius);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -623,7 +634,7 @@ html, body {
 .modal-select, .modal-input, .modal-textarea {
   background: rgba(30, 41, 59, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--radius-btn);
+  border-radius: 10px;
   padding: 9px 14px;
   color: #fff;
   font-family: var(--font-mono);
@@ -650,7 +661,7 @@ html, body {
 
 .btn {
   padding: 8px 18px;
-  border-radius: var(--radius-pill);
+  border-radius: 9999px;
   font-family: var(--font-ui);
   font-weight: 700;
   font-size: 0.85rem;
@@ -717,7 +728,7 @@ html, body {
   background: rgba(30, 41, 59, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 12px;
-  border-radius: var(--radius-btn);
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -739,14 +750,23 @@ html, body {
    RESPONSIVE ADAPTATIONS
    ========================================================================== */
 @media (max-width: 900px) {
-  .key-3d { height: 38px; width: 38px; font-size: 0.82rem; }
+  :root {
+    --key-height: 38px;
+    --key-width: 38px;
+    --key-radius: 10px;
+  }
+  .key-3d { font-size: 0.82rem; }
   .lyric-active { font-size: 1.2rem; }
 }
 
 @media (max-width: 600px) {
-  .app-ui-container { padding: 8px 14px; }
-  .key-3d { height: 32px; width: 28px; font-size: 0.72rem; border-radius: 10px; }
-  .key-mod { width: 32px; }
+  .app-ui-container { padding: 8px 12px; }
+  :root {
+    --key-height: 32px;
+    --key-width: 28px;
+    --key-radius: 8px;
+  }
+  .key-3d { font-size: 0.72rem; }
   .lyrics-panel { padding: 16px; }
   .lyric-prev, .lyric-next { font-size: 0.88rem; }
 }

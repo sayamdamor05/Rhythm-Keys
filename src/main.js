@@ -1,6 +1,6 @@
 /**
- * Rhythm Keys // Interactive Audio, Typing & 3D Three.js Engine
- * Full Integration: Three.js 3D Celestial Physics, Web Audio API, Typing Controller, LRC Sync
+ * Rhythm Keys // Precision Audio, Typing & 3D Three.js Engine
+ * Clean, mathematically precise keyboard feedback, character cell rendering, and Lucide SVG transport controls.
  */
 
 import { SpaceScene } from './space/SpaceScene.js';
@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentTrackArtist = document.getElementById('currentTrackArtist');
   const btnPlayPause = document.getElementById('btnPlayPause');
   const playButtonText = document.getElementById('playButtonText');
-  const pauseBar1 = document.getElementById('pauseBar1');
-  const pauseBar2 = document.getElementById('pauseBar2');
+  const playIconSvg = document.getElementById('playIconSvg');
+  const pauseIconSvg = document.getElementById('pauseIconSvg');
   const btnRestart = document.getElementById('btnRestart');
   const diffHard = document.getElementById('diffHard');
   const diffText = document.getElementById('diffText');
@@ -153,6 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /**
+   * Renders discrete, strict monospace character cells without overlap
+   */
   function renderActiveChars() {
     activeCharsContainer.innerHTML = '';
     const target = typing.targetLine;
@@ -187,15 +190,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /**
+   * Updates the Play/Pause circular button state and SVG icons
+   */
   function updatePlayButtonState(playing) {
     if (playing) {
       playButtonText.textContent = 'PAUSE';
-      pauseBar1.style.display = 'block';
-      pauseBar2.style.display = 'block';
+      if (playIconSvg) playIconSvg.style.display = 'none';
+      if (pauseIconSvg) pauseIconSvg.style.display = 'block';
     } else {
       playButtonText.textContent = 'PLAY';
-      pauseBar1.style.display = 'block';
-      pauseBar2.style.display = 'none';
+      if (playIconSvg) playIconSvg.style.display = 'block';
+      if (pauseIconSvg) pauseIconSvg.style.display = 'none';
     }
   }
 
@@ -338,11 +344,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const key = e.key;
     const lowerKey = key.toLowerCase();
 
-    // Visual press animation on virtual 3D pastel keyboard
+    // Visual active animation on virtual 3D keyboard
     const virtualKey = keyElementMap.get(lowerKey) || keyElementMap.get(key);
     if (virtualKey) {
       virtualKey.classList.add('key-pressed');
-      setTimeout(() => virtualKey.classList.remove('key-pressed'), 100);
+      setTimeout(() => virtualKey.classList.remove('key-pressed'), 90);
     }
 
     // Auto-start music on first keypress if paused

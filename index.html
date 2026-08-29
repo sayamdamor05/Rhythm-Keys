@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪐</text></svg>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rhythm Keys // 3D Cosmic Rhythm-Typing</title>
+  <title>Rhythm Keys // Precision Rhythm-Typing</title>
   <!-- Google Fonts: Inter, Fira Code, Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
-  <!-- Three.js CDN for standalone compatibility -->
+  <!-- Three.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="./src/style.css" />
 </head>
@@ -44,6 +44,7 @@
 
         <div class="nav-divider"></div>
 
+        <!-- Precise Stats HUD -->
         <div class="header-stats-group">
           <div class="stat-unit">
             <span class="stat-unit-label">WPM</span>
@@ -55,26 +56,27 @@
           </div>
         </div>
 
+        <!-- Clean Symmetrical Settings Gear SVG (Lucide) -->
         <button class="settings-btn" id="btnSettings" title="Track & Audio Settings" aria-label="Settings">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
           </svg>
         </button>
       </div>
     </header>
 
-    <!-- CENTER STAGE (Floating Lyrics & Soft 3D Pastel Keyboard) -->
+    <!-- CENTER STAGE (Lyrics Display & Grid Keyboard) -->
     <main class="center-stage">
-      <!-- Lyrics Container -->
+      <!-- Strict Monospace Lyrics Container -->
       <section class="lyrics-panel glass-panel" id="lyricsContainer" aria-live="polite">
         <div class="lyric-stream">
-          <!-- Line 1: Previous (Muted Lavender Grey) -->
+          <!-- Line 1: Previous Line -->
           <div class="lyric-line lyric-prev" id="lyricPrev">
             <span class="line-text" id="lyricPrevText">Waiting for the sun to rise</span>
           </div>
 
-          <!-- Line 2: Active Target Line (Cyan Typed, Red Error Box, Clean Untyped) -->
+          <!-- Line 2: Active Target Line with Character Cell Highlighting -->
           <div class="lyric-line lyric-active" id="lyricActive">
             <div class="active-chars-container" id="activeChars">
               <span class="char char-correct">The city is </span>
@@ -83,16 +85,16 @@
             </div>
           </div>
 
-          <!-- Line 3: Upcoming (Muted Lavender Grey) -->
+          <!-- Line 3: Next Line -->
           <div class="lyric-line lyric-next" id="lyricNext">
             <span class="line-text" id="lyricNextText">Neon lights are shining bright</span>
           </div>
         </div>
       </section>
 
-      <!-- Keyboard Container -->
+      <!-- Mathematically Precise QWERTY Keyboard Layout -->
       <section class="keyboard-panel glass-panel" id="virtualKeyboard" aria-label="Virtual Keyboard">
-        <!-- Row 1: Q W E R T Y U I O P -->
+        <!-- Row 1: Q W E R T Y U I O P (10 Keys) -->
         <div class="kb-row kb-row-1">
           <button class="key key-3d key-cyan" data-key="q">Q</button>
           <button class="key key-3d key-pink" data-key="w">W</button>
@@ -106,7 +108,7 @@
           <button class="key key-3d key-mint" data-key="p">P</button>
         </div>
 
-        <!-- Row 2: A S D F G H J K L -->
+        <!-- Row 2: A S D F G H J K L (9 Keys) -->
         <div class="kb-row kb-row-2">
           <button class="key key-3d key-yellow" data-key="a">A</button>
           <button class="key key-3d key-mint" data-key="s">S</button>
@@ -119,7 +121,7 @@
           <button class="key key-3d key-pink" data-key="l">L</button>
         </div>
 
-        <!-- Row 3: Z X C V B N M -->
+        <!-- Row 3: Z X C V B N M (7 Keys) -->
         <div class="kb-row kb-row-3">
           <button class="key key-3d key-purple" data-key="z">Z</button>
           <button class="key key-3d key-yellow" data-key="x">X</button>
@@ -130,44 +132,52 @@
           <button class="key key-3d key-yellow" data-key="m">M</button>
         </div>
 
-        <!-- Row 4: Left Modifier, SPACEBAR, Right Modifier -->
+        <!-- Row 4: Shift Modifier, SPACEBAR, Backspace Modifier -->
         <div class="kb-row kb-row-4">
-          <button class="key key-3d key-mod key-mint" data-key="Shift" aria-label="Shift"></button>
+          <button class="key key-3d key-mod key-mint" data-key="Shift" aria-label="Shift">⇧</button>
           <button class="key key-3d key-space" data-key=" ">SPACE</button>
-          <button class="key key-3d key-mod key-pink" data-key="Backspace" aria-label="Backspace"></button>
+          <button class="key key-3d key-mod key-pink" data-key="Backspace" aria-label="Backspace">⌫</button>
         </div>
       </section>
     </main>
 
     <!-- BOTTOM FOOTER -->
     <footer class="ui-footer glass-panel">
-      <!-- Left: Restart -->
+      <!-- Left: Clean Restart Button (Lucide rotate-ccw SVG) -->
       <div class="footer-left">
         <button class="footer-btn" id="btnRestart" title="Restart Song">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-            <path d="M3 3v5h5"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
           </svg>
           <span>RESTART</span>
         </button>
       </div>
 
-      <!-- Center: Play/Pause Circular Pink Button -->
+      <!-- Center: Play/Pause Circular Pink Button with Proper Play Triangle SVG -->
       <div class="footer-center">
-        <button class="play-btn-circle" id="btnPlayPause" aria-label="Play or Pause">
+        <button class="play-btn-circle" id="btnPlayPause" aria-label="Play or Pause Track">
           <div class="play-icon-inner">
-            <span class="pause-bar" id="pauseBar1"></span>
-            <span class="pause-bar" id="pauseBar2"></span>
+            <!-- Proper Play Triangle SVG -->
+            <svg id="playIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <!-- Proper Pause Bars SVG -->
+            <svg id="pauseIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+            </svg>
           </div>
           <span class="play-btn-label" id="playButtonText">PAUSE</span>
         </button>
       </div>
 
-      <!-- Right: Difficulty Toggle -->
+      <!-- Right: Difficulty Toggle (Lucide gauge SVG) -->
       <div class="footer-right">
-        <button class="footer-btn" id="diffHard" title="Difficulty">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M4 15h16M4 9h16M8 3v18M16 3v18"/>
+        <button class="footer-btn" id="diffHard" title="Toggle Difficulty">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 14v4"></path>
+            <path d="M3.34 19a10 10 0 1 1 17.32 0"></path>
           </svg>
           <span id="diffText">HARD</span>
         </button>
@@ -180,7 +190,7 @@
     <div class="modal-card glass-panel">
       <div class="modal-header">
         <h2 class="modal-title">Track & Audio Controls</h2>
-        <button class="modal-close-btn" id="btnSettingsClose">&times;</button>
+        <button class="modal-close-btn" id="btnSettingsClose" aria-label="Close Settings">&times;</button>
       </div>
       <div class="modal-body">
         <label class="modal-label" for="trackSelector">Song Selection</label>
