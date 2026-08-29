@@ -14,34 +14,10 @@
   <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
-  <!-- ================= 1. THREE.JS 3D CANVAS BACKGROUND ================= -->
+  <!-- ================= 1. FULLSCREEN 3D SPACE CANVAS (EDGE-TO-EDGE) ================= -->
   <canvas id="spaceCanvas" class="three-space-canvas"></canvas>
 
-  <!-- ================= 2. SPACESHIPI COCKPIT FRAME OVERLAY ================= -->
-  <div class="cockpit-viewport-frame" aria-hidden="true">
-    <!-- Top Cockpit Canopy Visor -->
-    <div class="cockpit-canopy-top">
-      <div class="canopy-pill-group">
-        <span class="hud-pill pill-cyan"></span>
-        <span class="hud-pill pill-pink"></span>
-        <span class="hud-pill pill-cyan"></span>
-        <span class="hud-pill pill-pink"></span>
-      </div>
-    </div>
-
-    <!-- Left & Right Sleek Cockpit Window Struts with Neon Accents -->
-    <div class="cockpit-strut strut-left">
-      <div class="neon-line-cyan"></div>
-    </div>
-    <div class="cockpit-strut strut-right">
-      <div class="neon-line-cyan"></div>
-    </div>
-
-    <!-- Bottom Dashboard Console -->
-    <div class="cockpit-dashboard-bottom"></div>
-  </div>
-
-  <!-- ================= 3. FOREGROUND GLASSMORPHIC UI ================= -->
+  <!-- ================= 2. FOREGROUND FLOATING GLASSMORPHIC UI ================= -->
   <div class="app-ui-container" id="app">
     <!-- TOP HEADER -->
     <header class="ui-header glass-panel">
@@ -88,7 +64,7 @@
       </div>
     </header>
 
-    <!-- CENTER STAGE (Lyrics Display & Pastel Soft 3D Keyboard) -->
+    <!-- CENTER STAGE (Floating Lyrics & Soft 3D Pastel Keyboard) -->
     <main class="center-stage">
       <!-- Lyrics Container -->
       <section class="lyrics-panel glass-panel" id="lyricsContainer" aria-live="polite">
