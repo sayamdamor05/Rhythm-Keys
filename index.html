@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhythm Keys // Cockpit Rhythm-Typing Simulator</title>
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <!-- ================= LAYER 1: COCKPIT & SPACE ENVIRONMENT ================= -->
+  <div class="cockpit-viewport" id="cockpitViewport">
+    <!-- Starfield Parallax Layers -->
+    <div class="stars-layer stars-small"></div>
+    <div class="stars-layer stars-medium"></div>
+    <div class="stars-layer stars-large"></div>
+    <div class="space-nebula"></div>
+    <div class="warp-grid"></div>
+
+    <!-- Animated Passing Planets -->
+    <div class="celestial-body planet-left" aria-hidden="true">
+      <div class="planet-ring"></div>
+      <div class="planet-glow"></div>
+    </div>
+    <div class="celestial-body planet-right" aria-hidden="true">
+      <div class="planet-atmosphere"></div>
+    </div>
+    <div class="celestial-body moon-distant" aria-hidden="true"></div>
+
+    <!-- Cockpit Structural Frame & HUD Glass Overlays -->
+    <div class="cockpit-canopy-frame" aria-hidden="true">
+      <div class="hud-bracket hud-tl"></div>
+      <div class="hud-bracket hud-tr"></div>
+      <div class="hud-bracket hud-bl"></div>
+      <div class="hud-bracket hud-br"></div>
+      <div class="hud-crosshair-left"></div>
+      <div class="hud-crosshair-right"></div>
+      <div class="glass-glare"></div>
+      <div class="speed-lines"></div>
+    </div>
+  </div>
+
+  <!-- ================= LAYER 2: MAIN COCKPIT UI LAYOUT ================= -->
+  <div class="cockpit-ui-container" id="app">
+    <!-- 1. TOP HEADER -->
+    <header class="cockpit-header glass-panel">
+      <!-- Logo & Ship Identifier -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <span class="logo-glyph">◈</span>
+          <span class="logo-text">Rhythm Keys</span>
+          <span class="subsystem-badge">SYS: ONLINE</span>
+        </div>
+      </div>
+
+      <!-- Current Song / Audio Track Telemetry -->
+      <div class="header-center">
+        <div class="track-telemetry">
+          <div class="audio-pulse-indicator" id="audioPulse">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="track-info">
+            <span class="track-title" id="currentTrackTitle">Midnight City</span>
+            <span class="track-artist-divider">//</span>
+            <span class="track-artist" id="currentTrackArtist">M83</span>
+          </div>
+          <div class="track-selector-wrapper">
+            <select id="trackSelector" class="cockpit-select" aria-label="Select Track">
+              <option value="midnight-city">Midnight City - M83 (Demo)</option>
+              <option value="cyber-odyssey">Cyber Odyssey - Stellar Voyager</option>
+              <option value="neon-pulse">Neon Pulse - RetroWave 2088</option>
+              <option value="jamendo-stream">Live Jamendo Stream (Creative Commons)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation & Cockpit Performance Metrics -->
+      <div class="header-right">
+        <nav class="cockpit-nav" aria-label="Cockpit Navigation">
+          <button class="nav-item active" id="navPractice">Practice</button>
+          <button class="nav-item" id="navPlay">Play</button>
+          <button class="nav-item" id="navLeaderboard">Leaderboard</button>
+        </nav>
+
+        <div class="cockpit-stats-hud">
+          <div class="stat-pill wpm-pill" title="Words Per Minute">
+            <span class="stat-label">WPM</span>
+            <span class="stat-value" id="hudWpm">74</span>
+          </div>
+          <div class="stat-pill acc-pill" title="Accuracy Percentage">
+            <span class="stat-label">ACC</span>
+            <span class="stat-value" id="hudAcc">98%</span>
+          </div>
+          <div class="stat-pill combo-pill" title="Streak Multiplier">
+            <span class="stat-label">COMBO</span>
+            <span class="stat-value" id="hudCombo">x4</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. CENTER STAGE (Lyrics HUD + Virtual Cockpit Keyboard) -->
+    <main class="center-stage">
+      <!-- Cockpit Audio Engine Status Warning Strip -->
+      <div class="audio-engine-hud" id="audioStatusBadge">
+        <span class="hud-led led-green" id="audioLed"></span>
+        <span class="engine-text" id="audioStatusText">AUDIO ENGINE: SYNCHRONIZED (FILTER CLEAR)</span>
+      </div>
+
+      <!-- Main Glassmorphism Lyrics Display Panel -->
+      <section class="lyrics-panel glass-panel" id="lyricsContainer" aria-live="polite">
+        <!-- Target Line Progress Bar -->
+        <div class="lyric-progress-track">
+          <div class="lyric-progress-fill" id="lyricProgressFill" style="width: 42%;"></div>
+        </div>
+
+        <div class="lyric-stream">
+          <!-- Line 1: Previous / Completed (Muted Grey) -->
+          <div class="lyric-line lyric-prev" id="lyricPrev">
+            <span class="line-status-icon">✓</span>
+            <span class="line-text">Waiting in a car, waiting for a ride in the dark</span>
+          </div>
+
+          <!-- Line 2: Active / Current Target (Color-Coded Monospace) -->
+          <div class="lyric-line lyric-active" id="lyricActive">
+            <span class="line-status-icon active-aim">▶</span>
+            <div class="active-chars-container" id="activeChars">
+              <!-- Demo pre-rendered tokens for visual prototype -->
+              <span class="char char-correct">T</span>
+              <span class="char char-correct">h</span>
+              <span class="char char-correct">e</span>
+              <span class="char char-correct"> </span>
+              <span class="char char-correct">c</span>
+              <span class="char char-correct">i</span>
+              <span class="char char-correct">t</span>
+              <span class="char char-correct">y</span>
+              <span class="char char-correct"> </span>
+              <span class="char char-correct">i</span>
+              <span class="char char-correct">s</span>
+              <span class="char char-correct"> </span>
+              <span class="char char-error">m</span>
+              <span class="char char-cursor">y</span>
+              <span class="char char-pending"> </span>
+              <span class="char char-pending">c</span>
+              <span class="char char-pending">h</span>
+              <span class="char char-pending">u</span>
+              <span class="char char-pending">r</span>
+              <span class="char char-pending">c</span>
+              <span class="char char-pending">h</span>
+              <span class="char char-pending">,</span>
+              <span class="char char-pending"> </span>
+              <span class="char char-pending">i</span>
+              <span class="char char-pending">t</span>
+              <span class="char char-pending"> </span>
+              <span class="char char-pending">w</span>
+              <span class="char char-pending">r</span>
+              <span class="char char-pending">a</span>
+              <span class="char char-pending">p</span>
+              <span class="char char-pending">s</span>
+              <span class="char char-pending"> </span>
+              <span class="char char-pending">i</span>
+              <span class="char char-pending">n</span>
+              <span class="char char-pending"> </span>
+              <span class="char char-pending">t</span>
+              <span class="char char-pending">h</span>
+              <span class="char char-pending">e</span>
+              <span class="char char-pending"> </span>
+              <span class="char char-pending">n</span>
+              <span class="char char-pending">i</span>
+              <span class="char char-pending">g</span>
+              <span class="char char-pending">h</span>
+              <span class="char char-pending">t</span>
+            </div>
+          </div>
+
+          <!-- Line 3: Upcoming (Muted Grey) -->
+          <div class="lyric-line lyric-next" id="lyricNext">
+            <span class="line-status-icon">⋯</span>
+            <span class="line-text">The city is my church, it wraps in the blinding twilight</span>
+          </div>
+        </div>
+
+        <!-- Hidden input for mobile keyboard capture -->
+        <input type="text" id="mobileInputCapture" class="sr-only-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+      </section>
+
+      <!-- Virtual Cockpit 3D Soft QWERTY Keyboard Panel -->
+      <section class="keyboard-panel glass-panel" id="virtualKeyboard" aria-label="Virtual Cockpit Keyboard">
+        <!-- Row 1: Numbers & Symbols -->
+        <div class="kb-row kb-row-numbers">
+          <button class="key key-num pastel-pink" data-key="`">~<br>`</button>
+          <button class="key key-num pastel-pink" data-key="1">1</button>
+          <button class="key key-num pastel-pink" data-key="2">2</button>
+          <button class="key key-num pastel-pink" data-key="3">3</button>
+          <button class="key key-num pastel-pink" data-key="4">4</button>
+          <button class="key key-num pastel-pink" data-key="5">5</button>
+          <button class="key key-num pastel-pink" data-key="6">6</button>
+          <button class="key key-num pastel-pink" data-key="7">7</button>
+          <button class="key key-num pastel-pink" data-key="8">8</button>
+          <button class="key key-num pastel-pink" data-key="9">9</button>
+          <button class="key key-num pastel-pink" data-key="0">0</button>
+          <button class="key key-num pastel-pink" data-key="-">-</button>
+          <button class="key key-num pastel-pink" data-key="=">=</button>
+          <button class="key key-special key-backspace pastel-pink" data-key="Backspace">BACK</button>
+        </div>
+
+        <!-- Row 2: QWERTY -->
+        <div class="kb-row kb-row-q">
+          <button class="key key-special key-tab pastel-cyan" data-key="Tab">TAB</button>
+          <button class="key pastel-cyan" data-key="q">Q</button>
+          <button class="key pastel-cyan" data-key="w">W</button>
+          <button class="key pastel-cyan" data-key="e">E</button>
+          <button class="key pastel-cyan" data-key="r">R</button>
+          <button class="key pastel-cyan" data-key="t">T</button>
+          <button class="key pastel-cyan" data-key="y">Y</button>
+          <button class="key pastel-cyan" data-key="u">U</button>
+          <button class="key pastel-cyan" data-key="i">I</button>
+          <button class="key pastel-cyan" data-key="o">O</button>
+          <button class="key pastel-cyan" data-key="p">P</button>
+          <button class="key pastel-cyan" data-key="[">[</button>
+          <button class="key pastel-cyan" data-key="]">]</button>
+          <button class="key pastel-cyan" data-key="\">\</button>
+        </div>
+
+        <!-- Row 3: ASDF -->
+        <div class="kb-row kb-row-a">
+          <button class="key key-special key-caps pastel-yellow" data-key="CapsLock">CAPS</button>
+          <button class="key pastel-yellow" data-key="a">A</button>
+          <button class="key pastel-yellow" data-key="s">S</button>
+          <button class="key pastel-yellow" data-key="d">D</button>
+          <button class="key pastel-yellow" data-key="f">F</button>
+          <button class="key pastel-yellow" data-key="g">G</button>
+          <button class="key pastel-yellow" data-key="h">H</button>
+          <button class="key pastel-yellow" data-key="j">J</button>
+          <button class="key pastel-yellow" data-key="k">K</button>
+          <button class="key pastel-yellow" data-key="l">L</button>
+          <button class="key pastel-yellow" data-key=";">;</button>
+          <button class="key pastel-yellow" data-key="'">'</button>
+          <button class="key key-special key-enter pastel-yellow" data-key="Enter">ENTER</button>
+        </div>
+
+        <!-- Row 4: ZXCV -->
+        <div class="kb-row kb-row-z">
+          <button class="key key-special key-shift pastel-green" data-key="Shift">SHIFT</button>
+          <button class="key pastel-green" data-key="z">Z</button>
+          <button class="key pastel-green" data-key="x">X</button>
+          <button class="key pastel-green" data-key="c">C</button>
+          <button class="key pastel-green" data-key="v">V</button>
+          <button class="key pastel-green" data-key="b">B</button>
+          <button class="key pastel-green" data-key="n">N</button>
+          <button class="key pastel-green" data-key="m">M</button>
+          <button class="key pastel-green" data-key=",">,</button>
+          <button class="key pastel-green" data-key=".">.</button>
+          <button class="key pastel-green" data-key="/">/</button>
+          <button class="key key-special key-shift pastel-green" data-key="Shift">SHIFT</button>
+        </div>
+
+        <!-- Row 5: Space Bar & Modifiers -->
+        <div class="kb-row kb-row-space">
+          <button class="key key-special pastel-lavender" data-key="Control">CTRL</button>
+          <button class="key key-special pastel-lavender" data-key="Alt">ALT</button>
+          <button class="key key-space pastel-lavender" data-key=" ">SPACEBAR</button>
+          <button class="key key-special pastel-lavender" data-key="Alt">ALT</button>
+          <button class="key key-special pastel-lavender" data-key="Control">CTRL</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- 3. BOTTOM FOOTER -->
+    <footer class="cockpit-footer glass-panel">
+      <!-- Left: Restart & Reset Controls -->
+      <div class="footer-left">
+        <button class="cockpit-btn btn-secondary" id="btnRestart" title="Restart Track and Counters">
+          <svg class="btn-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 4v6h6M23 20v-6h-6"/>
+            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+          </svg>
+          <span>RESTART</span>
+        </button>
+      </div>
+
+      <!-- Center: Transport Play/Pause Pill Button & Track Seeker -->
+      <div class="footer-center">
+        <div class="time-display" id="timeCurrent">01:14</div>
+        <div class="timeline-bar-wrapper">
+          <input type="range" class="cockpit-slider" id="timelineSlider" min="0" max="100" value="32" aria-label="Audio Timeline" />
+        </div>
+        <div class="time-display" id="timeDuration">03:45</div>
+
+        <button class="cockpit-btn btn-primary-play" id="btnPlayPause" aria-label="Play or Pause Track">
+          <svg class="play-icon" id="playIcon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <span id="playButtonText">ENGAGE</span>
+        </button>
+      </div>
+
+      <!-- Right: Difficulty Toggle & Audio Volume Slider -->
+      <div class="footer-right">
+        <div class="difficulty-wrapper">
+          <span class="control-label">DIFFICULTY:</span>
+          <button class="diff-btn active" id="diffHard" data-diff="hard">HARD</button>
+        </div>
+
+        <div class="volume-control">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+          <input type="range" id="volumeSlider" class="cockpit-slider vol-slider" min="0" max="100" value="85" aria-label="Volume" />
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

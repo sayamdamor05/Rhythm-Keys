@@ -1,0 +1,1093 @@
+/* ==========================================================================
+   TYPETEMPO // COCKPIT RHYTHM-TYPING DESIGN SYSTEM & STYLESHEET
+   ========================================================================== */
+
+/* --- 1. CSS VARIABLES & DESIGN TOKENS --- */
+:root {
+  /* Color Palette */
+  --bg-deep-space: #050814;
+  --bg-space-dark: #090e24;
+  --bg-cockpit-overlay: rgba(5, 8, 20, 0.75);
+
+  /* Neon Accents */
+  --neon-cyan: #00e5ff;
+  --neon-cyan-glow: rgba(0, 229, 255, 0.5);
+  --neon-purple: #bd00ff;
+  --neon-purple-glow: rgba(189, 0, 255, 0.5);
+  --neon-pink: #ff66cc;
+  --neon-pink-glow: rgba(255, 102, 204, 0.5);
+  --neon-red: #ff2a5f;
+  --neon-red-glow: rgba(255, 42, 95, 0.6);
+  --neon-green: #00ffaa;
+  --neon-green-glow: rgba(0, 255, 170, 0.5);
+
+  /* Pastel Keyboard Color Palette */
+  --pastel-pink: #ff9ebb;
+  --pastel-pink-bg: rgba(255, 158, 187, 0.22);
+  --pastel-pink-border: rgba(255, 158, 187, 0.45);
+
+  --pastel-cyan: #70d6ff;
+  --pastel-cyan-bg: rgba(112, 214, 255, 0.22);
+  --pastel-cyan-border: rgba(112, 214, 255, 0.45);
+
+  --pastel-yellow: #ffd670;
+  --pastel-yellow-bg: rgba(255, 214, 112, 0.22);
+  --pastel-yellow-border: rgba(255, 214, 112, 0.45);
+
+  --pastel-green: #a0e8af;
+  --pastel-green-bg: rgba(160, 232, 175, 0.22);
+  --pastel-green-border: rgba(160, 232, 175, 0.45);
+
+  --pastel-lavender: #d0bfff;
+  --pastel-lavender-bg: rgba(208, 191, 255, 0.22);
+  --pastel-lavender-border: rgba(208, 191, 255, 0.45);
+
+  /* Glassmorphism Specification */
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.14);
+  --glass-border: rgba(0, 229, 255, 0.35);
+  --glass-border-focus: rgba(0, 229, 255, 0.8);
+  --glass-blur: blur(12px);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+
+  /* Typography */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+  --font-display: 'Orbitron', var(--font-ui);
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.35);
+  --text-cyan: var(--neon-cyan);
+
+  /* Transitions */
+  --trans-fast: 0.15s ease;
+  --trans-normal: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* --- 2. GLOBAL RESET & BASE --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-deep-space);
+  font-family: var(--font-ui);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- 3. LAYER 1: COCKPIT & SPACE ENVIRONMENT --- */
+.cockpit-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #0d1435 0%, #060919 60%, #02040b 100%);
+  pointer-events: none;
+}
+
+/* Parallax Starfields using Keyframes & Multiple Box Shadows */
+.stars-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+}
+
+.stars-small {
+  width: 1px;
+  height: 1px;
+  box-shadow: 
+    120px 200px #fff, 350px 800px #a9def9, 780px 320px #fff, 1100px 950px #d0bfff,
+    1400px 150px #fff, 1680px 650px #70d6ff, 250px 1200px #fff, 550px 1450px #fff,
+    890px 1650px #ff9ebb, 1300px 1850px #fff, 1750px 1350px #70d6ff, 450px 450px #fff,
+    950px 750px #fff, 1250px 350px #d0bfff, 1550px 850px #fff, 200px 700px #fff,
+    600px 250px #70d6ff, 850px 1150px #fff, 1150px 600px #fff, 1450px 1100px #fff;
+  animation: starsDrift 60s linear infinite;
+}
+
+.stars-medium {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  box-shadow: 
+    200px 400px #70d6ff, 600px 100px #ff66cc, 900px 850px #00e5ff, 1350px 500px #ffd670,
+    1600px 200px #00e5ff, 400px 900px #ffffff, 800px 1300px #70d6ff, 1200px 1500px #ff9ebb,
+    1700px 1100px #ffffff, 300px 600px #00e5ff, 1050px 400px #ffd670, 1500px 900px #ff66cc;
+  animation: starsDrift 35s linear infinite;
+}
+
+.stars-large {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  box-shadow: 
+    300px 250px #00e5ff, 850px 550px #ff66cc, 1450px 750px #00ffaa, 650px 950px #ffffff,
+    1150px 200px #ffd670, 1650px 1050px #00e5ff;
+  animation: starsDrift 20s linear infinite;
+}
+
+@keyframes starsDrift {
+  from {
+    transform: translateY(0px) scale(1);
+  }
+  to {
+    transform: translateY(1000px) scale(1.05);
+  }
+}
+
+/* Swirling Cosmic Nebula */
+.space-nebula {
+  position: absolute;
+  inset: -20%;
+  background: 
+    radial-gradient(ellipse at 25% 30%, rgba(189, 0, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 60%, rgba(0, 229, 255, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 85%, rgba(255, 42, 95, 0.08) 0%, transparent 40%);
+  filter: blur(40px);
+  animation: nebulaPulse 18s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaPulse {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  100% { transform: scale(1.1) rotate(4deg); opacity: 1; }
+}
+
+/* Subtle Perspective Grid */
+.warp-grid {
+  position: absolute;
+  bottom: -20%;
+  left: -20%;
+  right: -20%;
+  height: 60%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 229, 255, 0.04) 100%),
+              repeating-linear-gradient(90deg, rgba(0, 229, 255, 0.03) 0, rgba(0, 229, 255, 0.03) 1px, transparent 1px, transparent 60px);
+  transform: perspective(600px) rotateX(75deg);
+  pointer-events: none;
+}
+
+/* Animated Passing Planets */
+.celestial-body {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Left Planet (Gas Giant with Rings) */
+.planet-left {
+  left: -90px;
+  top: 15%;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle at 35% 30%, #a855f7 0%, #6b21a8 45%, #2e1065 80%, #0a041f 100%);
+  box-shadow: inset -25px -25px 40px rgba(0, 0, 0, 0.9), 0 0 50px rgba(168, 85, 247, 0.4);
+  animation: planetLeftOrbit 50s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.planet-left .planet-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 380px;
+  height: 90px;
+  border-radius: 50%;
+  border: 12px solid rgba(192, 132, 252, 0.35);
+  border-left-color: rgba(233, 213, 255, 0.6);
+  transform: translate(-50%, -50%) rotate(-28deg);
+  box-shadow: 0 0 25px rgba(192, 132, 252, 0.4);
+}
+
+.planet-left .planet-glow {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.2);
+}
+
+/* Right Planet (Cyan / Emerald Oceanic Exoplanet) */
+.planet-right {
+  right: -60px;
+  top: 55%;
+  width: 170px;
+  height: 170px;
+  background: radial-gradient(circle at 30% 30%, #00e5ff 0%, #0284c7 40%, #0f172a 85%);
+  box-shadow: inset -20px -20px 30px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 229, 255, 0.45);
+  animation: planetRightOrbit 65s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.planet-right .planet-atmosphere {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 229, 255, 0.6);
+  filter: blur(3px);
+}
+
+/* Distant Moon */
+.moon-distant {
+  right: 18%;
+  top: 12%;
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(circle at 30% 30%, #ffd670 0%, #d97706 60%, #451a03 100%);
+  box-shadow: 0 0 20px rgba(255, 214, 112, 0.5);
+  animation: moonFloat 30s ease-in-out infinite alternate;
+}
+
+@keyframes planetLeftOrbit {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(80px) scale(1.08); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes planetRightOrbit {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-70px) scale(1.06); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes moonFloat {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-25px, 20px); }
+}
+
+/* Cockpit Canopy Frame & HUD Overlays */
+.cockpit-canopy-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.85);
+}
+
+/* HUD Corner Brackets */
+.hud-bracket {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-color: var(--neon-cyan);
+  border-style: solid;
+  opacity: 0.7;
+}
+
+.hud-tl { top: 12px; left: 12px; border-width: 3px 0 0 3px; }
+.hud-tr { top: 12px; right: 12px; border-width: 3px 3px 0 0; }
+.hud-bl { bottom: 12px; left: 12px; border-width: 0 0 3px 3px; }
+.hud-br { bottom: 12px; right: 12px; border-width: 0 3px 3px 0; }
+
+.hud-crosshair-left, .hud-crosshair-right {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 2px;
+  background: var(--neon-cyan);
+  opacity: 0.3;
+  transform: translateY(-50%);
+}
+.hud-crosshair-left { left: 14px; }
+.hud-crosshair-right { right: 14px; }
+
+.glass-glare {
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 140%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+
+/* --- 4. LAYER 2: MAIN COCKPIT UI LAYOUT --- */
+.cockpit-ui-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100vh;
+  padding: 16px 24px;
+  gap: 12px;
+}
+
+/* Glassmorphism Panel Base Utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  position: relative;
+  transition: border-color var(--trans-normal), box-shadow var(--trans-normal);
+}
+
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 100%);
+}
+
+/* ==========================================================================
+   TOP HEADER
+   ========================================================================== */
+.cockpit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  min-height: 64px;
+  flex-shrink: 0;
+}
+
+/* Header Left: Brand */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-glyph {
+  font-size: 1.4rem;
+  color: var(--neon-purple);
+  text-shadow: 0 0 12px var(--neon-purple-glow);
+  animation: glyphSpin 8s ease-in-out infinite alternate;
+}
+
+@keyframes glyphSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(180deg) scale(1.15); }
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #ff66cc, #bd00ff, #00e5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px var(--neon-purple-glow);
+}
+
+.subsystem-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(0, 255, 170, 0.12);
+  border: 1px solid rgba(0, 255, 170, 0.4);
+  color: var(--neon-green);
+  letter-spacing: 1px;
+}
+
+/* Header Center: Song Telemetry & Track Selector */
+.header-center {
+  display: flex;
+  align-items: center;
+}
+
+.track-telemetry {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+}
+
+.audio-pulse-indicator {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 14px;
+}
+
+.audio-pulse-indicator span {
+  display: block;
+  width: 3px;
+  height: 100%;
+  background: var(--neon-cyan);
+  border-radius: 2px;
+  box-shadow: 0 0 6px var(--neon-cyan);
+  animation: pulseBar 1.2s ease-in-out infinite alternate;
+}
+
+.audio-pulse-indicator span:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.audio-pulse-indicator span:nth-child(2) { height: 90%; animation-delay: 0.3s; }
+.audio-pulse-indicator span:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+.audio-pulse-indicator span:nth-child(4) { height: 100%; animation-delay: 0.4s; }
+
+@keyframes pulseBar {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.track-title {
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.track-artist-divider {
+  color: var(--neon-cyan);
+  opacity: 0.6;
+}
+
+.track-artist {
+  color: var(--neon-cyan);
+  font-weight: 500;
+}
+
+.cockpit-select {
+  background: rgba(5, 8, 20, 0.8);
+  color: var(--text-secondary);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--trans-fast);
+}
+
+.cockpit-select:hover, .cockpit-select:focus {
+  border-color: var(--neon-cyan);
+  color: #fff;
+  box-shadow: 0 0 10px var(--neon-cyan-glow);
+}
+
+/* Header Right: Navigation & Stats HUD */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cockpit-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-item {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.nav-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-item.active {
+  color: var(--neon-cyan);
+  background: rgba(0, 229, 255, 0.12);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+}
+
+.cockpit-stats-hud {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.wpm-pill .stat-value { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan-glow); }
+.acc-pill .stat-value { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green-glow); }
+.combo-pill .stat-value { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink-glow); }
+
+/* ==========================================================================
+   CENTER STAGE
+   ========================================================================== */
+.center-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  max-width: 1060px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Audio Status HUD Strip */
+.audio-engine-hud {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 255, 170, 0.3);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  transition: all var(--trans-normal);
+}
+
+.hud-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--neon-green);
+  box-shadow: 0 0 8px var(--neon-green);
+}
+
+.audio-engine-hud.degraded {
+  border-color: rgba(255, 42, 95, 0.5);
+  background: rgba(255, 42, 95, 0.15);
+  color: var(--neon-red);
+}
+
+.audio-engine-hud.degraded .hud-led {
+  background: var(--neon-red);
+  box-shadow: 0 0 10px var(--neon-red);
+  animation: errorBlink 0.4s infinite alternate;
+}
+
+@keyframes errorBlink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* Lyrics Panel */
+.lyrics-panel {
+  width: 100%;
+  padding: 24px 32px;
+  min-height: 175px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+  box-shadow: var(--glass-shadow), 0 0 30px rgba(0, 229, 255, 0.1);
+  overflow: hidden;
+}
+
+.lyric-progress-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.lyric-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+  box-shadow: 0 0 8px var(--neon-cyan);
+  transition: width 0.2s ease-out;
+}
+
+.lyric-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lyric-line {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  transition: all var(--trans-normal);
+}
+
+.line-status-icon {
+  font-size: 0.85rem;
+  width: 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* Previous Line */
+.lyric-prev {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  opacity: 0.65;
+  filter: blur(0.4px);
+}
+
+.lyric-prev .line-status-icon {
+  color: var(--neon-green);
+}
+
+/* Active Line */
+.lyric-active {
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border-left: 3px solid var(--neon-cyan);
+  box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.08);
+}
+
+.lyric-active .active-aim {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan);
+  animation: aimPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes aimPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.2); opacity: 1; }
+}
+
+.active-chars-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  line-height: 1.5;
+}
+
+/* Active Character States */
+.char {
+  display: inline-block;
+  white-space: pre;
+  transition: color 0.1s ease, background-color 0.1s ease;
+}
+
+.char-correct {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan-glow);
+}
+
+.char-cursor {
+  position: relative;
+  color: #ffffff;
+  background: rgba(0, 229, 255, 0.2);
+  border-bottom: 3px solid var(--neon-cyan);
+  border-radius: 2px;
+  animation: cursorPulse 0.9s infinite alternate;
+}
+
+@keyframes cursorPulse {
+  0% { background: rgba(0, 229, 255, 0.1); border-color: transparent; }
+  100% { background: rgba(0, 229, 255, 0.4); border-color: var(--neon-cyan); box-shadow: 0 0 12px var(--neon-cyan); }
+}
+
+.char-error {
+  color: #ffffff;
+  background: var(--neon-red);
+  border-radius: 3px;
+  padding: 0 2px;
+  box-shadow: 0 0 14px var(--neon-red-glow);
+  animation: errorShake 0.25s ease-in-out;
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.char-pending {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Next / Upcoming Line */
+.lyric-next {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* Hidden input for mobile browsers */
+.sr-only-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   VIRTUAL 3D COCKPIT KEYBOARD
+   ========================================================================== */
+.keyboard-panel {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(7, 12, 30, 0.65);
+}
+
+.kb-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+/* 3D Soft Keyboard Buttons */
+.key {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  height: 42px;
+  min-width: 44px;
+  flex: 1;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.08s ease-out;
+  /* 3D Soft tactile elevation */
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.5),
+    0 5px 10px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.key:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 5px 0 rgba(0, 0, 0, 0.5),
+    0 7px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.key:active, .key.key-pressed {
+  transform: translateY(3px);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.3);
+}
+
+/* Pastel Theme Color Tints */
+.pastel-pink {
+  background: var(--pastel-pink-bg);
+  border-color: var(--pastel-pink-border);
+  color: var(--pastel-pink);
+}
+.pastel-pink:hover, .pastel-pink.key-pressed {
+  box-shadow: 0 0 14px rgba(255, 158, 187, 0.6);
+}
+
+.pastel-cyan {
+  background: var(--pastel-cyan-bg);
+  border-color: var(--pastel-cyan-border);
+  color: var(--pastel-cyan);
+}
+.pastel-cyan:hover, .pastel-cyan.key-pressed {
+  box-shadow: 0 0 14px rgba(112, 214, 255, 0.6);
+}
+
+.pastel-yellow {
+  background: var(--pastel-yellow-bg);
+  border-color: var(--pastel-yellow-border);
+  color: var(--pastel-yellow);
+}
+.pastel-yellow:hover, .pastel-yellow.key-pressed {
+  box-shadow: 0 0 14px rgba(255, 214, 112, 0.6);
+}
+
+.pastel-green {
+  background: var(--pastel-green-bg);
+  border-color: var(--pastel-green-border);
+  color: var(--pastel-green);
+}
+.pastel-green:hover, .pastel-green.key-pressed {
+  box-shadow: 0 0 14px rgba(160, 232, 175, 0.6);
+}
+
+.pastel-lavender {
+  background: var(--pastel-lavender-bg);
+  border-color: var(--pastel-lavender-border);
+  color: var(--pastel-lavender);
+}
+.pastel-lavender:hover, .pastel-lavender.key-pressed {
+  box-shadow: 0 0 14px rgba(208, 191, 255, 0.6);
+}
+
+/* Special Keys Flex Weight */
+.key-special {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.key-backspace { flex: 1.6; }
+.key-tab { flex: 1.3; }
+.key-caps { flex: 1.5; }
+.key-enter { flex: 1.8; }
+.key-shift { flex: 2.2; }
+.key-space { flex: 6; font-size: 0.8rem; letter-spacing: 2px; }
+
+/* ==========================================================================
+   BOTTOM FOOTER
+   ========================================================================== */
+.cockpit-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  min-height: 62px;
+  flex-shrink: 0;
+}
+
+/* Footer Left */
+.footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.cockpit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  outline: none;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Footer Center: Play Button & Timeline */
+.footer-center {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  max-width: 540px;
+  justify-content: center;
+}
+
+.time-display {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-width: 42px;
+}
+
+.timeline-bar-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.cockpit-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cockpit-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.cockpit-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+/* Pink Accent Play Pill */
+.btn-primary-play {
+  background: linear-gradient(135deg, #ff66cc 0%, #bd00ff 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  padding: 8px 24px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  box-shadow: 0 0 20px var(--neon-pink-glow), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary-play:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 28px var(--neon-pink-glow);
+}
+
+.btn-primary-play:active {
+  transform: scale(0.97);
+}
+
+/* Footer Right: Difficulty & Volume */
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.difficulty-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.diff-btn {
+  background: rgba(255, 102, 204, 0.15);
+  border: 1px solid var(--neon-pink);
+  color: var(--neon-pink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 102, 204, 0.3);
+  transition: all var(--trans-fast);
+}
+
+.diff-btn:hover {
+  background: var(--neon-pink);
+  color: #fff;
+  box-shadow: 0 0 16px var(--neon-pink);
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.vol-slider {
+  width: 75px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN ADAPTATIONS
+   ========================================================================== */
+@media (max-width: 992px) {
+  .header-center { display: none; }
+  .key { height: 38px; min-width: 32px; font-size: 0.75rem; }
+  .lyric-active { font-size: 1.25rem; }
+}
+
+@media (max-width: 768px) {
+  .cockpit-ui-container { padding: 8px 12px; gap: 8px; }
+  .cockpit-header { padding: 8px 14px; min-height: 52px; }
+  .logo-text { font-size: 1.1rem; }
+  .subsystem-badge, .cockpit-nav { display: none; }
+  .lyrics-panel { padding: 16px 20px; min-height: 140px; }
+  .lyric-active { font-size: 1.1rem; }
+  .keyboard-panel { padding: 10px 8px; gap: 5px; }
+  .key { height: 34px; min-width: 24px; font-size: 0.7rem; }
+  .footer-center { max-width: 280px; }
+  .time-display { display: none; }
+}
+
+@media (max-height: 700px) {
+  .cockpit-ui-container { padding: 6px 12px; }
+  .cockpit-header, .cockpit-footer { min-height: 48px; padding: 6px 16px; }
+  .lyrics-panel { min-height: 120px; padding: 14px 20px; }
+  .lyric-stream { gap: 6px; }
+  .keyboard-panel { padding: 8px 12px; gap: 4px; }
+  .key { height: 32px; }
+}
