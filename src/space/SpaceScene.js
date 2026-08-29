@@ -1,7 +1,7 @@
 /**
  * SpaceScene.js // Three.js 3D Physics-Driven Celestial Space Environment for Rhythm Keys
- * Converts whimsical 2D art into true 3D celestial bodies with real-time kinematic physics,
- * orbital gravitational drift, axial rotation, procedural textures, and forward-velocity starfield.
+ * Whimsical 3D planets, stylized tumbling asteroids, and forward-motion starfield.
+ * Clean, non-distracting celestial layout matching the reference artwork.
  */
 
 import * as THREE from 'three';
@@ -18,7 +18,6 @@ export class SpaceScene {
     this.starCount = 1800;
     this.forwardSpeed = 0.8;
     this.celestialBodies = [];
-    this.rocketGroup = null;
     this.animationFrameId = null;
     this.clock = new THREE.Clock();
 
@@ -49,7 +48,7 @@ export class SpaceScene {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    // 3. Volumetric 3D Lighting Setup (Creates Rich Spherical Depth & Specular Highlights)
+    // 3. Volumetric 3D Lighting Setup
     const ambientLight = new THREE.AmbientLight(0x3a2552, 2.2);
     this.scene.add(ambientLight);
 
@@ -77,7 +76,7 @@ export class SpaceScene {
     this.createCosmicNebulaLayers();
     this.create3DStarfield();
     this.create3DCelestialBodies();
-    this.create3DRocketShip();
+    this.createWhimsicalAsteroidField();
 
     // 5. Window Resize Event
     this.handleResize = this.handleResize.bind(this);
@@ -135,7 +134,6 @@ export class SpaceScene {
    * Creates 3D particle starfield with outward streaking forward velocity
    */
   create3DStarfield() {
-    // Soft circular star sprite
     const canvas = document.createElement('canvas');
     canvas.width = 64;
     canvas.height = 64;
@@ -199,7 +197,7 @@ export class SpaceScene {
   }
 
   /**
-   * Procedural canvas texture generator mimicking the whimsical 2D art in 3D
+   * Procedural canvas texture generator mimicking whimsical celestial art
    */
   createWhimsicalTexture(type) {
     const canvas = document.createElement('canvas');
@@ -208,7 +206,6 @@ export class SpaceScene {
     const ctx = canvas.getContext('2d');
 
     if (type === 'yellow-saturn') {
-      // Golden yellow surface with stippled planetary stripes
       const grad = ctx.createLinearGradient(0, 0, 0, 1024);
       grad.addColorStop(0.0, '#fff9c4');
       grad.addColorStop(0.2, '#ffd54f');
@@ -219,7 +216,6 @@ export class SpaceScene {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
-      // Stippled atmospheric bands
       ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
       for (let y = 100; y < 1024; y += 90) {
         ctx.fillRect(0, y, 1024, 28);
@@ -230,7 +226,6 @@ export class SpaceScene {
         ctx.fillRect(0, y, 1024, 18);
       }
     } else if (type === 'pink-craters') {
-      // Whimsical magenta/pink planet with bold cartoon craters
       const grad = ctx.createRadialGradient(400, 400, 50, 512, 512, 512);
       grad.addColorStop(0.0, '#ff80ab');
       grad.addColorStop(0.45, '#f50057');
@@ -239,7 +234,6 @@ export class SpaceScene {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
-      // Stylized Craters
       const craters = [
         { x: 300, y: 350, r: 65, color1: '#880e4f', color2: '#c51162' },
         { x: 700, y: 400, r: 85, color1: '#880e4f', color2: '#c51162' },
@@ -260,7 +254,6 @@ export class SpaceScene {
         ctx.fill();
       });
     } else if (type === 'blue-swirl') {
-      // Cyan/oceanic swirling atmosphere
       const grad = ctx.createLinearGradient(0, 0, 1024, 1024);
       grad.addColorStop(0.0, '#80d8ff');
       grad.addColorStop(0.3, '#00b0ff');
@@ -269,7 +262,6 @@ export class SpaceScene {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
-      // Swirl bands
       ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
       for (let y = 80; y < 1024; y += 140) {
         ctx.beginPath();
@@ -277,7 +269,6 @@ export class SpaceScene {
         ctx.fill();
       }
     } else if (type === 'turquoise-mint') {
-      // Vibrant turquoise exoplanet
       const grad = ctx.createRadialGradient(350, 350, 40, 512, 512, 512);
       grad.addColorStop(0.0, '#a7ffeb');
       grad.addColorStop(0.4, '#1de9b6');
@@ -285,6 +276,19 @@ export class SpaceScene {
       grad.addColorStop(1.0, '#00332c');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
+    } else if (type === 'amethyst-bands') {
+      const grad = ctx.createLinearGradient(0, 0, 0, 1024);
+      grad.addColorStop(0.0, '#e9d5ff');
+      grad.addColorStop(0.3, '#c084fc');
+      grad.addColorStop(0.6, '#9333ea');
+      grad.addColorStop(1.0, '#581c87');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1024, 1024);
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+      for (let y = 120; y < 1024; y += 110) {
+        ctx.fillRect(0, y, 1024, 22);
+      }
     }
 
     const texture = new THREE.CanvasTexture(canvas);
@@ -343,8 +347,8 @@ export class SpaceScene {
       mass: 80,
       baseX: -24,
       baseY: 11,
-      vz: 0.08,           // Forward velocity towards camera
-      orbitFreq: 0.0012,  // Gravitational curved drift
+      vz: 0.08,
+      orbitFreq: 0.0012,
       orbitRadiusX: 2.2,
       orbitRadiusY: 1.5,
       rotVelocity: new THREE.Vector3(0.002, 0.007, 0.001),
@@ -417,7 +421,7 @@ export class SpaceScene {
     });
     const turqPlanet = new THREE.Mesh(turqGeo, turqMat);
 
-    // Orbiting 3D Coral Moon
+    // Orbiting Coral Moon
     const moonGeo = new THREE.SphereGeometry(0.7, 24, 24);
     const moonMat = new THREE.MeshStandardMaterial({
       color: 0xff6e40,
@@ -446,94 +450,118 @@ export class SpaceScene {
     };
     this.scene.add(turqPlanet);
     this.celestialBodies.push(turqPlanet);
+
+    // --- 5. 3D Amethyst Striped Exoplanet (Upper-Right Drift) ---
+    const amethystGeo = new THREE.SphereGeometry(3.0, 48, 48);
+    const amethystMat = new THREE.MeshStandardMaterial({
+      map: this.createWhimsicalTexture('amethyst-bands'),
+      roughness: 0.4,
+      metalness: 0.12,
+      emissive: 0x3b0764,
+      emissiveIntensity: 0.25
+    });
+    const amethystPlanet = new THREE.Mesh(amethystGeo, amethystMat);
+    amethystPlanet.position.set(24, 10.5, -110);
+    amethystPlanet.userData = {
+      mass: 60,
+      baseX: 24,
+      baseY: 10.5,
+      vz: 0.08,
+      orbitFreq: 0.0013,
+      orbitRadiusX: 2.0,
+      orbitRadiusY: 1.4,
+      rotVelocity: new THREE.Vector3(0.003, 0.006, 0.002),
+      resetZ: -160,
+      limitZ: 32
+    };
+    this.scene.add(amethystPlanet);
+    this.celestialBodies.push(amethystPlanet);
   }
 
   /**
-   * Builds the 3D Whimsical Retro Rocket Ship
+   * Creates stylized whimsical tumbling 3D asteroids with gemstone & cosmic pastel colors
    */
-  create3DRocketShip() {
-    this.rocketGroup = new THREE.Group();
+  createWhimsicalAsteroidField() {
+    const asteroidGeometries = [
+      new THREE.DodecahedronGeometry(1.3, 1),
+      new THREE.IcosahedronGeometry(1.1, 0),
+      new THREE.DodecahedronGeometry(0.9, 0),
+      new THREE.IcosahedronGeometry(1.4, 1),
+      new THREE.DodecahedronGeometry(1.0, 1)
+    ];
 
-    // 1. Fuselage (Yellow Body)
-    const bodyGeo = new THREE.CylinderGeometry(0.6, 1.2, 3.8, 24);
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: 0xffeb3b,
-      roughness: 0.3,
-      metalness: 0.2,
-      emissive: 0xff8f00,
-      emissiveIntensity: 0.25
+    const asteroidConfigs = [
+      // Top-Right Orange-Gold Asteroid
+      {
+        color: 0xffa726,
+        emissive: 0xe65100,
+        x: 27, y: 6, z: -70,
+        vz: 0.09,
+        rot: new THREE.Vector3(0.015, 0.02, 0.01)
+      },
+      // Mid-Right Violet Asteroid
+      {
+        color: 0xba68c8,
+        emissive: 0x6a1b9a,
+        x: 28, y: -2, z: -115,
+        vz: 0.085,
+        rot: new THREE.Vector3(-0.01, 0.018, 0.015)
+      },
+      // Top-Left Turquoise Jade Asteroid
+      {
+        color: 0x4dd0e1,
+        emissive: 0x00838f,
+        x: -28, y: 7, z: -95,
+        vz: 0.092,
+        rot: new THREE.Vector3(0.012, -0.016, 0.02)
+      },
+      // Lower-Left Rose Quartz Asteroid
+      {
+        color: 0xf48fb1,
+        emissive: 0xad1457,
+        x: -27, y: -5, z: -130,
+        vz: 0.078,
+        rot: new THREE.Vector3(0.018, 0.014, -0.01)
+      },
+      // Distant Top Center-Right Amber Asteroid
+      {
+        color: 0xffd54f,
+        emissive: 0xff8f00,
+        x: 26, y: 16, z: -145,
+        vz: 0.088,
+        rot: new THREE.Vector3(-0.014, 0.022, 0.012)
+      }
+    ];
+
+    asteroidConfigs.forEach((cfg, idx) => {
+      const geo = asteroidGeometries[idx % asteroidGeometries.length];
+      const mat = new THREE.MeshStandardMaterial({
+        color: cfg.color,
+        roughness: 0.45,
+        metalness: 0.15,
+        emissive: cfg.emissive,
+        emissiveIntensity: 0.35,
+        flatShading: true
+      });
+
+      const asteroid = new THREE.Mesh(geo, mat);
+      asteroid.position.set(cfg.x, cfg.y, cfg.z);
+      asteroid.userData = {
+        mass: 15,
+        baseX: cfg.x,
+        baseY: cfg.y,
+        vz: cfg.vz,
+        orbitFreq: 0.002 + (idx * 0.0004),
+        orbitRadiusX: 1.6,
+        orbitRadiusY: 1.2,
+        rotVelocity: cfg.rot,
+        resetZ: -160,
+        limitZ: 32
+      };
+
+      this.scene.add(asteroid);
+      this.celestialBodies.push(asteroid);
     });
-    const fuselage = new THREE.Mesh(bodyGeo, bodyMat);
-    fuselage.rotation.z = Math.PI / 2;
-    this.rocketGroup.add(fuselage);
-
-    // 2. Nosecone (Magenta Pink)
-    const noseGeo = new THREE.ConeGeometry(0.6, 1.6, 24);
-    const noseMat = new THREE.MeshStandardMaterial({
-      color: 0xe91e63,
-      roughness: 0.3,
-      emissive: 0x880e4f,
-      emissiveIntensity: 0.3
-    });
-    const nose = new THREE.Mesh(noseGeo, noseMat);
-    nose.rotation.z = -Math.PI / 2;
-    nose.position.x = 2.7;
-    this.rocketGroup.add(nose);
-
-    // 3. Porthole (Cyan Glass Window)
-    const windowGeo = new THREE.SphereGeometry(0.45, 20, 20);
-    const windowMat = new THREE.MeshStandardMaterial({
-      color: 0x00e5ff,
-      roughness: 0.1,
-      metalness: 0.5,
-      emissive: 0x00b0ff,
-      emissiveIntensity: 0.4
-    });
-    const windowMesh = new THREE.Mesh(windowGeo, windowMat);
-    windowMesh.position.set(0.6, 0.7, 0);
-    this.rocketGroup.add(windowMesh);
-
-    // 4. Rocket Fins
-    const finGeo = new THREE.BoxGeometry(0.8, 1.4, 0.15);
-    const finMat = new THREE.MeshStandardMaterial({
-      color: 0xff5722,
-      roughness: 0.4
-    });
-    const finTop = new THREE.Mesh(finGeo, finMat);
-    finTop.position.set(-1.4, 1.0, 0);
-    finTop.rotation.z = Math.PI / 4;
-    this.rocketGroup.add(finTop);
-
-    const finBottom = new THREE.Mesh(finGeo, finMat);
-    finBottom.position.set(-1.4, -1.0, 0);
-    finBottom.rotation.z = -Math.PI / 4;
-    this.rocketGroup.add(finBottom);
-
-    // 5. Thruster Flame (Pulsing Animated Cone)
-    const flameGeo = new THREE.ConeGeometry(0.8, 2.2, 16);
-    const flameMat = new THREE.MeshBasicMaterial({
-      color: 0xff1744,
-      transparent: true,
-      opacity: 0.85,
-      blending: THREE.AdditiveBlending
-    });
-    const flame = new THREE.Mesh(flameGeo, flameMat);
-    flame.rotation.z = Math.PI / 2;
-    flame.position.x = -3.0;
-    this.rocketGroup.add(flame);
-    this.rocketGroup.userData = {
-      flameMesh: flame,
-      baseX: 24,
-      baseY: 10,
-      vz: 0.1,
-      orbitFreq: 0.0018,
-      resetZ: -140,
-      limitZ: 32
-    };
-
-    this.rocketGroup.position.set(24, 10, -110);
-    this.rocketGroup.rotation.set(0.2, -0.3, 0.15);
-    this.scene.add(this.rocketGroup);
   }
 
   handleResize() {
@@ -569,11 +597,11 @@ export class SpaceScene {
       this.stars.geometry.attributes.position.needsUpdate = true;
     }
 
-    // 2. 3D Celestial Bodies Kinematic Physics & Orbital Drift
+    // 2. 3D Celestial Bodies & Asteroids Kinematic Physics & Orbital Drift
     for (const body of this.celestialBodies) {
       const u = body.userData;
 
-      // Axial Rotational Spin
+      // Axial Rotational Spin & Tumbling
       body.rotation.x += u.rotVelocity.x;
       body.rotation.y += u.rotVelocity.y;
       body.rotation.z += u.rotVelocity.z;
@@ -595,24 +623,6 @@ export class SpaceScene {
       // Recycle to distance when passing camera
       if (body.position.z > u.limitZ) {
         body.position.z = u.resetZ;
-      }
-    }
-
-    // 3. 3D Rocket Kinematics & Thruster Pulse
-    if (this.rocketGroup) {
-      const ru = this.rocketGroup.userData;
-      this.rocketGroup.position.z += ru.vz;
-      this.rocketGroup.position.x = ru.baseX + Math.sin(Date.now() * ru.orbitFreq) * 2.5;
-      this.rocketGroup.position.y = ru.baseY + Math.cos(Date.now() * ru.orbitFreq) * 1.8;
-
-      // Thruster Flame Scale Pulse
-      if (ru.flameMesh) {
-        const pulse = Math.sin(Date.now() * 0.02) * 0.3 + 1.0;
-        ru.flameMesh.scale.set(pulse, pulse, pulse);
-      }
-
-      if (this.rocketGroup.position.z > ru.limitZ) {
-        this.rocketGroup.position.z = ru.resetZ;
       }
     }
 
