@@ -1,39 +1,39 @@
 /* ==========================================================================
-   RHYTHM KEYS // MATTE FINISH DESIGN SYSTEM
-   Clean, Modern, Non-Glossy Aesthetic Matching Cockpit Layout
+   RHYTHM KEYS // WHIMSICAL COSMIC 2D ANIMATED SPACE & COCKPIT UI
    ========================================================================== */
 
-/* --- 1. DESIGN TOKENS --- */
+/* --- 1. CSS VARIABLES & TOKENS --- */
 :root {
-  /* Colors */
-  --bg-deep-space: #060c1c;
-  --accent-cyan: #5ce1e6;
-  --accent-pink: #ff70a6;
-  --accent-purple: #c499f3;
-  --accent-yellow: #ffd670;
-  --accent-mint: #a0e8af;
-  --accent-red: #ff3366;
+  /* Vibrant Whimsical Accents */
+  --neon-cyan: #00e5ff;
+  --neon-cyan-glow: rgba(0, 229, 255, 0.5);
+  --neon-pink: #ff4081;
+  --neon-pink-glow: rgba(255, 64, 129, 0.5);
+  --neon-purple: #c499f3;
+  --neon-yellow: #ffd54f;
+  --neon-mint: #a7ffeb;
+  --neon-red: #ff1744;
 
-  /* Matte Card Tokens (No gloss, clean subtle depth) */
-  --matte-card-bg: rgba(10, 18, 38, 0.78);
-  --matte-card-border: rgba(92, 225, 230, 0.45);
-  --matte-card-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
-  --matte-blur: blur(12px);
+  /* Glassmorphism Dark Mode Tokens */
+  --glass-panel-bg: rgba(10, 15, 30, 0.72);
+  --glass-panel-border: rgba(0, 229, 255, 0.45);
+  --glass-panel-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(10px);
 
   /* Typography */
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'Fira Code', monospace;
+  --font-mono: 'Fira Code', Consolas, monospace;
   --font-brand: 'Space Grotesk', var(--font-ui);
 
   /* Text Colors */
   --text-white: #f8fafc;
   --text-lavender: #d0bfff;
   --text-muted: #94a3b8;
-  --text-cyan: #5ce1e6;
+  --text-cyan: #00e5ff;
 
   /* Transitions */
   --trans-fast: 0.08s ease-out;
-  --trans-normal: 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --trans-normal: 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* --- 2. GLOBAL RESET --- */
@@ -48,109 +48,377 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: transparent !important;
+  background-color: #060312;
   font-family: var(--font-ui);
   color: var(--text-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- 3. THREE.JS 3D CANVAS BACKGROUND --- */
-.space-background-canvas {
+/* ==========================================================================
+   LAYER 1: THE DEEP SPACE BACKGROUND & WHIMSICAL CELESTIAL BODIES
+   ========================================================================== */
+.space-viewport {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   z-index: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #160a2c 0%, #0c051a 50%, #04020a 100%);
   pointer-events: none;
-  display: block;
 }
 
-/* --- 4. SLEEK MATTE COCKPIT FRAME --- */
-.cockpit-canopy-overlay {
+/* Swirling Cosmic Nebulae */
+.cosmic-nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.nebula-1 {
+  width: 70vw;
+  height: 60vh;
+  top: 10%;
+  left: -15%;
+  background: radial-gradient(ellipse at center, rgba(142, 36, 170, 0.35) 0%, rgba(26, 35, 126, 0.2) 60%, transparent 80%);
+  animation: nebulaDrift 24s ease-in-out infinite alternate;
+}
+
+.nebula-2 {
+  width: 65vw;
+  height: 55vh;
+  bottom: 5%;
+  right: -10%;
+  background: radial-gradient(ellipse at center, rgba(0, 184, 212, 0.25) 0%, rgba(106, 27, 154, 0.2) 60%, transparent 80%);
+  animation: nebulaDrift 30s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes nebulaDrift {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.12) translate(30px, -20px); }
+}
+
+/* Outward Forward-Momentum Starfield Particles */
+.starfield-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: transparent;
+  transform: translate(-50%, -50%);
+}
+
+.burst-1 {
+  box-shadow:
+    -60px -80px #fff, 80px -100px #80d8ff, -120px 40px #ff80ab, 140px 90px #ffd54f,
+    -180px -160px #fff, 200px -140px #80d8ff, -220px 180px #fff, 240px 160px #ff80ab,
+    -320px -60px #ffd54f, 340px -80px #fff, -280px -260px #80d8ff, 310px 280px #fff,
+    -420px 160px #fff, 440px -220px #ff80ab, -380px 320px #80d8ff, 410px 340px #ffd54f;
+  animation: warpStarOut 5s linear infinite;
+}
+
+.burst-2 {
+  box-shadow:
+    -40px 60px #fff, 70px 50px #ffd54f, -90px -110px #80d8ff, 110px -70px #fff,
+    -160px 140px #ff80ab, 180px -180px #fff, -240px -120px #80d8ff, 260px 110px #ffd54f,
+    -360px 220px #fff, 380px -140px #ff80ab, -460px -200px #80d8ff, 480px 210px #fff;
+  animation: warpStarOut 5s linear infinite;
+  animation-delay: 1.6s;
+}
+
+.burst-3 {
+  box-shadow:
+    -100px -40px #ffd54f, 120px 60px #fff, -150px -180px #80d8ff, 170px 150px #ff80ab,
+    -290px 80px #fff, 300px -240px #ffd54f, -390px -160px #80d8ff, 420px 190px #fff;
+  animation: warpStarOut 5s linear infinite;
+  animation-delay: 3.3s;
+}
+
+@keyframes warpStarOut {
+  0% {
+    transform: translate(-50%, -50%) scale(0.15);
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   WHIMSICAL 2D CELESTIAL BODIES ANIMATIONS (OUTWARD FORWARD TRAVEL)
+   ========================================================================== */
+.celestial-body {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.planet-svg {
+  display: block;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
+}
+
+/* 1. Yellow Saturn with Pink Ring (Drifts Upper-Left Margin) */
+.saturn-yellow {
+  width: 170px;
+  height: 170px;
+  top: 50%;
+  left: 50%;
+  animation: driftSaturn 22s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+}
+
+@keyframes driftSaturn {
+  0% {
+    transform: translate(-50%, -50%) scale(0.12);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-38vw, -30vh) scale(1.25) rotate(-12deg);
+    opacity: 0;
+  }
+}
+
+/* 2. Retro Rocket Ship (Drifts Upper-Right Margin) */
+.retro-rocket {
+  width: 140px;
+  height: 140px;
+  top: 50%;
+  left: 50%;
+  animation: driftRocket 19s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  animation-delay: 3.5s;
+}
+
+@keyframes driftRocket {
+  0% {
+    transform: translate(-50%, -50%) scale(0.15) rotate(15deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(36vw, -32vh) scale(1.3) rotate(-10deg);
+    opacity: 0;
+  }
+}
+
+/* 3. Blue Swirl Oceanic Exoplanet (Drifts Lower-Right Margin) */
+.blue-exoplanet {
+  width: 135px;
+  height: 135px;
+  top: 50%;
+  left: 50%;
+  animation: driftBluePlanet 21s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  animation-delay: 7s;
+}
+
+@keyframes driftBluePlanet {
+  0% {
+    transform: translate(-50%, -50%) scale(0.12);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(37vw, 24vh) scale(1.35) rotate(35deg);
+    opacity: 0;
+  }
+}
+
+/* 4. Pink Stippled Crater Planet (Drifts Lower-Left Margin) */
+.pink-stippled-planet {
+  width: 130px;
+  height: 130px;
+  top: 50%;
+  left: 50%;
+  animation: driftPinkPlanet 24s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  animation-delay: 11s;
+}
+
+@keyframes driftPinkPlanet {
+  0% {
+    transform: translate(-50%, -50%) scale(0.12);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-36vw, 26vh) scale(1.3) rotate(-25deg);
+    opacity: 0;
+  }
+}
+
+/* 5. Turquoise Glowing Exoplanet with Moon (Drifts Mid-Left Margin) */
+.turquoise-planet {
+  width: 120px;
+  height: 120px;
+  top: 50%;
+  left: 50%;
+  animation: driftTurquoise 20s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  animation-delay: 14.5s;
+}
+
+@keyframes driftTurquoise {
+  0% {
+    transform: translate(-50%, -50%) scale(0.12);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-39vw, -3vh) scale(1.25) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+/* 6. Golden Shooting Stars with Streamers (Drifts Center-Right) */
+.golden-comet {
+  width: 160px;
+  height: 160px;
+  top: 50%;
+  left: 50%;
+  animation: driftComet 16s ease-out infinite;
+  animation-delay: 18s;
+}
+
+@keyframes driftComet {
+  0% {
+    transform: translate(-50%, -50%) scale(0.15) rotate(-20deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(32vw, -8vh) scale(1.4) rotate(-35deg);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   LAYER 2: SPACESHIPI COCKPIT FRAME
+   ========================================================================== */
+.cockpit-viewport-frame {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   z-index: 2;
   pointer-events: none;
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.85);
 }
 
-/* Top Bezel Arch */
-.canopy-top-arch {
+/* Top Visor Canopy with LEDs */
+.cockpit-canopy-top {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 44%;
-  max-width: 540px;
-  height: 22px;
-  background: #0f172a;
-  border-bottom: 2px solid rgba(92, 225, 230, 0.25);
+  width: 42%;
+  max-width: 520px;
+  height: 20px;
+  background: #0d1527;
+  border-bottom: 2px solid rgba(0, 229, 255, 0.35);
   border-radius: 0 0 16px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
 }
 
-.arch-capsule {
-  width: 24px;
+.canopy-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hud-pill {
+  width: 22px;
   height: 4px;
   border-radius: 2px;
 }
-.capsule-cyan { background: var(--accent-cyan); }
-.capsule-pink { background: var(--accent-pink); }
+.pill-cyan { background: var(--neon-cyan); box-shadow: 0 0 8px var(--neon-cyan); }
+.pill-pink { background: var(--neon-pink); box-shadow: 0 0 8px var(--neon-pink); }
 
-.arch-led {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-}
-.arch-led-pink { background: var(--accent-pink); }
-.arch-led-cyan { background: var(--accent-cyan); }
-
-/* Left & Right Frame Struts */
-.canopy-side-strut {
+/* Left & Right Cockpit Struts */
+.cockpit-strut {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 32px;
-  background: linear-gradient(90deg, rgba(8, 14, 30, 0.8) 0%, rgba(8, 14, 30, 0.1) 100%);
+  width: 28px;
+  background: linear-gradient(90deg, rgba(8, 14, 30, 0.85) 0%, rgba(8, 14, 30, 0.1) 100%);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 60px;
-  padding: 0 8px;
 }
 
 .strut-left {
   left: 0;
-  border-right: 1px solid rgba(92, 225, 230, 0.15);
+  border-right: 1px solid rgba(0, 229, 255, 0.2);
 }
 
 .strut-right {
   right: 0;
   transform: scaleX(-1);
-  border-right: 1px solid rgba(92, 225, 230, 0.15);
+  border-right: 1px solid rgba(0, 229, 255, 0.2);
 }
 
-.strut-light-ribbon {
+.neon-line-cyan {
   width: 3px;
-  height: 70px;
+  height: 80px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
   border-radius: 2px;
 }
-.ribbon-cyan { background: var(--accent-cyan); }
-.ribbon-pink { background: var(--accent-pink); }
 
-.canopy-glass-reflection {
+/* Bottom Console */
+.cockpit-dashboard-bottom {
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: linear-gradient(0deg, #070d1d 0%, transparent 100%);
+  border-top: 1px solid rgba(0, 229, 255, 0.2);
 }
 
-/* --- 5. MAIN UI CONTAINER --- */
-.cockpit-ui-container {
+/* ==========================================================================
+   LAYER 3: THE INTERACTIVE UI (FOREGROUND)
+   ========================================================================== */
+.app-ui-container {
   position: relative;
   z-index: 10;
   display: flex;
@@ -162,22 +430,20 @@ html, body {
   gap: 8px;
 }
 
-/* Clean Matte Card Utility */
-.glass-card {
-  background: var(--matte-card-bg);
-  backdrop-filter: var(--matte-blur);
-  -webkit-backdrop-filter: var(--matte-blur);
-  border: 2px solid var(--matte-card-border);
-  box-shadow: var(--matte-card-shadow);
+/* Dark Glassmorphism Panel Base Utility */
+.glass-panel {
+  background: var(--glass-panel-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 2px solid var(--glass-panel-border);
+  box-shadow: var(--glass-panel-shadow);
   border-radius: 20px;
   position: relative;
-  transition: border-color var(--trans-normal);
+  transition: border-color var(--trans-normal), box-shadow var(--trans-normal);
 }
 
-/* ==========================================================================
-   TOP HEADER
-   ========================================================================== */
-.cockpit-header {
+/* --- HEADER --- */
+.ui-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -191,9 +457,9 @@ html, body {
   align-items: center;
 }
 
-.brand-logo-text {
+.brand-title {
   font-family: var(--font-brand);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: var(--text-lavender);
@@ -205,8 +471,11 @@ html, body {
   justify-content: center;
 }
 
-.track-info-block {
+.track-header-block {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .track-title-text {
@@ -214,7 +483,6 @@ html, body {
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.3px;
-  line-height: 1.2;
 }
 
 .track-artist-text {
@@ -254,7 +522,8 @@ html, body {
 }
 
 .nav-btn.active {
-  color: var(--accent-pink);
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink-glow);
 }
 
 .nav-btn.active::after {
@@ -264,13 +533,14 @@ html, body {
   left: 20%;
   right: 20%;
   height: 2px;
-  background: var(--accent-pink);
+  background: var(--neon-pink);
+  box-shadow: 0 0 8px var(--neon-pink);
   border-radius: 2px;
 }
 
-.nav-separator {
+.nav-divider {
   width: 1px;
-  height: 16px;
+  height: 18px;
   background: rgba(255, 255, 255, 0.15);
 }
 
@@ -298,10 +568,10 @@ html, body {
   font-weight: 700;
 }
 
-.cyan-accent { color: var(--accent-cyan); }
-.pink-accent { color: var(--accent-pink); }
+.cyan-val { color: var(--neon-cyan); }
+.pink-val { color: var(--neon-pink); }
 
-.settings-trigger-btn {
+.settings-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
@@ -312,14 +582,12 @@ html, body {
   transition: color var(--trans-fast), transform var(--trans-fast);
 }
 
-.settings-trigger-btn:hover {
-  color: var(--accent-cyan);
+.settings-btn:hover {
+  color: var(--neon-cyan);
   transform: rotate(45deg);
 }
 
-/* ==========================================================================
-   CENTER STAGE
-   ========================================================================== */
+/* --- CENTER STAGE --- */
 .center-stage {
   flex: 1;
   display: flex;
@@ -332,7 +600,7 @@ html, body {
   margin: 0 auto;
 }
 
-/* Matte Lyrics Panel */
+/* Lyrics Panel */
 .lyrics-panel {
   width: 100%;
   padding: 24px 36px;
@@ -386,25 +654,33 @@ html, body {
 }
 
 .char-correct {
-  color: var(--accent-cyan);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan-glow);
 }
 
 .char-cursor {
   color: #ffffff;
-  background: rgba(92, 225, 230, 0.25);
-  border-bottom: 2px solid var(--accent-cyan);
+  background: rgba(0, 229, 255, 0.25);
+  border-bottom: 2px solid var(--neon-cyan);
   border-radius: 3px;
 }
 
 .char-error {
   color: #ffffff;
-  background: var(--accent-red);
+  background: var(--neon-red);
   border-radius: 5px;
   padding: 0 4px;
+  animation: errorShake 0.2s ease-in-out;
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
 }
 
 .char-pending {
-  color: #94a3b8;
+  color: #f1f5f9;
 }
 
 .lyric-next {
@@ -413,9 +689,7 @@ html, body {
   opacity: 0.85;
 }
 
-/* ==========================================================================
-   MATTE 3D PASTEL VIRTUAL KEYBOARD
-   ========================================================================== */
+/* --- KEYBOARD CONTAINER --- */
 .keyboard-panel {
   width: 100%;
   max-width: 660px;
@@ -434,7 +708,7 @@ html, body {
   width: 100%;
 }
 
-/* Matte 3D Squircle Keys */
+/* Soft 3D Pastel Keys */
 .key-3d {
   appearance: none;
   border: none;
@@ -460,7 +734,7 @@ html, body {
   transform: translateY(3px) !important;
 }
 
-/* Matte Flat/Soft Pastel Color Palettes */
+/* Pastel Colors */
 .key-cyan {
   background: #70d6ff;
   color: #062b40;
@@ -523,10 +797,8 @@ html, body {
   box-shadow: 0 1px 0 #3a97c4;
 }
 
-/* ==========================================================================
-   BOTTOM FOOTER
-   ========================================================================== */
-.cockpit-footer {
+/* --- FOOTER --- */
+.ui-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -535,7 +807,7 @@ html, body {
   flex-shrink: 0;
 }
 
-.footer-action-btn {
+.footer-btn {
   background: transparent;
   border: none;
   color: var(--text-lavender);
@@ -550,11 +822,11 @@ html, body {
   transition: color var(--trans-fast);
 }
 
-.footer-action-btn:hover {
-  color: var(--accent-cyan);
+.footer-btn:hover {
+  color: var(--neon-cyan);
 }
 
-.play-circle-btn {
+.play-btn-circle {
   background: transparent;
   border: none;
   display: flex;
@@ -563,21 +835,23 @@ html, body {
   gap: 4px;
   cursor: pointer;
   outline: none;
+  transition: transform var(--trans-fast);
 }
 
-.play-circle-btn:hover {
-  transform: translateY(-1px);
+.play-btn-circle:hover {
+  transform: scale(1.06);
 }
 
-.play-circle-icon {
+.play-icon-inner {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--accent-pink);
+  background: var(--neon-pink);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
+  box-shadow: 0 0 14px var(--neon-pink-glow);
 }
 
 .pause-bar {
@@ -587,7 +861,7 @@ html, body {
   border-radius: 2px;
 }
 
-.play-circle-label {
+.play-btn-label {
   font-family: var(--font-ui);
   font-size: 0.72rem;
   font-weight: 700;
@@ -595,9 +869,7 @@ html, body {
   color: var(--text-lavender);
 }
 
-/* ==========================================================================
-   MODALS (MATTE FINISH)
-   ========================================================================== */
+/* --- MODALS --- */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -620,8 +892,8 @@ html, body {
 .modal-card {
   width: 90%;
   max-width: 500px;
-  background: #0f172a;
-  border: 2px solid var(--accent-cyan);
+  background: rgba(12, 20, 44, 0.94);
+  border: 2px solid var(--neon-cyan);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
   padding: 22px;
   border-radius: 20px;
@@ -641,7 +913,7 @@ html, body {
 .modal-title {
   font-family: var(--font-brand);
   font-size: 1.05rem;
-  color: var(--accent-cyan);
+  color: var(--neon-cyan);
 }
 
 .modal-close-btn {
@@ -660,7 +932,7 @@ html, body {
   gap: 10px;
 }
 
-.modal-field-label {
+.modal-label {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -678,7 +950,12 @@ html, body {
 }
 
 .modal-select:focus, .modal-input:focus, .modal-textarea:focus {
-  border-color: var(--accent-cyan);
+  border-color: var(--neon-cyan);
+}
+
+.modal-slider {
+  width: 100%;
+  accent-color: var(--neon-cyan);
 }
 
 .modal-footer {
@@ -687,7 +964,7 @@ html, body {
   gap: 10px;
 }
 
-.modal-btn {
+.btn {
   padding: 7px 16px;
   border-radius: 8px;
   font-family: var(--font-ui);
@@ -703,7 +980,7 @@ html, body {
 }
 
 .btn-primary {
-  background: var(--accent-pink);
+  background: var(--neon-pink);
   border: none;
   color: #ffffff;
 }
@@ -719,7 +996,7 @@ html, body {
   font-family: var(--font-brand);
   font-size: 2rem;
   font-weight: 900;
-  color: var(--accent-yellow);
+  color: var(--neon-yellow);
 }
 
 .results-title {
@@ -758,7 +1035,7 @@ html, body {
   color: var(--text-muted);
 }
 
-.res-value {
+.res-val {
   font-family: var(--font-mono);
   font-size: 1.25rem;
   font-weight: 700;
@@ -773,8 +1050,8 @@ html, body {
 }
 
 @media (max-width: 600px) {
-  .cockpit-ui-container { padding: 8px 12px; }
-  .canopy-side-strut, .canopy-top-arch { display: none; }
+  .app-ui-container { padding: 8px 12px; }
+  .cockpit-strut, .cockpit-canopy-top { display: none; }
   .key-3d { height: 30px; width: 26px; font-size: 0.68rem; border-radius: 8px; }
   .key-mod { width: 30px; }
   .lyrics-panel { padding: 14px; }

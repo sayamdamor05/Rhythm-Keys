@@ -1,23 +1,15 @@
 /**
- * Rhythm Keys // Cockpit Rhythm-Typing Engine
- * Full Integration: Three.js 3D Space Background, Web Audio Engine, Typing Controller, LRC Sync
+ * Rhythm Keys // Interactive Audio & Typing Engine
+ * Handles AudioController, TypingController, LRC Synchronizer, and On-Screen Keyboard Feedback
  */
 
-import { SpaceScene } from './space/SpaceScene.js';
 import { AudioController } from './audio/AudioController.js';
 import { TypingController } from './typing/TypingController.js';
 import { LrcParser } from './lyrics/LrcParser.js';
 import { SONG_DATABASE } from './lyrics/songDatabase.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 1. INITIALIZE THREE.JS 3D SPACE BACKGROUND ---
-  const spaceCanvas = document.getElementById('spaceCanvas');
-  let spaceScene = null;
-  if (spaceCanvas) {
-    spaceScene = new SpaceScene(spaceCanvas);
-  }
-
-  // --- 2. DOM ELEMENTS ---
+  // --- 1. DOM ELEMENTS ---
   const currentTrackTitle = document.getElementById('currentTrackTitle');
   const currentTrackArtist = document.getElementById('currentTrackArtist');
   const btnPlayPause = document.getElementById('btnPlayPause');
@@ -31,8 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Stats HUD
   const hudWpm = document.getElementById('hudWpm');
   const hudAcc = document.getElementById('hudAcc');
-  const audioStatusBadge = document.getElementById('audioStatusBadge');
-  const audioStatusText = document.getElementById('audioStatusText');
 
   // Lyrics Elements
   const lyricPrevText = document.getElementById('lyricPrevText');
@@ -53,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const customLrcText = document.getElementById('customLrcText');
 
   // Navigation Items
-  const navItems = document.querySelectorAll('.nav-item');
+  const navItems = document.querySelectorAll('.nav-btn');
 
   // Results Modal
   const resultsModal = document.getElementById('resultsModal');
@@ -65,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resLines = document.getElementById('resLines');
   const btnResultsRestart = document.getElementById('btnResultsRestart');
 
-  // Keyboard elements
+  // On-Screen Keyboard Elements Map
   const keys = document.querySelectorAll('.key-3d');
   const keyElementMap = new Map();
   keys.forEach((keyEl) => {
@@ -75,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 3. ENGINE INSTANCES ---
+  // --- 2. ENGINE INSTANCES ---
   const audio = new AudioController();
   let currentSong = SONG_DATABASE['midnight-city'];
   let parsedLyrics = LrcParser.parse(currentSong.lrc);
@@ -85,14 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const typing = new TypingController({
     onTypo: () => {
       audio.applyPenalty();
-      audioStatusBadge.classList.add('degraded');
-      audioStatusText.textContent = 'AUDIO ENGINE: MUFFLED (LOW-PASS 380Hz) - FIX TYPO!';
       renderActiveChars();
     },
     onCorrect: () => {
       audio.clearPenalty();
-      audioStatusBadge.classList.remove('degraded');
-      audioStatusText.textContent = 'AUDIO ENGINE: SYNCHRONIZED';
       renderActiveChars();
     },
     onLineComplete: () => {
@@ -108,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 4. TRACK MANAGEMENT & LYRIC SYNC ---
+  // --- 3. TRACK & LYRICS MANAGEMENT ---
   function loadTrack(trackKey, customData = null) {
     audio.pause();
     isGameFinished = false;
@@ -220,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resultsGradeBadge.textContent = grade;
     resultsTrackInfo.textContent = `${currentSong.title} // ${currentSong.artist}`;
-    resWpm.textContent = stats.wpm;
+    resWpm.textContent = `${stats.wpm} WPM`;
     resAcc.textContent = `${stats.accuracy}%`;
     resCombo.textContent = `${stats.combo} (${typing.maxStreak})`;
     resLines.textContent = `${typing.completedLinesCount} / ${parsedLyrics.length}`;
@@ -229,13 +215,12 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsModal.setAttribute('aria-hidden', 'false');
   }
 
-  // --- 5. REAL-TIME SYNC LOOP ---
+  // --- 4. REAL-TIME SYNC LOOP ---
   function syncLoop() {
     if (audio.isPlaying && !isGameFinished) {
       const curTime = audio.getCurrentTime();
       const duration = currentSong.duration || 120;
 
-      // Check lyrics sync
       const targetIndex = LrcParser.getActiveIndex(parsedLyrics, curTime);
       if (targetIndex !== -1 && targetIndex !== activeLyricIndex) {
         setLyricLine(targetIndex);
@@ -249,9 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   requestAnimationFrame(syncLoop);
 
-  // --- 6. EVENT LISTENERS ---
+  // --- 5. EVENT LISTENERS ---
 
-  // Play / Pause Circular Button
+  // Play / Pause Button
   btnPlayPause.addEventListener('click', () => {
     if (audio.isPlaying) {
       audio.pause();
@@ -311,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   btnSettingsApply.addEventListener('click', () => {
     const val = trackSelector.value;
     if (val === 'custom-lrc') {
-      const title = customTitleInput.value.trim() || 'Custom Cosmic Transmission';
+      const title = customTitleInput.value.trim() || 'Custom Song';
       const audioUrl = customAudioUrl.value.trim() || null;
       const lrc = customLrcText.value.trim() || currentSong.lrc;
       loadTrack('custom-track', {
@@ -336,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.setVolume(vol);
   });
 
-  // Keyboard Handler (Physical Keydown)
+  // Visual Keypress Feedback & Typing Input
   window.addEventListener('keydown', (e) => {
     if (settingsModal.classList.contains('active')) {
       return;
@@ -345,11 +330,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const key = e.key;
     const lowerKey = key.toLowerCase();
 
-    // Visual press animation on virtual 3D pastel keyboard
+    // Visual active press on on-screen keyboard
     const virtualKey = keyElementMap.get(lowerKey) || keyElementMap.get(key);
     if (virtualKey) {
       virtualKey.classList.add('key-pressed');
-      setTimeout(() => virtualKey.classList.remove('key-pressed'), 110);
+      setTimeout(() => virtualKey.classList.remove('key-pressed'), 100);
     }
 
     // Auto-start music on first keypress if paused
@@ -388,6 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePlayButtonState(true);
   });
 
-  // Initial Load: Midnight City
+  // Initial Load
   loadTrack('midnight-city');
 });
