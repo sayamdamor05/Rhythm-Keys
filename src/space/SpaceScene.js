@@ -1,7 +1,7 @@
 /**
- * SpaceScene.js // Three.js 3D Physics-Driven Celestial Space Environment for Rhythm Keys
- * Whimsical 3D planets, stylized tumbling asteroids, and forward-motion starfield.
- * Clean, non-distracting celestial layout matching the reference artwork.
+ * SpaceScene.js // Three.js 3D Celestial Space Environment for Rhythm Keys
+ * Smooth forward-translating 3D planets & asteroids matching the starfield particle kinematics.
+ * Eliminates artificial wobble/jiggle for steady, majestic cosmic motion.
  */
 
 import * as THREE from 'three';
@@ -35,7 +35,7 @@ export class SpaceScene {
     );
     this.camera.position.set(0, 0, 26);
 
-    // 2. WebGL Renderer with High Dynamic Quality
+    // 2. WebGL Renderer
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
@@ -298,10 +298,10 @@ export class SpaceScene {
   }
 
   /**
-   * Creates 3D celestial bodies with physical mass, velocity, and orbital mechanics
+   * Creates 3D celestial bodies with smooth forward travel kinematics matching particles
    */
   create3DCelestialBodies() {
-    // --- 1. Iconic 3D Yellow Saturn with Pink Ring (Upper-Left Drift) ---
+    // --- 1. Iconic 3D Yellow Saturn with Pink Ring (Upper-Left Periphery) ---
     const saturnGeo = new THREE.SphereGeometry(3.6, 48, 48);
     const saturnMat = new THREE.MeshStandardMaterial({
       map: this.createWhimsicalTexture('yellow-saturn'),
@@ -342,23 +342,19 @@ export class SpaceScene {
     ringMesh.rotation.y = -Math.PI / 8;
     saturnMesh.add(ringMesh);
 
-    saturnMesh.position.set(-24, 11, -120);
+    saturnMesh.position.set(-25, 11, -120);
     saturnMesh.userData = {
-      mass: 80,
-      baseX: -24,
+      baseX: -25,
       baseY: 11,
-      vz: 0.08,
-      orbitFreq: 0.0012,
-      orbitRadiusX: 2.2,
-      orbitRadiusY: 1.5,
-      rotVelocity: new THREE.Vector3(0.002, 0.007, 0.001),
-      resetZ: -160,
+      vz: 0.12, // Smooth steady forward velocity matching particles
+      rotVelocity: new THREE.Vector3(0.001, 0.004, 0.0005), // Gentle axial spin
+      resetZ: -220,
       limitZ: 32
     };
     this.scene.add(saturnMesh);
     this.celestialBodies.push(saturnMesh);
 
-    // --- 2. 3D Pink Cratered Planet (Lower-Left Drift) ---
+    // --- 2. 3D Pink Cratered Planet (Lower-Left Periphery) ---
     const pinkGeo = new THREE.SphereGeometry(3.4, 48, 48);
     const pinkMat = new THREE.MeshStandardMaterial({
       map: this.createWhimsicalTexture('pink-craters'),
@@ -368,23 +364,19 @@ export class SpaceScene {
       emissiveIntensity: 0.2
     });
     const pinkPlanet = new THREE.Mesh(pinkGeo, pinkMat);
-    pinkPlanet.position.set(-25, -10, -85);
+    pinkPlanet.position.set(-26, -10, -170);
     pinkPlanet.userData = {
-      mass: 65,
-      baseX: -25,
+      baseX: -26,
       baseY: -10,
-      vz: 0.075,
-      orbitFreq: 0.0014,
-      orbitRadiusX: 1.8,
-      orbitRadiusY: 1.2,
-      rotVelocity: new THREE.Vector3(-0.003, 0.005, 0.002),
-      resetZ: -150,
+      vz: 0.11,
+      rotVelocity: new THREE.Vector3(0.0008, 0.0035, -0.001),
+      resetZ: -230,
       limitZ: 32
     };
     this.scene.add(pinkPlanet);
     this.celestialBodies.push(pinkPlanet);
 
-    // --- 3. 3D Blue Swirl Oceanic Exoplanet (Lower-Right Drift) ---
+    // --- 3. 3D Blue Swirl Oceanic Exoplanet (Lower-Right Periphery) ---
     const blueGeo = new THREE.SphereGeometry(3.2, 48, 48);
     const blueMat = new THREE.MeshStandardMaterial({
       map: this.createWhimsicalTexture('blue-swirl'),
@@ -394,23 +386,19 @@ export class SpaceScene {
       emissiveIntensity: 0.25
     });
     const bluePlanet = new THREE.Mesh(blueGeo, blueMat);
-    bluePlanet.position.set(25, -9, -95);
+    bluePlanet.position.set(26, -9, -90);
     bluePlanet.userData = {
-      mass: 70,
-      baseX: 25,
+      baseX: 26,
       baseY: -9,
-      vz: 0.085,
-      orbitFreq: 0.0011,
-      orbitRadiusX: 2.0,
-      orbitRadiusY: 1.6,
-      rotVelocity: new THREE.Vector3(0.004, 0.006, -0.002),
-      resetZ: -155,
+      vz: 0.13,
+      rotVelocity: new THREE.Vector3(0.001, 0.0045, 0.0008),
+      resetZ: -210,
       limitZ: 32
     };
     this.scene.add(bluePlanet);
     this.celestialBodies.push(bluePlanet);
 
-    // --- 4. 3D Turquoise Planet with Orbiting Coral Moon (Mid-Left Drift) ---
+    // --- 4. 3D Turquoise Planet with Orbiting Coral Moon (Mid-Left Periphery) ---
     const turqGeo = new THREE.SphereGeometry(2.6, 48, 48);
     const turqMat = new THREE.MeshStandardMaterial({
       map: this.createWhimsicalTexture('turquoise-mint'),
@@ -433,25 +421,21 @@ export class SpaceScene {
     coralMoon.position.set(4.4, 0.8, 0);
     turqPlanet.add(coralMoon);
 
-    turqPlanet.position.set(-26, 0.5, -135);
+    turqPlanet.position.set(-27, 0.5, -145);
     turqPlanet.userData = {
-      mass: 50,
-      baseX: -26,
+      baseX: -27,
       baseY: 0.5,
-      vz: 0.07,
-      orbitFreq: 0.0016,
-      orbitRadiusX: 1.5,
-      orbitRadiusY: 1.2,
+      vz: 0.115,
       moonOrbitMesh: coralMoon,
-      moonOrbitSpeed: 0.003,
-      rotVelocity: new THREE.Vector3(0.002, 0.005, 0.001),
-      resetZ: -165,
+      moonOrbitSpeed: 0.002,
+      rotVelocity: new THREE.Vector3(0.0005, 0.003, 0.0005),
+      resetZ: -225,
       limitZ: 32
     };
     this.scene.add(turqPlanet);
     this.celestialBodies.push(turqPlanet);
 
-    // --- 5. 3D Amethyst Striped Exoplanet (Upper-Right Drift) ---
+    // --- 5. 3D Amethyst Striped Exoplanet (Upper-Right Periphery) ---
     const amethystGeo = new THREE.SphereGeometry(3.0, 48, 48);
     const amethystMat = new THREE.MeshStandardMaterial({
       map: this.createWhimsicalTexture('amethyst-bands'),
@@ -461,17 +445,13 @@ export class SpaceScene {
       emissiveIntensity: 0.25
     });
     const amethystPlanet = new THREE.Mesh(amethystGeo, amethystMat);
-    amethystPlanet.position.set(24, 10.5, -110);
+    amethystPlanet.position.set(25, 10.5, -135);
     amethystPlanet.userData = {
-      mass: 60,
-      baseX: 24,
+      baseX: 25,
       baseY: 10.5,
-      vz: 0.08,
-      orbitFreq: 0.0013,
-      orbitRadiusX: 2.0,
-      orbitRadiusY: 1.4,
-      rotVelocity: new THREE.Vector3(0.003, 0.006, 0.002),
-      resetZ: -160,
+      vz: 0.125,
+      rotVelocity: new THREE.Vector3(0.0008, 0.004, 0.0006),
+      resetZ: -215,
       limitZ: 32
     };
     this.scene.add(amethystPlanet);
@@ -479,7 +459,7 @@ export class SpaceScene {
   }
 
   /**
-   * Creates stylized whimsical tumbling 3D asteroids with gemstone & cosmic pastel colors
+   * Creates stylized whimsical 3D asteroids with smooth forward travel
    */
   createWhimsicalAsteroidField() {
     const asteroidGeometries = [
@@ -495,41 +475,41 @@ export class SpaceScene {
       {
         color: 0xffa726,
         emissive: 0xe65100,
-        x: 27, y: 6, z: -70,
-        vz: 0.09,
-        rot: new THREE.Vector3(0.015, 0.02, 0.01)
+        x: 28, y: 5, z: -80,
+        vz: 0.14,
+        rot: new THREE.Vector3(0.005, 0.008, 0.004)
       },
       // Mid-Right Violet Asteroid
       {
         color: 0xba68c8,
         emissive: 0x6a1b9a,
-        x: 28, y: -2, z: -115,
-        vz: 0.085,
-        rot: new THREE.Vector3(-0.01, 0.018, 0.015)
+        x: 29, y: -3, z: -150,
+        vz: 0.13,
+        rot: new THREE.Vector3(-0.004, 0.007, 0.005)
       },
       // Top-Left Turquoise Jade Asteroid
       {
         color: 0x4dd0e1,
         emissive: 0x00838f,
-        x: -28, y: 7, z: -95,
-        vz: 0.092,
-        rot: new THREE.Vector3(0.012, -0.016, 0.02)
+        x: -29, y: 6, z: -110,
+        vz: 0.145,
+        rot: new THREE.Vector3(0.004, -0.006, 0.007)
       },
       // Lower-Left Rose Quartz Asteroid
       {
         color: 0xf48fb1,
         emissive: 0xad1457,
-        x: -27, y: -5, z: -130,
-        vz: 0.078,
-        rot: new THREE.Vector3(0.018, 0.014, -0.01)
+        x: -28, y: -6, z: -160,
+        vz: 0.12,
+        rot: new THREE.Vector3(0.006, 0.005, -0.004)
       },
       // Distant Top Center-Right Amber Asteroid
       {
         color: 0xffd54f,
         emissive: 0xff8f00,
-        x: 26, y: 16, z: -145,
-        vz: 0.088,
-        rot: new THREE.Vector3(-0.014, 0.022, 0.012)
+        x: 27, y: 15, z: -190,
+        vz: 0.135,
+        rot: new THREE.Vector3(-0.005, 0.008, 0.004)
       }
     ];
 
@@ -547,15 +527,11 @@ export class SpaceScene {
       const asteroid = new THREE.Mesh(geo, mat);
       asteroid.position.set(cfg.x, cfg.y, cfg.z);
       asteroid.userData = {
-        mass: 15,
         baseX: cfg.x,
         baseY: cfg.y,
         vz: cfg.vz,
-        orbitFreq: 0.002 + (idx * 0.0004),
-        orbitRadiusX: 1.6,
-        orbitRadiusY: 1.2,
         rotVelocity: cfg.rot,
-        resetZ: -160,
+        resetZ: -230,
         limitZ: 32
       };
 
@@ -574,10 +550,10 @@ export class SpaceScene {
 
   /**
    * Main Physics Simulation & Render Loop
+   * Uses smooth forward-moving kinematics matching the starfield particles (no jiggling)
    */
   animate() {
     this.animationFrameId = requestAnimationFrame(this.animate);
-    const elapsedTime = this.clock.getElapsedTime();
 
     // 1. Particle Starfield Forward Kinematics
     if (this.stars && this.starPositions) {
@@ -597,28 +573,28 @@ export class SpaceScene {
       this.stars.geometry.attributes.position.needsUpdate = true;
     }
 
-    // 2. 3D Celestial Bodies & Asteroids Kinematic Physics & Orbital Drift
+    // 2. 3D Celestial Bodies & Asteroids Forward Kinematics (Steady Smooth Translation, No Wobble)
     for (const body of this.celestialBodies) {
       const u = body.userData;
 
-      // Axial Rotational Spin & Tumbling
+      // Pure Axial Spin Only
       body.rotation.x += u.rotVelocity.x;
       body.rotation.y += u.rotVelocity.y;
       body.rotation.z += u.rotVelocity.z;
 
-      // Moon Gravitational Orbit
+      // Smooth Moon Gravitational Orbit
       if (u.moonOrbitMesh) {
         const angle = Date.now() * u.moonOrbitSpeed;
         u.moonOrbitMesh.position.x = Math.cos(angle) * 4.4;
         u.moonOrbitMesh.position.z = Math.sin(angle) * 4.4;
       }
 
-      // Forward Velocity
+      // Smooth Forward Translation Along Z-Axis (identical to star particles)
       body.position.z += u.vz;
 
-      // Subtle Gravitational Orbital Drift Curve
-      body.position.x = u.baseX + Math.sin(Date.now() * u.orbitFreq) * u.orbitRadiusX;
-      body.position.y = u.baseY + Math.cos(Date.now() * u.orbitFreq) * u.orbitRadiusY;
+      // Fixed Lateral Stability (Keeps them strictly on the screen margins without wobbling)
+      body.position.x = u.baseX;
+      body.position.y = u.baseY;
 
       // Recycle to distance when passing camera
       if (body.position.z > u.limitZ) {
