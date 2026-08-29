@@ -1,15 +1,23 @@
 /**
- * Rhythm Keys // Interactive Audio & Typing Engine
- * Handles AudioController, TypingController, LRC Synchronizer, and On-Screen Keyboard Feedback
+ * Rhythm Keys // Interactive Audio, Typing & 3D Three.js Engine
+ * Full Integration: Three.js 3D Celestial Physics, Web Audio API, Typing Controller, LRC Sync
  */
 
+import { SpaceScene } from './space/SpaceScene.js';
 import { AudioController } from './audio/AudioController.js';
 import { TypingController } from './typing/TypingController.js';
 import { LrcParser } from './lyrics/LrcParser.js';
 import { SONG_DATABASE } from './lyrics/songDatabase.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 1. DOM ELEMENTS ---
+  // --- 1. INITIALIZE THREE.JS 3D SPACE BACKGROUND ---
+  const spaceCanvas = document.getElementById('spaceCanvas');
+  let spaceScene = null;
+  if (spaceCanvas) {
+    spaceScene = new SpaceScene(spaceCanvas);
+  }
+
+  // --- 2. DOM ELEMENTS ---
   const currentTrackTitle = document.getElementById('currentTrackTitle');
   const currentTrackArtist = document.getElementById('currentTrackArtist');
   const btnPlayPause = document.getElementById('btnPlayPause');
@@ -65,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 2. ENGINE INSTANCES ---
+  // --- 3. ENGINE INSTANCES ---
   const audio = new AudioController();
   let currentSong = SONG_DATABASE['midnight-city'];
   let parsedLyrics = LrcParser.parse(currentSong.lrc);
@@ -94,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 3. TRACK & LYRICS MANAGEMENT ---
+  // --- 4. TRACK & LYRICS MANAGEMENT ---
   function loadTrack(trackKey, customData = null) {
     audio.pause();
     isGameFinished = false;
@@ -215,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsModal.setAttribute('aria-hidden', 'false');
   }
 
-  // --- 4. REAL-TIME SYNC LOOP ---
+  // --- 5. REAL-TIME SYNC LOOP ---
   function syncLoop() {
     if (audio.isPlaying && !isGameFinished) {
       const curTime = audio.getCurrentTime();
@@ -234,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   requestAnimationFrame(syncLoop);
 
-  // --- 5. EVENT LISTENERS ---
+  // --- 6. EVENT LISTENERS ---
 
   // Play / Pause Button
   btnPlayPause.addEventListener('click', () => {
@@ -330,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const key = e.key;
     const lowerKey = key.toLowerCase();
 
-    // Visual active press on on-screen keyboard
+    // Visual press animation on virtual 3D pastel keyboard
     const virtualKey = keyElementMap.get(lowerKey) || keyElementMap.get(key);
     if (virtualKey) {
       virtualKey.classList.add('key-pressed');

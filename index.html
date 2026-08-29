@@ -2,169 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪐</text></svg>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rhythm Keys // Whimsical Cosmic Rhythm-Typing</title>
+  <title>Rhythm Keys // 3D Cosmic Rhythm-Typing</title>
   <!-- Google Fonts: Inter, Fira Code, Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <!-- Three.js CDN for standalone compatibility -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
-  <!-- ================= LAYER 1: DEEP SPACE BACKGROUND & CELESTIAL BODIES ================= -->
-  <div class="space-viewport" id="spaceViewport">
-    <!-- Cosmic Nebula Gradient Layers -->
-    <div class="cosmic-nebula nebula-1"></div>
-    <div class="cosmic-nebula nebula-2"></div>
+  <!-- ================= 1. THREE.JS 3D CANVAS BACKGROUND ================= -->
+  <canvas id="spaceCanvas" class="three-space-canvas"></canvas>
 
-    <!-- Outward Forward-Momentum Starfield Particles -->
-    <div class="starfield-burst burst-1"></div>
-    <div class="starfield-burst burst-2"></div>
-    <div class="starfield-burst burst-3"></div>
-
-    <!-- 6 Whimsical 2D Celestial Bodies Drifting Outward from Center (SVG/CSS) -->
-
-    <!-- 1. The Iconic Yellow Saturn with Pink Ring (Drifts Upper-Left) -->
-    <div class="celestial-body saturn-yellow body-drift-1" aria-hidden="true">
-      <svg class="planet-svg" viewBox="0 0 200 200" width="100%" height="100%">
-        <defs>
-          <radialGradient id="saturnGrad" cx="40%" cy="40%" r="60%">
-            <stop offset="0%" stop-color="#fff59d"/>
-            <stop offset="35%" stop-color="#ffd54f"/>
-            <stop offset="70%" stop-color="#ffb300"/>
-            <stop offset="100%" stop-color="#f57c00"/>
-          </radialGradient>
-          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff4081"/>
-            <stop offset="50%" stop-color="#f50057"/>
-            <stop offset="100%" stop-color="#c51162"/>
-          </linearGradient>
-        </defs>
-        <!-- Back Ring -->
-        <ellipse cx="100" cy="100" rx="92" ry="24" fill="none" stroke="url(#ringGrad)" stroke-width="14" transform="rotate(-28 100 100)" stroke-dasharray="280 280" stroke-dashoffset="140"/>
-        <!-- Planet Sphere -->
-        <circle cx="100" cy="100" r="54" fill="url(#saturnGrad)"/>
-        <!-- Planet Surface Stripes -->
-        <path d="M52 92 Q100 112 148 92" stroke="#ffa000" stroke-width="5" fill="none" opacity="0.6"/>
-        <path d="M56 108 Q100 128 144 108" stroke="#ff8f00" stroke-width="4" fill="none" opacity="0.6"/>
-        <!-- Front Ring -->
-        <ellipse cx="100" cy="100" rx="92" ry="24" fill="none" stroke="url(#ringGrad)" stroke-width="14" transform="rotate(-28 100 100)" stroke-dasharray="280 280" stroke-dashoffset="0"/>
-        <!-- Ring Sparkle Dots -->
-        <circle cx="28" cy="135" r="3" fill="#fff" opacity="0.9"/>
-        <circle cx="172" cy="65" r="3" fill="#fff" opacity="0.9"/>
-      </svg>
-    </div>
-
-    <!-- 2. The Whimsical Retro Rocket Ship (Drifts Upper-Right) -->
-    <div class="celestial-body retro-rocket body-drift-2" aria-hidden="true">
-      <svg class="planet-svg" viewBox="0 0 160 160" width="100%" height="100%">
-        <defs>
-          <linearGradient id="rocketBody" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ffeb3b"/>
-            <stop offset="60%" stop-color="#ffc107"/>
-            <stop offset="100%" stop-color="#ff9800"/>
-          </linearGradient>
-          <linearGradient id="flameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#ff1744"/>
-            <stop offset="60%" stop-color="#ff9100"/>
-            <stop offset="100%" stop-color="#ffff00"/>
-          </linearGradient>
-        </defs>
-        <!-- Rocket Exhaust Flames -->
-        <polygon points="42,118 10,135 32,108 5,120 38,98" fill="url(#flameGrad)"/>
-        <!-- Fins -->
-        <path d="M48 65 L25 88 L52 96 Z" fill="#ff5722"/>
-        <path d="M78 102 L95 125 L65 118 Z" fill="#ff5722"/>
-        <!-- Rocket Fuselage -->
-        <ellipse cx="85" cy="75" rx="42" ry="26" fill="url(#rocketBody)" transform="rotate(-38 85 75)"/>
-        <!-- Nosecone -->
-        <path d="M106 48 Q128 32 120 54 Z" fill="#e91e63"/>
-        <!-- Porthole Window -->
-        <circle cx="85" cy="72" r="10" fill="#00e5ff" stroke="#fff" stroke-width="2.5"/>
-        <circle cx="82" cy="69" r="3" fill="#fff"/>
-      </svg>
-    </div>
-
-    <!-- 3. Blue Swirl Oceanic Exoplanet (Drifts Lower-Right) -->
-    <div class="celestial-body blue-exoplanet body-drift-3" aria-hidden="true">
-      <svg class="planet-svg" viewBox="0 0 140 140" width="100%" height="100%">
-        <defs>
-          <radialGradient id="bluePlanetGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#80d8ff"/>
-            <stop offset="40%" stop-color="#00b0ff"/>
-            <stop offset="80%" stop-color="#00468c"/>
-            <stop offset="100%" stop-color="#011b40"/>
-          </radialGradient>
-        </defs>
-        <circle cx="70" cy="70" r="52" fill="url(#bluePlanetGrad)"/>
-        <!-- Atmospheric Swirls -->
-        <path d="M28 62 Q70 85 112 62" stroke="rgba(255,255,255,0.4)" stroke-width="6" fill="none" stroke-linecap="round"/>
-        <path d="M35 78 Q70 100 105 78" stroke="rgba(128,216,255,0.6)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-        <circle cx="50" cy="45" r="5" fill="#fff" opacity="0.6"/>
-      </svg>
-    </div>
-
-    <!-- 4. Textured Pink/Magenta Planet (Drifts Lower-Left) -->
-    <div class="celestial-body pink-stippled-planet body-drift-4" aria-hidden="true">
-      <svg class="planet-svg" viewBox="0 0 140 140" width="100%" height="100%">
-        <defs>
-          <radialGradient id="pinkPlanetGrad" cx="40%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#ff80ab"/>
-            <stop offset="45%" stop-color="#f50057"/>
-            <stop offset="85%" stop-color="#880e4f"/>
-            <stop offset="100%" stop-color="#4a0025"/>
-          </radialGradient>
-        </defs>
-        <circle cx="70" cy="70" r="48" fill="url(#pinkPlanetGrad)"/>
-        <!-- Stylized Craters & Stipples -->
-        <circle cx="52" cy="55" r="8" fill="#c51162" opacity="0.8"/>
-        <circle cx="50" cy="53" r="7" fill="#f50057"/>
-        <circle cx="85" cy="78" r="11" fill="#880e4f" opacity="0.8"/>
-        <circle cx="83" cy="76" r="9.5" fill="#c51162"/>
-        <circle cx="72" cy="45" r="4" fill="#ff4081"/>
-        <circle cx="45" cy="85" r="5" fill="#ff4081"/>
-      </svg>
-    </div>
-
-    <!-- 5. Turquoise Glowing Exoplanet with Moon (Drifts Mid-Left) -->
-    <div class="celestial-body turquoise-planet body-drift-5" aria-hidden="true">
-      <svg class="planet-svg" viewBox="0 0 120 120" width="100%" height="100%">
-        <defs>
-          <radialGradient id="turqGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#a7ffeb"/>
-            <stop offset="40%" stop-color="#1de9b6"/>
-            <stop offset="85%" stop-color="#00695c"/>
-            <stop offset="100%" stop-color="#00332c"/>
-          </radialGradient>
-        </defs>
-        <circle cx="60" cy="60" r="38" fill="url(#turqGrad)"/>
-        <!-- Tiny Orbiting Coral Moon -->
-        <circle cx="102" cy="35" r="9" fill="#ff6e40" stroke="#ffe57f" stroke-width="1.5"/>
-      </svg>
-    </div>
-
-    <!-- 6. Golden Shooting Stars with Comet Streamers (Drifts Center-Right) -->
-    <div class="celestial-body golden-comet body-drift-6" aria-hidden="true">
-      <svg class="planet-svg" viewBox="0 0 180 180" width="100%" height="100%">
-        <defs>
-          <linearGradient id="cometTail" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="rgba(255,235,59,0)"/>
-            <stop offset="70%" stop-color="rgba(255,213,79,0.7)"/>
-            <stop offset="100%" stop-color="#fff"/>
-          </linearGradient>
-        </defs>
-        <!-- Dual Tail Trails -->
-        <path d="M30 30 Q80 80 135 135" stroke="url(#cometTail)" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <path d="M50 20 Q95 65 145 115" stroke="url(#cometTail)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <!-- Star Head -->
-        <polygon points="140,140 144,128 152,140 164,144 152,148 144,160 140,148 128,144" fill="#fffde7" stroke="#ffd600" stroke-width="1.5"/>
-        <circle cx="144" cy="144" r="5" fill="#fff"/>
-      </svg>
-    </div>
-  </div>
-
-  <!-- ================= LAYER 2: SPACESHIPI COCKPIT FRAME ================= -->
+  <!-- ================= 2. SPACESHIPI COCKPIT FRAME OVERLAY ================= -->
   <div class="cockpit-viewport-frame" aria-hidden="true">
     <!-- Top Cockpit Canopy Visor -->
     <div class="cockpit-canopy-top">
@@ -185,16 +38,14 @@
     </div>
 
     <!-- Bottom Dashboard Console -->
-    <div class="cockpit-dashboard-bottom">
-      <div class="neon-line-bottom"></div>
-    </div>
+    <div class="cockpit-dashboard-bottom"></div>
   </div>
 
-  <!-- ================= LAYER 3: THE INTERACTIVE UI (FOREGROUND) ================= -->
+  <!-- ================= 3. FOREGROUND GLASSMORPHIC UI ================= -->
   <div class="app-ui-container" id="app">
-    <!-- 1. TOP HEADER -->
+    <!-- TOP HEADER -->
     <header class="ui-header glass-panel">
-      <!-- Left: Logo -->
+      <!-- Left: Brand Logo -->
       <div class="header-left">
         <span class="brand-title">Rhythm Keys</span>
       </div>
@@ -237,7 +88,7 @@
       </div>
     </header>
 
-    <!-- 2. CENTER STAGE (Lyrics Display & Pastel Soft 3D Keyboard) -->
+    <!-- CENTER STAGE (Lyrics Display & Pastel Soft 3D Keyboard) -->
     <main class="center-stage">
       <!-- Lyrics Container -->
       <section class="lyrics-panel glass-panel" id="lyricsContainer" aria-live="polite">
@@ -312,7 +163,7 @@
       </section>
     </main>
 
-    <!-- 3. BOTTOM FOOTER -->
+    <!-- BOTTOM FOOTER -->
     <footer class="ui-footer glass-panel">
       <!-- Left: Restart -->
       <div class="footer-left">

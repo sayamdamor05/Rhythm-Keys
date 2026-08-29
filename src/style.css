@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RHYTHM KEYS // WHIMSICAL COSMIC 2D ANIMATED SPACE & COCKPIT UI
+   RHYTHM KEYS // THREE.JS 3D SCENE & GLASSMORPHISM COCKPIT UI
    ========================================================================== */
 
 /* --- 1. CSS VARIABLES & TOKENS --- */
@@ -48,7 +48,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #060312;
+  background: transparent !important;
   font-family: var(--font-ui);
   color: var(--text-white);
   -webkit-font-smoothing: antialiased;
@@ -56,280 +56,20 @@ html, body {
 }
 
 /* ==========================================================================
-   LAYER 1: THE DEEP SPACE BACKGROUND & WHIMSICAL CELESTIAL BODIES
+   1. THREE.JS 3D CANVAS BACKGROUND
    ========================================================================== */
-.space-viewport {
+.three-space-canvas {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   z-index: 0;
-  overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, #160a2c 0%, #0c051a 50%, #04020a 100%);
   pointer-events: none;
-}
-
-/* Swirling Cosmic Nebulae */
-.cosmic-nebula {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(50px);
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.nebula-1 {
-  width: 70vw;
-  height: 60vh;
-  top: 10%;
-  left: -15%;
-  background: radial-gradient(ellipse at center, rgba(142, 36, 170, 0.35) 0%, rgba(26, 35, 126, 0.2) 60%, transparent 80%);
-  animation: nebulaDrift 24s ease-in-out infinite alternate;
-}
-
-.nebula-2 {
-  width: 65vw;
-  height: 55vh;
-  bottom: 5%;
-  right: -10%;
-  background: radial-gradient(ellipse at center, rgba(0, 184, 212, 0.25) 0%, rgba(106, 27, 154, 0.2) 60%, transparent 80%);
-  animation: nebulaDrift 30s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes nebulaDrift {
-  0% { transform: scale(1) translate(0, 0); }
-  100% { transform: scale(1.12) translate(30px, -20px); }
-}
-
-/* Outward Forward-Momentum Starfield Particles */
-.starfield-burst {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: transparent;
-  transform: translate(-50%, -50%);
-}
-
-.burst-1 {
-  box-shadow:
-    -60px -80px #fff, 80px -100px #80d8ff, -120px 40px #ff80ab, 140px 90px #ffd54f,
-    -180px -160px #fff, 200px -140px #80d8ff, -220px 180px #fff, 240px 160px #ff80ab,
-    -320px -60px #ffd54f, 340px -80px #fff, -280px -260px #80d8ff, 310px 280px #fff,
-    -420px 160px #fff, 440px -220px #ff80ab, -380px 320px #80d8ff, 410px 340px #ffd54f;
-  animation: warpStarOut 5s linear infinite;
-}
-
-.burst-2 {
-  box-shadow:
-    -40px 60px #fff, 70px 50px #ffd54f, -90px -110px #80d8ff, 110px -70px #fff,
-    -160px 140px #ff80ab, 180px -180px #fff, -240px -120px #80d8ff, 260px 110px #ffd54f,
-    -360px 220px #fff, 380px -140px #ff80ab, -460px -200px #80d8ff, 480px 210px #fff;
-  animation: warpStarOut 5s linear infinite;
-  animation-delay: 1.6s;
-}
-
-.burst-3 {
-  box-shadow:
-    -100px -40px #ffd54f, 120px 60px #fff, -150px -180px #80d8ff, 170px 150px #ff80ab,
-    -290px 80px #fff, 300px -240px #ffd54f, -390px -160px #80d8ff, 420px 190px #fff;
-  animation: warpStarOut 5s linear infinite;
-  animation-delay: 3.3s;
-}
-
-@keyframes warpStarOut {
-  0% {
-    transform: translate(-50%, -50%) scale(0.15);
-    opacity: 0.1;
-  }
-  40% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.8);
-    opacity: 0;
-  }
-}
-
-/* ==========================================================================
-   WHIMSICAL 2D CELESTIAL BODIES ANIMATIONS (OUTWARD FORWARD TRAVEL)
-   ========================================================================== */
-.celestial-body {
-  position: absolute;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-.planet-svg {
   display: block;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
-}
-
-/* 1. Yellow Saturn with Pink Ring (Drifts Upper-Left Margin) */
-.saturn-yellow {
-  width: 170px;
-  height: 170px;
-  top: 50%;
-  left: 50%;
-  animation: driftSaturn 22s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
-}
-
-@keyframes driftSaturn {
-  0% {
-    transform: translate(-50%, -50%) scale(0.12);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.95;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-38vw, -30vh) scale(1.25) rotate(-12deg);
-    opacity: 0;
-  }
-}
-
-/* 2. Retro Rocket Ship (Drifts Upper-Right Margin) */
-.retro-rocket {
-  width: 140px;
-  height: 140px;
-  top: 50%;
-  left: 50%;
-  animation: driftRocket 19s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
-  animation-delay: 3.5s;
-}
-
-@keyframes driftRocket {
-  0% {
-    transform: translate(-50%, -50%) scale(0.15) rotate(15deg);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(36vw, -32vh) scale(1.3) rotate(-10deg);
-    opacity: 0;
-  }
-}
-
-/* 3. Blue Swirl Oceanic Exoplanet (Drifts Lower-Right Margin) */
-.blue-exoplanet {
-  width: 135px;
-  height: 135px;
-  top: 50%;
-  left: 50%;
-  animation: driftBluePlanet 21s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
-  animation-delay: 7s;
-}
-
-@keyframes driftBluePlanet {
-  0% {
-    transform: translate(-50%, -50%) scale(0.12);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.95;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(37vw, 24vh) scale(1.35) rotate(35deg);
-    opacity: 0;
-  }
-}
-
-/* 4. Pink Stippled Crater Planet (Drifts Lower-Left Margin) */
-.pink-stippled-planet {
-  width: 130px;
-  height: 130px;
-  top: 50%;
-  left: 50%;
-  animation: driftPinkPlanet 24s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
-  animation-delay: 11s;
-}
-
-@keyframes driftPinkPlanet {
-  0% {
-    transform: translate(-50%, -50%) scale(0.12);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.95;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-36vw, 26vh) scale(1.3) rotate(-25deg);
-    opacity: 0;
-  }
-}
-
-/* 5. Turquoise Glowing Exoplanet with Moon (Drifts Mid-Left Margin) */
-.turquoise-planet {
-  width: 120px;
-  height: 120px;
-  top: 50%;
-  left: 50%;
-  animation: driftTurquoise 20s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
-  animation-delay: 14.5s;
-}
-
-@keyframes driftTurquoise {
-  0% {
-    transform: translate(-50%, -50%) scale(0.12);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.95;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-39vw, -3vh) scale(1.25) rotate(20deg);
-    opacity: 0;
-  }
-}
-
-/* 6. Golden Shooting Stars with Streamers (Drifts Center-Right) */
-.golden-comet {
-  width: 160px;
-  height: 160px;
-  top: 50%;
-  left: 50%;
-  animation: driftComet 16s ease-out infinite;
-  animation-delay: 18s;
-}
-
-@keyframes driftComet {
-  0% {
-    transform: translate(-50%, -50%) scale(0.15) rotate(-20deg);
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate(32vw, -8vh) scale(1.4) rotate(-35deg);
-    opacity: 0;
-  }
 }
 
 /* ==========================================================================
-   LAYER 2: SPACESHIPI COCKPIT FRAME
+   2. SPACESHIPI COCKPIT FRAME OVERLAY
    ========================================================================== */
 .cockpit-viewport-frame {
   position: fixed;
@@ -416,7 +156,7 @@ html, body {
 }
 
 /* ==========================================================================
-   LAYER 3: THE INTERACTIVE UI (FOREGROUND)
+   3. FOREGROUND GLASSMORPHIC UI
    ========================================================================== */
 .app-ui-container {
   position: relative;
