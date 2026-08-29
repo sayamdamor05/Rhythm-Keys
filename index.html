@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rhythm Keys // Cockpit Rhythm-Typing Simulator</title>
-  <!-- Google Fonts: Inter & Fira Code -->
+  <!-- Google Fonts: Inter, Fira Code, Orbitron -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet" />
@@ -21,7 +21,7 @@
     <div class="space-nebula"></div>
     <div class="warp-grid"></div>
 
-    <!-- Animated Passing Planets -->
+    <!-- Animated Passing Celestial Bodies -->
     <div class="celestial-body planet-left" aria-hidden="true">
       <div class="planet-ring"></div>
       <div class="planet-glow"></div>
@@ -53,7 +53,7 @@
         <div class="brand-logo">
           <span class="logo-glyph">◈</span>
           <span class="logo-text">Rhythm Keys</span>
-          <span class="subsystem-badge">SYS: ONLINE</span>
+          <span class="subsystem-badge" id="subsystemBadge">SYS: ONLINE</span>
         </div>
       </div>
 
@@ -61,19 +61,25 @@
       <div class="header-center">
         <div class="track-telemetry">
           <div class="audio-pulse-indicator" id="audioPulse">
-            <span></span><span></span><span></span><span></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
           </div>
           <div class="track-info">
-            <span class="track-title" id="currentTrackTitle">Midnight City</span>
+            <span class="track-title" id="currentTrackTitle">Cyber Odyssey</span>
             <span class="track-artist-divider">//</span>
-            <span class="track-artist" id="currentTrackArtist">M83</span>
+            <span class="track-artist" id="currentTrackArtist">Stellar Voyager</span>
           </div>
           <div class="track-selector-wrapper">
             <select id="trackSelector" class="cockpit-select" aria-label="Select Track">
-              <option value="midnight-city">Midnight City - M83 (Demo)</option>
-              <option value="cyber-odyssey">Cyber Odyssey - Stellar Voyager</option>
-              <option value="neon-pulse">Neon Pulse - RetroWave 2088</option>
-              <option value="jamendo-stream">Live Jamendo Stream (Creative Commons)</option>
+              <option value="cyber-odyssey">Cyber Odyssey - Stellar Voyager (110 BPM)</option>
+              <option value="neon-pulse">Neon Pulse - RetroWave 2088 (125 BPM)</option>
+              <option value="midnight-city">Midnight City - M83 Homage (105 BPM)</option>
+              <option value="stellar-horizon">Stellar Horizon - AstroPulse (120 BPM)</option>
+              <option value="custom-lrc">⚡ Custom LRC / Jamendo API...</option>
             </select>
           </div>
         </div>
@@ -82,23 +88,22 @@
       <!-- Navigation & Cockpit Performance Metrics -->
       <div class="header-right">
         <nav class="cockpit-nav" aria-label="Cockpit Navigation">
-          <button class="nav-item active" id="navPractice">Practice</button>
-          <button class="nav-item" id="navPlay">Play</button>
-          <button class="nav-item" id="navLeaderboard">Leaderboard</button>
+          <button class="nav-item active" id="navPractice">Flight Mode</button>
+          <button class="nav-item" id="btnCustomModalOpen">Custom Song</button>
         </nav>
 
         <div class="cockpit-stats-hud">
           <div class="stat-pill wpm-pill" title="Words Per Minute">
             <span class="stat-label">WPM</span>
-            <span class="stat-value" id="hudWpm">74</span>
+            <span class="stat-value" id="hudWpm">0</span>
           </div>
           <div class="stat-pill acc-pill" title="Accuracy Percentage">
             <span class="stat-label">ACC</span>
-            <span class="stat-value" id="hudAcc">98%</span>
+            <span class="stat-value" id="hudAcc">100%</span>
           </div>
           <div class="stat-pill combo-pill" title="Streak Multiplier">
             <span class="stat-label">COMBO</span>
-            <span class="stat-value" id="hudCombo">x4</span>
+            <span class="stat-value" id="hudCombo">x1</span>
           </div>
         </div>
       </div>
@@ -116,77 +121,30 @@
       <section class="lyrics-panel glass-panel" id="lyricsContainer" aria-live="polite">
         <!-- Target Line Progress Bar -->
         <div class="lyric-progress-track">
-          <div class="lyric-progress-fill" id="lyricProgressFill" style="width: 42%;"></div>
+          <div class="lyric-progress-fill" id="lyricProgressFill" style="width: 0%;"></div>
         </div>
 
         <div class="lyric-stream">
           <!-- Line 1: Previous / Completed (Muted Grey) -->
           <div class="lyric-line lyric-prev" id="lyricPrev">
             <span class="line-status-icon">✓</span>
-            <span class="line-text">Waiting in a car, waiting for a ride in the dark</span>
+            <span class="line-text" id="lyricPrevText">(Cockpit Systems Initializing...)</span>
           </div>
 
           <!-- Line 2: Active / Current Target (Color-Coded Monospace) -->
           <div class="lyric-line lyric-active" id="lyricActive">
             <span class="line-status-icon active-aim">▶</span>
             <div class="active-chars-container" id="activeChars">
-              <!-- Demo pre-rendered tokens for visual prototype -->
-              <span class="char char-correct">T</span>
-              <span class="char char-correct">h</span>
-              <span class="char char-correct">e</span>
-              <span class="char char-correct"> </span>
-              <span class="char char-correct">c</span>
-              <span class="char char-correct">i</span>
-              <span class="char char-correct">t</span>
-              <span class="char char-correct">y</span>
-              <span class="char char-correct"> </span>
-              <span class="char char-correct">i</span>
-              <span class="char char-correct">s</span>
-              <span class="char char-correct"> </span>
-              <span class="char char-error">m</span>
-              <span class="char char-cursor">y</span>
-              <span class="char char-pending"> </span>
-              <span class="char char-pending">c</span>
-              <span class="char char-pending">h</span>
-              <span class="char char-pending">u</span>
-              <span class="char char-pending">r</span>
-              <span class="char char-pending">c</span>
-              <span class="char char-pending">h</span>
-              <span class="char char-pending">,</span>
-              <span class="char char-pending"> </span>
-              <span class="char char-pending">i</span>
-              <span class="char char-pending">t</span>
-              <span class="char char-pending"> </span>
-              <span class="char char-pending">w</span>
-              <span class="char char-pending">r</span>
-              <span class="char char-pending">a</span>
-              <span class="char char-pending">p</span>
-              <span class="char char-pending">s</span>
-              <span class="char char-pending"> </span>
-              <span class="char char-pending">i</span>
-              <span class="char char-pending">n</span>
-              <span class="char char-pending"> </span>
-              <span class="char char-pending">t</span>
-              <span class="char char-pending">h</span>
-              <span class="char char-pending">e</span>
-              <span class="char char-pending"> </span>
-              <span class="char char-pending">n</span>
-              <span class="char char-pending">i</span>
-              <span class="char char-pending">g</span>
-              <span class="char char-pending">h</span>
-              <span class="char char-pending">t</span>
+              <span class="char char-cursor">Press ENGAGE or Start Typing</span>
             </div>
           </div>
 
           <!-- Line 3: Upcoming (Muted Grey) -->
           <div class="lyric-line lyric-next" id="lyricNext">
             <span class="line-status-icon">⋯</span>
-            <span class="line-text">The city is my church, it wraps in the blinding twilight</span>
+            <span class="line-text" id="lyricNextText">Departing docking bay zero niner into hyperlane</span>
           </div>
         </div>
-
-        <!-- Hidden input for mobile keyboard capture -->
-        <input type="text" id="mobileInputCapture" class="sr-only-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
       </section>
 
       <!-- Virtual Cockpit 3D Soft QWERTY Keyboard Panel -->
@@ -286,15 +244,15 @@
 
       <!-- Center: Transport Play/Pause Pill Button & Track Seeker -->
       <div class="footer-center">
-        <div class="time-display" id="timeCurrent">01:14</div>
+        <div class="time-display" id="timeCurrent">00:00</div>
         <div class="timeline-bar-wrapper">
-          <input type="range" class="cockpit-slider" id="timelineSlider" min="0" max="100" value="32" aria-label="Audio Timeline" />
+          <input type="range" class="cockpit-slider" id="timelineSlider" min="0" max="100" value="0" aria-label="Audio Timeline" />
         </div>
-        <div class="time-display" id="timeDuration">03:45</div>
+        <div class="time-display" id="timeDuration">02:00</div>
 
         <button class="cockpit-btn btn-primary-play" id="btnPlayPause" aria-label="Play or Pause Track">
-          <svg class="play-icon" id="playIcon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <polygon points="5 3 19 12 5 21 5 3"/>
+          <svg class="play-icon" id="playIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <polygon id="playPolygon" points="5 3 19 12 5 21 5 3"/>
           </svg>
           <span id="playButtonText">ENGAGE</span>
         </button>
@@ -316,6 +274,62 @@
         </div>
       </div>
     </footer>
+  </div>
+
+  <!-- ================= CUSTOM SONG & LRC MODAL ================= -->
+  <div class="modal-overlay" id="customSongModal" aria-hidden="true">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h2 class="modal-title">◈ CUSTOM LRC & AUDIO TRANSMISSION</h2>
+        <button class="modal-close-btn" id="btnCustomModalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label class="modal-field-label" for="customTitleInput">Track Title & Artist</label>
+        <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. Synth Runner // Neon Rider" />
+
+        <label class="modal-field-label" for="customAudioUrl">Audio URL (MP3 / Jamendo stream link - optional)</label>
+        <input type="url" id="customAudioUrl" class="modal-input" placeholder="https://...mp3 (Leave empty for procedural synth)" />
+
+        <label class="modal-field-label" for="customLrcText">Paste .LRC Lyrics (Standard timestamped format)</label>
+        <textarea id="customLrcText" class="modal-textarea" rows="6" placeholder="[00:00.00] Intro&#10;[00:10.00] First synchronized lyric line..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="cockpit-btn btn-secondary" id="btnCustomCancel">CANCEL</button>
+        <button class="cockpit-btn btn-primary-play" id="btnCustomLoad">LOAD MISSION</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MISSION DEBRIEF / RESULTS MODAL ================= -->
+  <div class="modal-overlay" id="resultsModal" aria-hidden="true">
+    <div class="modal-card glass-panel results-card">
+      <div class="results-badge" id="resultsGradeBadge">RANK S</div>
+      <h2 class="results-title">MISSION ACCOMPLISHED</h2>
+      <p class="results-subtitle" id="resultsTrackInfo">Cyber Odyssey // Stellar Voyager</p>
+
+      <div class="results-grid">
+        <div class="result-box">
+          <span class="res-label">FINAL WPM</span>
+          <span class="res-value cyan-val" id="resWpm">84</span>
+        </div>
+        <div class="result-box">
+          <span class="res-label">ACCURACY</span>
+          <span class="res-value green-val" id="resAcc">99%</span>
+        </div>
+        <div class="result-box">
+          <span class="res-label">MAX COMBO</span>
+          <span class="res-value pink-val" id="resCombo">x4 (82)</span>
+        </div>
+        <div class="result-box">
+          <span class="res-label">LINES COMPLETED</span>
+          <span class="res-value purple-val" id="resLines">12 / 12</span>
+        </div>
+      </div>
+
+      <div class="modal-footer results-footer">
+        <button class="cockpit-btn btn-primary-play" id="btnResultsRestart">FLY AGAIN</button>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="./src/main.js"></script>
