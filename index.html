@@ -4,87 +4,81 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rhythm Keys // Cockpit Rhythm-Typing Simulator</title>
-  <!-- Google Fonts: Inter, Fira Code, Orbitron -->
+  <title>Rhythm Keys // Cockpit Rhythm-Typing</title>
+  <!-- Clean Human Typography: Inter, Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
   <!-- ================= 3D THREE.JS SPACE BACKGROUND CANVAS ================= -->
-  <canvas id="spaceCanvas" class="three-canvas"></canvas>
+  <canvas id="spaceCanvas" class="space-background-canvas"></canvas>
 
-  <!-- ================= COCKPIT CANOPY FRAME & HUD OVERLAYS ================= -->
-  <div class="cockpit-overlay-frame" aria-hidden="true">
-    <!-- Top Cockpit Canopy Frame -->
-    <div class="cockpit-top-arch">
-      <div class="arch-light light-magenta-left"></div>
-      <div class="arch-capsule capsule-left"></div>
-      <div class="arch-capsule capsule-center-left"></div>
-      <div class="arch-capsule capsule-center-right"></div>
-      <div class="arch-capsule capsule-right"></div>
-      <div class="arch-light light-cyan-right"></div>
-    </div>
-
-    <!-- Side Cockpit Struts with Neon Glow Ribbons -->
-    <div class="cockpit-pillar pillar-left">
-      <div class="pillar-ribbon ribbon-cyan"></div>
-      <div class="pillar-ribbon ribbon-magenta"></div>
-    </div>
-    <div class="cockpit-pillar pillar-right">
-      <div class="pillar-ribbon ribbon-cyan"></div>
-      <div class="pillar-ribbon ribbon-magenta"></div>
+  <!-- ================= SLEEK COCKPIT CANOPY FRAME ================= -->
+  <div class="cockpit-canopy-overlay" aria-hidden="true">
+    <!-- Top Cockpit Bezel Arch with Glowing Capsule Lights -->
+    <div class="canopy-top-arch">
+      <div class="arch-led arch-led-pink"></div>
+      <div class="arch-capsule capsule-cyan"></div>
+      <div class="arch-capsule capsule-pink"></div>
+      <div class="arch-capsule capsule-cyan"></div>
+      <div class="arch-led arch-led-cyan"></div>
     </div>
 
-    <!-- Cockpit Canopy Floor Bevels & Glass Reflections -->
-    <div class="cockpit-bottom-bezel">
-      <div class="console-light-strip"></div>
+    <!-- Cockpit Windshield Side Framing -->
+    <div class="canopy-side-strut strut-left">
+      <div class="strut-light-ribbon ribbon-cyan"></div>
+      <div class="strut-light-ribbon ribbon-pink"></div>
     </div>
-    <div class="cockpit-glass-sheen"></div>
+    <div class="canopy-side-strut strut-right">
+      <div class="strut-light-ribbon ribbon-cyan"></div>
+      <div class="strut-light-ribbon ribbon-pink"></div>
+    </div>
+
+    <!-- Soft Glass Reflection -->
+    <div class="canopy-glass-reflection"></div>
   </div>
 
   <!-- ================= MAIN COCKPIT UI LAYOUT ================= -->
   <div class="cockpit-ui-container" id="app">
     <!-- 1. TOP HEADER -->
-    <header class="cockpit-header glass-panel">
+    <header class="cockpit-header glass-card">
       <!-- Left: Logo -->
       <div class="header-left">
-        <div class="brand-logo" id="brandLogo">
-          <span class="logo-text">Rhythm Keys</span>
-        </div>
+        <span class="brand-logo-text">Rhythm Keys</span>
       </div>
 
-      <!-- Center: Track Title & Artist -->
+      <!-- Center: Track Info -->
       <div class="header-center">
-        <div class="track-header-display" id="trackHeaderDisplay">
-          <div class="track-title-main" id="currentTrackTitle">Midnight City</div>
-          <div class="track-artist-sub" id="currentTrackArtist">M83</div>
+        <div class="track-info-block">
+          <h1 class="track-title-text" id="currentTrackTitle">Midnight City</h1>
+          <span class="track-artist-text" id="currentTrackArtist">M83</span>
         </div>
       </div>
 
       <!-- Right: Navigation, Stats & Settings -->
       <div class="header-right">
-        <nav class="cockpit-nav" aria-label="Flight Navigation">
-          <button class="nav-item" id="navPractice">Practice</button>
-          <button class="nav-item active" id="navPlay">Play</button>
-          <button class="nav-item" id="navLeaderboard">Leaderboard</button>
+        <nav class="header-nav" aria-label="Game Modes">
+          <button class="nav-btn" id="navPractice">Practice</button>
+          <button class="nav-btn active" id="navPlay">Play</button>
+          <button class="nav-btn" id="navLeaderboard">Leaderboard</button>
         </nav>
 
-        <div class="header-divider"></div>
+        <div class="nav-separator"></div>
 
-        <div class="cockpit-quick-stats">
-          <div class="quick-stat">
-            <span class="q-label">WPM</span>
-            <span class="q-value cyan-val" id="hudWpm">74</span>
+        <div class="header-stats-group">
+          <div class="stat-unit">
+            <span class="stat-unit-label">WPM</span>
+            <span class="stat-unit-val cyan-accent" id="hudWpm">74</span>
           </div>
-          <div class="quick-stat">
-            <span class="q-label">ACC</span>
-            <span class="q-value pink-val" id="hudAcc">98%</span>
+          <div class="stat-unit">
+            <span class="stat-unit-label">ACC</span>
+            <span class="stat-unit-val pink-accent" id="hudAcc">98%</span>
           </div>
         </div>
 
-        <button class="header-settings-btn" id="btnSettings" title="Settings / Track Selector" aria-label="Settings">
+        <button class="settings-trigger-btn" id="btnSettings" title="Track & Audio Settings" aria-label="Settings">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="3"/>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
@@ -93,41 +87,34 @@
       </div>
     </header>
 
-    <!-- 2. CENTER STAGE (Lyrics HUD & Pastel Soft 3D Keyboard) -->
+    <!-- 2. CENTER STAGE (Lyrics Display & Soft 3D Pastel Keyboard) -->
     <main class="center-stage">
-      <!-- Audio Penalty HUD Indicator -->
-      <div class="audio-engine-hud" id="audioStatusBadge">
-        <span class="hud-led led-green" id="audioLed"></span>
-        <span class="engine-text" id="audioStatusText">AUDIO ENGINE: SYNCHRONIZED</span>
-      </div>
-
       <!-- Main Glassmorphism Lyrics Display Panel -->
-      <section class="lyrics-panel glass-panel" id="lyricsContainer" aria-live="polite">
+      <section class="lyrics-panel glass-card" id="lyricsContainer" aria-live="polite">
         <div class="lyric-stream">
-          <!-- Line 1: Previous / Completed (Muted Grey) -->
+          <!-- Line 1: Previous (Muted Soft Lavender) -->
           <div class="lyric-line lyric-prev" id="lyricPrev">
             <span class="line-text" id="lyricPrevText">Waiting for the sun to rise</span>
           </div>
 
-          <!-- Line 2: Active / Current Target (Cyan & Error Box) -->
+          <!-- Line 2: Active Target Line (Cyan Completed, Red Error Box, Dark/Muted Remaining) -->
           <div class="lyric-line lyric-active" id="lyricActive">
             <div class="active-chars-container" id="activeChars">
-              <!-- Active rendered character spans -->
               <span class="char char-correct">The city is </span>
               <span class="char char-error">m</span>
               <span class="char char-pending">y playground</span>
             </div>
           </div>
 
-          <!-- Line 3: Upcoming (Muted Grey) -->
+          <!-- Line 3: Upcoming (Muted Soft Lavender) -->
           <div class="lyric-line lyric-next" id="lyricNext">
             <span class="line-text" id="lyricNextText">Neon lights are shining bright</span>
           </div>
         </div>
       </section>
 
-      <!-- Soft 3D Pastel Virtual Keyboard Panel -->
-      <section class="keyboard-panel glass-panel" id="virtualKeyboard" aria-label="Virtual Keyboard">
+      <!-- Soft 3D Pastel Virtual Keyboard -->
+      <section class="keyboard-panel glass-card" id="virtualKeyboard" aria-label="Virtual Keyboard">
         <!-- Row 1: Q W E R T Y U I O P -->
         <div class="kb-row kb-row-1">
           <button class="key key-3d key-cyan" data-key="q">Q</button>
@@ -166,7 +153,7 @@
           <button class="key key-3d key-yellow" data-key="m">M</button>
         </div>
 
-        <!-- Row 4: Modifier Pill, SPACEBAR, Modifier Pill -->
+        <!-- Row 4: Left Pill, SPACEBAR, Right Pill -->
         <div class="kb-row kb-row-4">
           <button class="key key-3d key-mod key-mint" data-key="Shift" aria-label="Shift"></button>
           <button class="key key-3d key-space" data-key=" ">SPACE</button>
@@ -176,10 +163,10 @@
     </main>
 
     <!-- 3. BOTTOM FOOTER -->
-    <footer class="cockpit-footer glass-panel">
+    <footer class="cockpit-footer glass-card">
       <!-- Left: Restart -->
       <div class="footer-left">
-        <button class="cockpit-footer-btn" id="btnRestart" title="Restart Song">
+        <button class="footer-action-btn" id="btnRestart" title="Restart Song">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
             <path d="M3 3v5h5"/>
@@ -188,7 +175,7 @@
         </button>
       </div>
 
-      <!-- Center: Glowing Pink Pause/Play Circular Pill Button -->
+      <!-- Center: Circular Glowing Pink Pause/Play Button -->
       <div class="footer-center">
         <button class="play-circle-btn" id="btnPlayPause" aria-label="Play or Pause Track">
           <div class="play-circle-icon">
@@ -201,7 +188,7 @@
 
       <!-- Right: Difficulty Toggle -->
       <div class="footer-right">
-        <button class="cockpit-footer-btn" id="diffHard" title="Change Difficulty">
+        <button class="footer-action-btn" id="diffHard" title="Change Difficulty">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
             <path d="M4 15h16M4 9h16M8 3v18M16 3v18"/>
           </svg>
@@ -213,70 +200,69 @@
 
   <!-- ================= SETTINGS & TRACK SELECTOR MODAL ================= -->
   <div class="modal-overlay" id="settingsModal" aria-hidden="true">
-    <div class="modal-card glass-panel">
+    <div class="modal-card glass-card">
       <div class="modal-header">
-        <h2 class="modal-title">◈ FLIGHT CONTROL & TRACK TELEMETRY</h2>
+        <h2 class="modal-title">Track & Audio Controls</h2>
         <button class="modal-close-btn" id="btnSettingsClose">&times;</button>
       </div>
       <div class="modal-body">
-        <label class="modal-field-label" for="trackSelector">Select Song Mission</label>
+        <label class="modal-field-label" for="trackSelector">Song Selection</label>
         <select id="trackSelector" class="modal-select">
-          <option value="midnight-city">Midnight City - M83 Homage (105 BPM)</option>
-          <option value="cyber-odyssey">Cyber Odyssey - Stellar Voyager (110 BPM)</option>
-          <option value="neon-pulse">Neon Pulse - RetroWave 2088 (125 BPM)</option>
-          <option value="stellar-horizon">Stellar Horizon - AstroPulse (120 BPM)</option>
-          <option value="custom-lrc">⚡ Custom LRC / Audio Stream...</option>
+          <option value="midnight-city">Midnight City - M83</option>
+          <option value="cyber-odyssey">Cyber Odyssey - Stellar Voyager</option>
+          <option value="neon-pulse">Neon Pulse - RetroWave 2088</option>
+          <option value="custom-lrc">Custom LRC & Audio URL...</option>
         </select>
 
-        <label class="modal-field-label" for="volumeSlider">Cockpit Volume</label>
+        <label class="modal-field-label" for="volumeSlider">Master Volume</label>
         <input type="range" id="volumeSlider" class="cockpit-slider vol-slider" min="0" max="100" value="85" />
 
         <div class="custom-track-fields" id="customFields" style="display: none;">
-          <label class="modal-field-label" for="customTitleInput">Track Title & Artist</label>
-          <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. Synth Runner // Neon Rider" />
+          <label class="modal-field-label" for="customTitleInput">Song Title & Artist</label>
+          <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. Midnight City - M83" />
 
           <label class="modal-field-label" for="customAudioUrl">Audio URL (Optional MP3 / Stream link)</label>
           <input type="url" id="customAudioUrl" class="modal-input" placeholder="https://...mp3 (Leave empty for procedural synth)" />
 
-          <label class="modal-field-label" for="customLrcText">Paste .LRC Lyrics</label>
-          <textarea id="customLrcText" class="modal-textarea" rows="5" placeholder="[00:00.00] Intro&#10;[00:10.00] First synchronized lyric line..."></textarea>
+          <label class="modal-field-label" for="customLrcText">Paste .LRC Synchronized Lyrics</label>
+          <textarea id="customLrcText" class="modal-textarea" rows="5" placeholder="[00:00.00] First lyric line..."></textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="cockpit-btn btn-secondary" id="btnSettingsCancel">CLOSE</button>
-        <button class="cockpit-btn btn-primary-play" id="btnSettingsApply">ENGAGE TRACK</button>
+        <button class="modal-btn btn-secondary" id="btnSettingsCancel">Close</button>
+        <button class="modal-btn btn-primary" id="btnSettingsApply">Apply Track</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= MISSION DEBRIEF / RESULTS MODAL ================= -->
+  <!-- ================= RESULTS MODAL ================= -->
   <div class="modal-overlay" id="resultsModal" aria-hidden="true">
-    <div class="modal-card glass-panel results-card">
+    <div class="modal-card glass-card results-card">
       <div class="results-badge" id="resultsGradeBadge">RANK S</div>
-      <h2 class="results-title">MISSION ACCOMPLISHED</h2>
+      <h2 class="results-title">Song Complete</h2>
       <p class="results-subtitle" id="resultsTrackInfo">Midnight City // M83</p>
 
       <div class="results-grid">
         <div class="result-box">
-          <span class="res-label">FINAL WPM</span>
-          <span class="res-value cyan-val" id="resWpm">84</span>
+          <span class="res-label">SPEED</span>
+          <span class="res-value cyan-val" id="resWpm">74 WPM</span>
         </div>
         <div class="result-box">
           <span class="res-label">ACCURACY</span>
-          <span class="res-value pink-val" id="resAcc">99%</span>
+          <span class="res-value pink-val" id="resAcc">98%</span>
         </div>
         <div class="result-box">
           <span class="res-label">MAX COMBO</span>
-          <span class="res-value yellow-val" id="resCombo">x4 (82)</span>
+          <span class="res-value yellow-val" id="resCombo">x4</span>
         </div>
         <div class="result-box">
-          <span class="res-label">LINES COMPLETED</span>
+          <span class="res-label">COMPLETED LINES</span>
           <span class="res-value mint-val" id="resLines">10 / 10</span>
         </div>
       </div>
 
       <div class="modal-footer results-footer">
-        <button class="cockpit-btn btn-primary-play" id="btnResultsRestart">FLY AGAIN</button>
+        <button class="modal-btn btn-primary" id="btnResultsRestart">Play Again</button>
       </div>
     </div>
   </div>

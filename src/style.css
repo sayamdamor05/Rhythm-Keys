@@ -1,45 +1,43 @@
 /* ==========================================================================
-   RHYTHM KEYS // COCKPIT RHYTHM-TYPING DESIGN SYSTEM & STYLESHEET
-   Matching Futuristic Spaceship Cockpit Visual Aesthetic
+   RHYTHM KEYS // COCKPIT RHYTHM-TYPING DESIGN SYSTEM
+   Authentic Futuristic Cockpit Aesthetic with Live 3D Space Background
    ========================================================================== */
 
-/* --- 1. CSS VARIABLES & DESIGN TOKENS --- */
+/* --- 1. DESIGN TOKENS --- */
 :root {
-  /* Colors */
-  --bg-deep-space: #030712;
+  /* Core Colors */
   --neon-cyan: #5ce1e6;
   --neon-cyan-glow: rgba(92, 225, 230, 0.6);
   --neon-pink: #ff66cc;
   --neon-pink-glow: rgba(255, 102, 204, 0.6);
   --neon-purple: #c499f3;
   --neon-red: #ff3366;
-  --neon-red-glow: rgba(255, 51, 102, 0.7);
+  --neon-red-glow: rgba(255, 51, 102, 0.75);
   --neon-green: #a0e8af;
 
-  /* Glassmorphism Specification */
-  --glass-panel-bg: rgba(6, 18, 38, 0.58);
-  --glass-panel-border: rgba(92, 225, 230, 0.55);
-  --glass-panel-glow: 0 0 25px rgba(92, 225, 230, 0.35), inset 0 0 15px rgba(92, 225, 230, 0.12);
-  --glass-blur: blur(12px);
+  /* Glassmorphism Tokens */
+  --glass-card-bg: rgba(6, 20, 42, 0.55);
+  --glass-card-border: rgba(92, 225, 230, 0.55);
+  --glass-card-glow: 0 0 24px rgba(92, 225, 230, 0.35), inset 0 0 15px rgba(92, 225, 230, 0.12);
+  --glass-blur: blur(10px);
 
   /* Typography */
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'Fira Code', 'JetBrains Mono', Consolas, monospace;
-  --font-display: 'Orbitron', var(--font-ui);
+  --font-mono: 'Fira Code', monospace;
+  --font-brand: 'Space Grotesk', var(--font-ui);
 
   /* Text Colors */
   --text-white: #ffffff;
   --text-lavender: #d0bfff;
   --text-muted: #a8b2d1;
   --text-cyan: #5ce1e6;
-  --text-dark-pending: #2c3e55;
 
   /* Transitions */
-  --trans-fast: 0.12s ease-out;
+  --trans-fast: 0.1s ease-out;
   --trans-normal: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* --- 2. GLOBAL RESET & BASE --- */
+/* --- 2. GLOBAL RESET --- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -51,123 +49,106 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: var(--bg-deep-space);
+  background: transparent !important;
   font-family: var(--font-ui);
   color: var(--text-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- 3. 3D THREE.JS CANVAS BACKGROUND --- */
-.three-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* --- 4. COCKPIT CANOPY FRAME & HUD OVERLAYS --- */
-.cockpit-overlay-frame {
+/* --- 3. THREE.JS 3D CANVAS BACKGROUND --- */
+.space-background-canvas {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 0;
   pointer-events: none;
-  z-index: 1;
+  display: block;
 }
 
-/* Top Arch Bezel */
-.cockpit-top-arch {
+/* --- 4. SLEEK COCKPIT CANOPY FRAME --- */
+.cockpit-canopy-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Top Bezel Arch */
+.canopy-top-arch {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
-  max-width: 720px;
-  height: 28px;
-  background: linear-gradient(180deg, #111a2e 0%, rgba(17, 26, 46, 0) 100%);
-  border-bottom: 2px solid rgba(92, 225, 230, 0.25);
-  border-radius: 0 0 24px 24px;
+  width: 48%;
+  max-width: 580px;
+  height: 24px;
+  background: linear-gradient(180deg, rgba(12, 22, 44, 0.9) 0%, rgba(12, 22, 44, 0) 100%);
+  border-bottom: 2px solid rgba(92, 225, 230, 0.35);
+  border-radius: 0 0 20px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  gap: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
 }
 
 .arch-capsule {
-  width: 28px;
+  width: 26px;
   height: 5px;
   border-radius: 3px;
-  background: var(--neon-cyan);
-  box-shadow: 0 0 10px var(--neon-cyan);
 }
+.capsule-cyan { background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
+.capsule-pink { background: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink); }
 
-.capsule-left, .capsule-right {
-  background: var(--neon-pink);
-  box-shadow: 0 0 10px var(--neon-pink);
-}
-
-.arch-light {
-  width: 8px;
-  height: 8px;
+.arch-led {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
 }
-.light-magenta-left { background: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink); }
-.light-cyan-right { background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
+.arch-led-pink { background: var(--neon-pink); box-shadow: 0 0 8px var(--neon-pink); }
+.arch-led-cyan { background: var(--neon-cyan); box-shadow: 0 0 8px var(--neon-cyan); }
 
-/* Left & Right Cockpit Pillars */
-.cockpit-pillar {
+/* Left & Right Windshield Side Struts */
+.canopy-side-strut {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 44px;
-  background: linear-gradient(90deg, rgba(7, 12, 25, 0.85) 0%, rgba(7, 12, 25, 0.2) 100%);
+  width: 36px;
+  background: linear-gradient(90deg, rgba(8, 14, 30, 0.8) 0%, rgba(8, 14, 30, 0.1) 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 60px;
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
-.pillar-left {
+.strut-left {
   left: 0;
   border-right: 1px solid rgba(92, 225, 230, 0.15);
 }
 
-.pillar-right {
+.strut-right {
   right: 0;
   transform: scaleX(-1);
   border-right: 1px solid rgba(92, 225, 230, 0.15);
 }
 
-.pillar-ribbon {
+.strut-light-ribbon {
   width: 4px;
-  height: 90px;
+  height: 80px;
   border-radius: 2px;
 }
 .ribbon-cyan { background: var(--neon-cyan); box-shadow: 0 0 12px var(--neon-cyan); }
-.ribbon-magenta { background: var(--neon-pink); box-shadow: 0 0 12px var(--neon-pink); }
+.ribbon-pink { background: var(--neon-pink); box-shadow: 0 0 12px var(--neon-pink); }
 
-/* Bottom Bezel */
-.cockpit-bottom-bezel {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 24px;
-  background: linear-gradient(0deg, #070d1d 0%, transparent 100%);
-  border-top: 1px solid rgba(92, 225, 230, 0.2);
-}
-
-/* Glass Sheen Speed Reflection */
-.cockpit-glass-sheen {
+.canopy-glass-reflection {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04) 0%, transparent 45%);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.035) 0%, transparent 45%);
 }
 
 /* --- 5. MAIN COCKPIT UI CONTAINER --- */
@@ -179,20 +160,20 @@ html, body {
   justify-content: space-between;
   width: 100%;
   height: 100vh;
-  padding: 14px 32px;
-  gap: 10px;
+  padding: 12px 32px;
+  gap: 8px;
 }
 
-/* Glassmorphism Panel Base Utility */
-.glass-panel {
-  background: var(--glass-panel-bg);
+/* Glassmorphism Card Utility */
+.glass-card {
+  background: var(--glass-card-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 2px solid var(--glass-panel-border);
-  box-shadow: var(--glass-panel-glow);
+  border: 2px solid var(--glass-card-border);
+  box-shadow: var(--glass-card-glow);
   border-radius: 20px;
   position: relative;
-  transition: all var(--trans-normal);
+  transition: border-color var(--trans-normal), box-shadow var(--trans-normal);
 }
 
 /* ==========================================================================
@@ -203,63 +184,61 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding: 8px 24px;
-  min-height: 58px;
+  min-height: 56px;
   flex-shrink: 0;
 }
 
-/* Left Brand */
 .header-left {
   display: flex;
   align-items: center;
 }
 
-.brand-logo .logo-text {
-  font-family: var(--font-display);
+.brand-logo-text {
+  font-family: var(--font-brand);
   font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   color: var(--text-lavender);
   text-shadow: 0 0 12px rgba(208, 191, 255, 0.6);
 }
 
-/* Center Track Display */
 .header-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.track-header-display {
+.track-info-block {
   text-align: center;
 }
 
-.track-title-main {
+.track-title-text {
   font-size: 1.1rem;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.5px;
+  line-height: 1.2;
 }
 
-.track-artist-sub {
+.track-artist-text {
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-muted);
 }
 
-/* Right Navigation & Stats */
 .header-right {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.cockpit-nav {
+.header-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
-.nav-item {
+.nav-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
@@ -273,16 +252,16 @@ html, body {
   transition: color var(--trans-fast);
 }
 
-.nav-item:hover {
+.nav-btn:hover {
   color: #ffffff;
 }
 
-.nav-item.active {
+.nav-btn.active {
   color: var(--neon-pink);
   text-shadow: 0 0 10px var(--neon-pink-glow);
 }
 
-.nav-item.active::after {
+.nav-btn.active::after {
   content: '';
   position: absolute;
   bottom: -2px;
@@ -294,42 +273,40 @@ html, body {
   border-radius: 2px;
 }
 
-.header-divider {
+.nav-separator {
   width: 1px;
-  height: 20px;
+  height: 18px;
   background: rgba(255, 255, 255, 0.2);
 }
 
-.cockpit-quick-stats {
+.header-stats-group {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-.quick-stat {
+.stat-unit {
   display: flex;
   align-items: baseline;
   gap: 6px;
   font-family: var(--font-mono);
 }
 
-.q-label {
+.stat-unit-label {
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--text-muted);
 }
 
-.q-value {
+.stat-unit-val {
   font-size: 0.95rem;
   font-weight: 700;
 }
 
-.cyan-val { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan-glow); }
-.pink-val { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink-glow); }
-.yellow-val { color: #ffd670; text-shadow: 0 0 8px rgba(255, 214, 112, 0.6); }
-.mint-val { color: var(--neon-green); text-shadow: 0 0 8px rgba(160, 232, 175, 0.6); }
+.cyan-accent { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan-glow); }
+.pink-accent { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink-glow); }
 
-.header-settings-btn {
+.settings-trigger-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
@@ -340,7 +317,7 @@ html, body {
   transition: color var(--trans-fast), transform var(--trans-fast);
 }
 
-.header-settings-btn:hover {
+.settings-trigger-btn:hover {
   color: var(--neon-cyan);
   transform: rotate(45deg);
 }
@@ -360,52 +337,11 @@ html, body {
   margin: 0 auto;
 }
 
-/* Audio Status HUD Strip */
-.audio-engine-hud {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 14px;
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 20px;
-  border: 1px solid rgba(92, 225, 230, 0.3);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-  transition: all var(--trans-normal);
-}
-
-.hud-led {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--neon-green);
-  box-shadow: 0 0 8px var(--neon-green);
-}
-
-.audio-engine-hud.degraded {
-  border-color: rgba(255, 51, 102, 0.6);
-  background: rgba(255, 51, 102, 0.2);
-  color: var(--neon-red);
-}
-
-.audio-engine-hud.degraded .hud-led {
-  background: var(--neon-red);
-  box-shadow: 0 0 10px var(--neon-red);
-  animation: errorBlink 0.35s infinite alternate;
-}
-
-@keyframes errorBlink {
-  0% { opacity: 0.2; }
-  100% { opacity: 1; }
-}
-
-/* Lyrics Panel */
+/* Lyrics Display Panel */
 .lyrics-panel {
   width: 100%;
   padding: 24px 36px;
-  min-height: 155px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -431,7 +367,7 @@ html, body {
 .lyric-prev {
   font-size: 1.1rem;
   color: var(--text-muted);
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 .lyric-active {
@@ -495,7 +431,7 @@ html, body {
 .lyric-next {
   font-size: 1.1rem;
   color: var(--text-muted);
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 /* ==========================================================================
@@ -593,7 +529,6 @@ html, body {
   box-shadow: 0 1px 0 #6ab57a, 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Modifiers & Space */
 .key-mod {
   width: 48px;
 }
@@ -624,7 +559,7 @@ html, body {
   flex-shrink: 0;
 }
 
-.cockpit-footer-btn {
+.footer-action-btn {
   background: transparent;
   border: none;
   color: var(--text-lavender);
@@ -639,13 +574,12 @@ html, body {
   transition: all var(--trans-fast);
 }
 
-.cockpit-footer-btn:hover {
+.footer-action-btn:hover {
   color: var(--neon-cyan);
   text-shadow: 0 0 10px var(--neon-cyan-glow);
   transform: scale(1.05);
 }
 
-/* Glowing Pink Pause / Play Circle Pill */
 .play-circle-btn {
   background: transparent;
   border: none;
@@ -713,10 +647,10 @@ html, body {
 
 .modal-card {
   width: 90%;
-  max-width: 540px;
-  background: rgba(10, 16, 38, 0.94);
+  max-width: 520px;
+  background: rgba(10, 18, 40, 0.94);
   border: 2px solid var(--neon-cyan);
-  box-shadow: 0 0 40px rgba(92, 225, 230, 0.35);
+  box-shadow: 0 0 35px rgba(92, 225, 230, 0.35);
   padding: 24px;
   border-radius: 22px;
   display: flex;
@@ -733,10 +667,9 @@ html, body {
 }
 
 .modal-title {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-family: var(--font-brand);
+  font-size: 1.1rem;
   color: var(--neon-cyan);
-  letter-spacing: 1px;
 }
 
 .modal-close-btn {
@@ -747,7 +680,6 @@ html, body {
   cursor: pointer;
   line-height: 1;
 }
-
 .modal-close-btn:hover { color: #fff; }
 
 .modal-body {
@@ -784,14 +716,13 @@ html, body {
   gap: 12px;
 }
 
-.cockpit-btn {
+.modal-btn {
   padding: 8px 18px;
   border-radius: 10px;
   font-family: var(--font-ui);
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: all var(--trans-fast);
 }
 
 .btn-secondary {
@@ -800,7 +731,7 @@ html, body {
   color: var(--text-muted);
 }
 
-.btn-primary-play {
+.btn-primary {
   background: linear-gradient(135deg, #ff66cc 0%, #bd00ff 100%);
   border: 1px solid rgba(255, 255, 255, 0.4);
   color: #ffffff;
@@ -815,7 +746,7 @@ html, body {
 }
 
 .results-badge {
-  font-family: var(--font-display);
+  font-family: var(--font-brand);
   font-size: 2.2rem;
   font-weight: 900;
   color: #ffd670;
@@ -823,7 +754,7 @@ html, body {
 }
 
 .results-title {
-  font-family: var(--font-display);
+  font-family: var(--font-brand);
   font-size: 1.35rem;
   background: linear-gradient(90deg, #ff66cc, #5ce1e6);
   -webkit-background-clip: text;
@@ -876,7 +807,7 @@ html, body {
 
 @media (max-width: 600px) {
   .cockpit-ui-container { padding: 8px 12px; }
-  .cockpit-pillar, .cockpit-top-arch { display: none; }
+  .canopy-side-strut, .canopy-top-arch { display: none; }
   .key-3d { height: 32px; width: 28px; font-size: 0.7rem; border-radius: 8px; }
   .key-mod { width: 32px; }
   .lyrics-panel { padding: 16px; }
