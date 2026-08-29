@@ -1,33 +1,36 @@
 /**
  * Rhythm Keys // Cockpit Rhythm-Typing Engine
- * Phase 2 & 3: Web Audio API Engine, Real-Time Typing Controller, LRC Synchronization
+ * Full Integration: Three.js 3D Space Background, Web Audio Engine, Typing Controller, LRC Sync
  */
 
+import { SpaceScene } from './space/SpaceScene.js';
 import { AudioController } from './audio/AudioController.js';
 import { TypingController } from './typing/TypingController.js';
 import { LrcParser } from './lyrics/LrcParser.js';
 import { SONG_DATABASE } from './lyrics/songDatabase.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 1. DOM ELEMENTS ---
-  const trackSelector = document.getElementById('trackSelector');
+  // --- 1. INITIALIZE THREE.JS 3D SPACE BACKGROUND ---
+  const spaceCanvas = document.getElementById('spaceCanvas');
+  let spaceScene = null;
+  if (spaceCanvas) {
+    spaceScene = new SpaceScene(spaceCanvas);
+  }
+
+  // --- 2. DOM ELEMENTS ---
   const currentTrackTitle = document.getElementById('currentTrackTitle');
   const currentTrackArtist = document.getElementById('currentTrackArtist');
   const btnPlayPause = document.getElementById('btnPlayPause');
   const playButtonText = document.getElementById('playButtonText');
-  const playPolygon = document.getElementById('playPolygon');
+  const pauseBar1 = document.getElementById('pauseBar1');
+  const pauseBar2 = document.getElementById('pauseBar2');
   const btnRestart = document.getElementById('btnRestart');
-  const timelineSlider = document.getElementById('timelineSlider');
-  const timeCurrent = document.getElementById('timeCurrent');
-  const timeDuration = document.getElementById('timeDuration');
-  const volumeSlider = document.getElementById('volumeSlider');
-  const diffBtn = document.getElementById('diffHard');
-  const eqBars = document.querySelectorAll('.eq-bar');
+  const diffHard = document.getElementById('diffHard');
+  const diffText = document.getElementById('diffText');
 
   // Stats HUD
   const hudWpm = document.getElementById('hudWpm');
   const hudAcc = document.getElementById('hudAcc');
-  const hudCombo = document.getElementById('hudCombo');
   const audioStatusBadge = document.getElementById('audioStatusBadge');
   const audioStatusText = document.getElementById('audioStatusText');
 
@@ -35,17 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const lyricPrevText = document.getElementById('lyricPrevText');
   const activeCharsContainer = document.getElementById('activeChars');
   const lyricNextText = document.getElementById('lyricNextText');
-  const lyricProgressFill = document.getElementById('lyricProgressFill');
 
-  // Modals
-  const customModal = document.getElementById('customSongModal');
-  const btnCustomModalOpen = document.getElementById('btnCustomModalOpen');
-  const btnCustomModalClose = document.getElementById('btnCustomModalClose');
-  const btnCustomCancel = document.getElementById('btnCustomCancel');
-  const btnCustomLoad = document.getElementById('btnCustomLoad');
+  // Settings / Track Selector Modal
+  const settingsModal = document.getElementById('settingsModal');
+  const btnSettings = document.getElementById('btnSettings');
+  const btnSettingsClose = document.getElementById('btnSettingsClose');
+  const btnSettingsCancel = document.getElementById('btnSettingsCancel');
+  const btnSettingsApply = document.getElementById('btnSettingsApply');
+  const trackSelector = document.getElementById('trackSelector');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const customFields = document.getElementById('customFields');
   const customTitleInput = document.getElementById('customTitleInput');
   const customAudioUrl = document.getElementById('customAudioUrl');
   const customLrcText = document.getElementById('customLrcText');
+
+  // Navigation Items
+  const navItems = document.querySelectorAll('.nav-item');
 
   // Results Modal
   const resultsModal = document.getElementById('resultsModal');
@@ -58,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnResultsRestart = document.getElementById('btnResultsRestart');
 
   // Keyboard elements
-  const keys = document.querySelectorAll('.key');
+  const keys = document.querySelectorAll('.key-3d');
   const keyElementMap = new Map();
   keys.forEach((keyEl) => {
     const dataKey = keyEl.getAttribute('data-key');
@@ -67,9 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 2. ENGINE INSTANCES ---
+  // --- 3. ENGINE INSTANCES ---
   const audio = new AudioController();
-  let currentSong = SONG_DATABASE['cyber-odyssey'];
+  let currentSong = SONG_DATABASE['midnight-city'];
   let parsedLyrics = LrcParser.parse(currentSong.lrc);
   let activeLyricIndex = 0;
   let isGameFinished = false;
@@ -78,17 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
     onTypo: () => {
       audio.applyPenalty();
       audioStatusBadge.classList.add('degraded');
-      audioStatusText.textContent = 'AUDIO ENGINE: MUFFLED (LOW-PASS 380Hz) - CORRECT TYPO!';
+      audioStatusText.textContent = 'AUDIO ENGINE: MUFFLED (LOW-PASS 380Hz) - FIX TYPO!';
       renderActiveChars();
     },
     onCorrect: () => {
       audio.clearPenalty();
       audioStatusBadge.classList.remove('degraded');
-      audioStatusText.textContent = 'AUDIO ENGINE: SYNCHRONIZED (FILTER CLEAR)';
+      audioStatusText.textContent = 'AUDIO ENGINE: SYNCHRONIZED';
       renderActiveChars();
     },
     onLineComplete: () => {
-      // Advance to next lyric line if available
       if (activeLyricIndex < parsedLyrics.length - 1) {
         setLyricLine(activeLyricIndex + 1);
       } else {
@@ -98,18 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
     onStatsUpdate: (stats) => {
       hudWpm.textContent = stats.wpm;
       hudAcc.textContent = `${stats.accuracy}%`;
-      hudCombo.textContent = stats.combo;
-      lyricProgressFill.style.width = `${Math.min(100, stats.progress * 100)}%`;
     }
   });
 
-  // --- 3. HELPER FUNCTIONS ---
-  function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  }
-
+  // --- 4. TRACK MANAGEMENT & LYRIC SYNC ---
   function loadTrack(trackKey, customData = null) {
     audio.pause();
     isGameFinished = false;
@@ -117,15 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (customData) {
       currentSong = customData;
     } else {
-      currentSong = SONG_DATABASE[trackKey] || SONG_DATABASE['cyber-odyssey'];
+      currentSong = SONG_DATABASE[trackKey] || SONG_DATABASE['midnight-city'];
     }
 
     parsedLyrics = LrcParser.parse(currentSong.lrc);
     currentTrackTitle.textContent = currentSong.title;
     currentTrackArtist.textContent = currentSong.artist;
-    timeDuration.textContent = formatTime(currentSong.duration || 120);
-    timelineSlider.value = 0;
-    timeCurrent.textContent = '00:00';
 
     if (currentSong.audioUrl) {
       audio.loadAudioUrl(currentSong.audioUrl);
@@ -147,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeLyricIndex > 0) {
       lyricPrevText.textContent = parsedLyrics[activeLyricIndex - 1].text || '(...)';
     } else {
-      lyricPrevText.textContent = '(Cockpit Flight Systems Ready)';
+      lyricPrevText.textContent = 'Waiting for the sun to rise';
     }
 
     // Active Target Line
@@ -159,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeLyricIndex < parsedLyrics.length - 1) {
       lyricNextText.textContent = parsedLyrics[activeLyricIndex + 1].text || '(...)';
     } else {
-      lyricNextText.textContent = '(Final Transmission Approaching)';
+      lyricNextText.textContent = 'Neon lights are shining bright';
     }
   }
 
@@ -171,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!target) {
       const span = document.createElement('span');
       span.className = 'char char-pending';
-      span.textContent = '(Instrumental Section - Standby)';
+      span.textContent = '(Instrumental Section)';
       activeCharsContainer.appendChild(span);
       return;
     }
@@ -199,15 +195,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updatePlayButtonState(playing) {
     if (playing) {
-      playButtonText.textContent = 'DISENGAGE';
-      btnPlayPause.style.background = 'linear-gradient(135deg, #00e5ff 0%, #0284c7 100%)';
-      btnPlayPause.style.boxShadow = '0 0 25px rgba(0, 229, 255, 0.6)';
-      playPolygon.setAttribute('points', '6 4 10 4 10 20 6 20 14 4 18 4 18 20 14 20'); // Pause icon bars
+      playButtonText.textContent = 'PAUSE';
+      pauseBar1.style.display = 'block';
+      pauseBar2.style.display = 'block';
     } else {
-      playButtonText.textContent = 'ENGAGE';
-      btnPlayPause.style.background = 'linear-gradient(135deg, #ff66cc 0%, #bd00ff 100%)';
-      btnPlayPause.style.boxShadow = '0 0 20px rgba(255, 102, 204, 0.5)';
-      playPolygon.setAttribute('points', '5 3 19 12 5 21 5 3'); // Play triangle
+      playButtonText.textContent = 'PLAY';
+      pauseBar1.style.display = 'block';
+      pauseBar2.style.display = 'none';
     }
   }
 
@@ -218,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePlayButtonState(false);
 
     const stats = typing.getStats();
-    let grade = 'A';
+    let grade = 'RANK S';
     if (stats.accuracy >= 98 && stats.wpm >= 60) grade = 'RANK S';
     else if (stats.accuracy >= 90) grade = 'RANK A';
     else if (stats.accuracy >= 80) grade = 'RANK B';
@@ -235,15 +229,11 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsModal.setAttribute('aria-hidden', 'false');
   }
 
-  // --- 4. REAL-TIME SYNC & VISUALIZER LOOP ---
+  // --- 5. REAL-TIME SYNC LOOP ---
   function syncLoop() {
     if (audio.isPlaying && !isGameFinished) {
       const curTime = audio.getCurrentTime();
       const duration = currentSong.duration || 120;
-
-      // Update timeline seeker
-      timeCurrent.textContent = formatTime(curTime);
-      timelineSlider.value = Math.min(100, (curTime / duration) * 100);
 
       // Check lyrics sync
       const targetIndex = LrcParser.getActiveIndex(parsedLyrics, curTime);
@@ -251,34 +241,17 @@ document.addEventListener('DOMContentLoaded', () => {
         setLyricLine(targetIndex);
       }
 
-      // Check song end
       if (curTime >= duration) {
         finishGame();
       }
-
-      // Update EQ Visualizer bars with Web Audio Analyser data
-      const freqData = audio.getFrequencyData();
-      if (freqData && freqData.length > 0) {
-        eqBars.forEach((bar, idx) => {
-          const sample = freqData[idx * 2] || 0;
-          const percent = Math.max(15, Math.min(100, (sample / 255) * 100));
-          bar.style.height = `${percent}%`;
-        });
-      }
-    } else {
-      // Idle EQ bounce
-      eqBars.forEach((bar, idx) => {
-        bar.style.height = `${15 + ((idx % 3) * 10)}%`;
-      });
     }
-
     requestAnimationFrame(syncLoop);
   }
   requestAnimationFrame(syncLoop);
 
-  // --- 5. EVENT LISTENERS ---
+  // --- 6. EVENT LISTENERS ---
 
-  // Play / Pause Toggle
+  // Play / Pause Circular Button
   btnPlayPause.addEventListener('click', () => {
     if (audio.isPlaying) {
       audio.pause();
@@ -289,39 +262,72 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Restart Track
+  // Restart Button
   btnRestart.addEventListener('click', () => {
     audio.restart();
     typing.reset();
     setLyricLine(0);
-    timelineSlider.value = 0;
-    timeCurrent.textContent = '00:00';
     updatePlayButtonState(false);
   });
 
-  // Track Selector Change
+  // Difficulty Toggle
+  const diffs = ['NORMAL', 'HARD', 'HYPER'];
+  let currentDiffIdx = 1;
+  diffHard.addEventListener('click', () => {
+    currentDiffIdx = (currentDiffIdx + 1) % diffs.length;
+    diffText.textContent = diffs[currentDiffIdx];
+  });
+
+  // Navigation Items
+  navItems.forEach((nav) => {
+    nav.addEventListener('click', () => {
+      navItems.forEach((n) => n.classList.remove('active'));
+      nav.classList.add('active');
+    });
+  });
+
+  // Settings Modal Handlers
+  btnSettings.addEventListener('click', () => {
+    settingsModal.classList.add('active');
+    settingsModal.setAttribute('aria-hidden', 'false');
+  });
+
+  function closeSettings() {
+    settingsModal.classList.remove('active');
+    settingsModal.setAttribute('aria-hidden', 'true');
+  }
+
+  btnSettingsClose.addEventListener('click', closeSettings);
+  btnSettingsCancel.addEventListener('click', closeSettings);
+
   trackSelector.addEventListener('change', (e) => {
-    const val = e.target.value;
-    if (val === 'custom-lrc') {
-      customModal.classList.add('active');
-      customModal.setAttribute('aria-hidden', 'false');
+    if (e.target.value === 'custom-lrc') {
+      customFields.style.display = 'flex';
     } else {
-      loadTrack(val);
+      customFields.style.display = 'none';
     }
   });
 
-  // Timeline Slider Scrubbing
-  timelineSlider.addEventListener('input', (e) => {
-    const percent = parseFloat(e.target.value);
-    const duration = currentSong.duration || 120;
-    const targetSeconds = (percent / 100) * duration;
-    audio.seek(targetSeconds);
-    timeCurrent.textContent = formatTime(targetSeconds);
-
-    const targetIndex = LrcParser.getActiveIndex(parsedLyrics, targetSeconds);
-    if (targetIndex !== -1) {
-      setLyricLine(targetIndex);
+  btnSettingsApply.addEventListener('click', () => {
+    const val = trackSelector.value;
+    if (val === 'custom-lrc') {
+      const title = customTitleInput.value.trim() || 'Custom Cosmic Transmission';
+      const audioUrl = customAudioUrl.value.trim() || null;
+      const lrc = customLrcText.value.trim() || currentSong.lrc;
+      loadTrack('custom-track', {
+        id: 'custom-track',
+        title: title,
+        artist: 'Custom Transmission',
+        duration: 120,
+        audioUrl: audioUrl,
+        lrc: lrc
+      });
+    } else {
+      loadTrack(val);
     }
+    closeSettings();
+    audio.play();
+    updatePlayButtonState(true);
   });
 
   // Volume Slider
@@ -330,38 +336,28 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.setVolume(vol);
   });
 
-  // Difficulty Toggle
-  const diffs = ['NORMAL', 'HARD', 'HYPER'];
-  let currentDiffIdx = 1;
-  diffBtn.addEventListener('click', () => {
-    currentDiffIdx = (currentDiffIdx + 1) % diffs.length;
-    diffBtn.textContent = diffs[currentDiffIdx];
-  });
-
   // Keyboard Handler (Physical Keydown)
   window.addEventListener('keydown', (e) => {
-    // If modal is active, let typing happen inside inputs
-    if (customModal.classList.contains('active')) {
+    if (settingsModal.classList.contains('active')) {
       return;
     }
 
     const key = e.key;
     const lowerKey = key.toLowerCase();
 
-    // Visual press animation on virtual 3D keyboard
+    // Visual press animation on virtual 3D pastel keyboard
     const virtualKey = keyElementMap.get(lowerKey) || keyElementMap.get(key);
     if (virtualKey) {
       virtualKey.classList.add('key-pressed');
       setTimeout(() => virtualKey.classList.remove('key-pressed'), 110);
     }
 
-    // Auto-start music if not playing on first typing keystroke
+    // Auto-start music on first keypress if paused
     if (!audio.isPlaying && !isGameFinished && key.length === 1) {
       audio.play();
       updatePlayButtonState(true);
     }
 
-    // Ignore navigation modifiers
     if (['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Tab'].includes(key)) {
       return;
     }
@@ -383,43 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Custom Modal Handlers
-  btnCustomModalOpen.addEventListener('click', () => {
-    customModal.classList.add('active');
-    customModal.setAttribute('aria-hidden', 'false');
-  });
-
-  function closeCustomModal() {
-    customModal.classList.remove('active');
-    customModal.setAttribute('aria-hidden', 'true');
-    if (trackSelector.value === 'custom-lrc') {
-      trackSelector.value = currentSong.id;
-    }
-  }
-
-  btnCustomModalClose.addEventListener('click', closeCustomModal);
-  btnCustomCancel.addEventListener('click', closeCustomModal);
-
-  btnCustomLoad.addEventListener('click', () => {
-    const title = customTitleInput.value.trim() || 'Custom Cosmic Transmission';
-    const audioUrl = customAudioUrl.value.trim() || null;
-    const lrc = customLrcText.value.trim() || currentSong.lrc;
-
-    const customData = {
-      id: 'custom-user-track',
-      title: title,
-      artist: 'Custom Transmission',
-      duration: 120,
-      audioUrl: audioUrl,
-      lrc: lrc
-    };
-
-    closeCustomModal();
-    loadTrack('custom-user-track', customData);
-    audio.play();
-    updatePlayButtonState(true);
-  });
-
   // Results Modal Restart
   btnResultsRestart.addEventListener('click', () => {
     resultsModal.classList.remove('active');
@@ -429,6 +388,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePlayButtonState(true);
   });
 
-  // Initial Boot
-  loadTrack('cyber-odyssey');
+  // Initial Load: Midnight City
+  loadTrack('midnight-city');
 });

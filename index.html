@@ -12,290 +12,239 @@
   <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
-  <!-- ================= LAYER 1: COCKPIT & SPACE ENVIRONMENT ================= -->
-  <div class="cockpit-viewport" id="cockpitViewport">
-    <!-- Starfield Parallax Layers -->
-    <div class="stars-layer stars-small"></div>
-    <div class="stars-layer stars-medium"></div>
-    <div class="stars-layer stars-large"></div>
-    <div class="space-nebula"></div>
-    <div class="warp-grid"></div>
+  <!-- ================= 3D THREE.JS SPACE BACKGROUND CANVAS ================= -->
+  <canvas id="spaceCanvas" class="three-canvas"></canvas>
 
-    <!-- Animated Passing Celestial Bodies -->
-    <div class="celestial-body planet-left" aria-hidden="true">
-      <div class="planet-ring"></div>
-      <div class="planet-glow"></div>
+  <!-- ================= COCKPIT CANOPY FRAME & HUD OVERLAYS ================= -->
+  <div class="cockpit-overlay-frame" aria-hidden="true">
+    <!-- Top Cockpit Canopy Frame -->
+    <div class="cockpit-top-arch">
+      <div class="arch-light light-magenta-left"></div>
+      <div class="arch-capsule capsule-left"></div>
+      <div class="arch-capsule capsule-center-left"></div>
+      <div class="arch-capsule capsule-center-right"></div>
+      <div class="arch-capsule capsule-right"></div>
+      <div class="arch-light light-cyan-right"></div>
     </div>
-    <div class="celestial-body planet-right" aria-hidden="true">
-      <div class="planet-atmosphere"></div>
-    </div>
-    <div class="celestial-body moon-distant" aria-hidden="true"></div>
 
-    <!-- Cockpit Structural Frame & HUD Glass Overlays -->
-    <div class="cockpit-canopy-frame" aria-hidden="true">
-      <div class="hud-bracket hud-tl"></div>
-      <div class="hud-bracket hud-tr"></div>
-      <div class="hud-bracket hud-bl"></div>
-      <div class="hud-bracket hud-br"></div>
-      <div class="hud-crosshair-left"></div>
-      <div class="hud-crosshair-right"></div>
-      <div class="glass-glare"></div>
-      <div class="speed-lines"></div>
+    <!-- Side Cockpit Struts with Neon Glow Ribbons -->
+    <div class="cockpit-pillar pillar-left">
+      <div class="pillar-ribbon ribbon-cyan"></div>
+      <div class="pillar-ribbon ribbon-magenta"></div>
     </div>
+    <div class="cockpit-pillar pillar-right">
+      <div class="pillar-ribbon ribbon-cyan"></div>
+      <div class="pillar-ribbon ribbon-magenta"></div>
+    </div>
+
+    <!-- Cockpit Canopy Floor Bevels & Glass Reflections -->
+    <div class="cockpit-bottom-bezel">
+      <div class="console-light-strip"></div>
+    </div>
+    <div class="cockpit-glass-sheen"></div>
   </div>
 
-  <!-- ================= LAYER 2: MAIN COCKPIT UI LAYOUT ================= -->
+  <!-- ================= MAIN COCKPIT UI LAYOUT ================= -->
   <div class="cockpit-ui-container" id="app">
     <!-- 1. TOP HEADER -->
     <header class="cockpit-header glass-panel">
-      <!-- Logo & Ship Identifier -->
+      <!-- Left: Logo -->
       <div class="header-left">
-        <div class="brand-logo">
-          <span class="logo-glyph">◈</span>
+        <div class="brand-logo" id="brandLogo">
           <span class="logo-text">Rhythm Keys</span>
-          <span class="subsystem-badge" id="subsystemBadge">SYS: ONLINE</span>
         </div>
       </div>
 
-      <!-- Current Song / Audio Track Telemetry -->
+      <!-- Center: Track Title & Artist -->
       <div class="header-center">
-        <div class="track-telemetry">
-          <div class="audio-pulse-indicator" id="audioPulse">
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-          </div>
-          <div class="track-info">
-            <span class="track-title" id="currentTrackTitle">Cyber Odyssey</span>
-            <span class="track-artist-divider">//</span>
-            <span class="track-artist" id="currentTrackArtist">Stellar Voyager</span>
-          </div>
-          <div class="track-selector-wrapper">
-            <select id="trackSelector" class="cockpit-select" aria-label="Select Track">
-              <option value="cyber-odyssey">Cyber Odyssey - Stellar Voyager (110 BPM)</option>
-              <option value="neon-pulse">Neon Pulse - RetroWave 2088 (125 BPM)</option>
-              <option value="midnight-city">Midnight City - M83 Homage (105 BPM)</option>
-              <option value="stellar-horizon">Stellar Horizon - AstroPulse (120 BPM)</option>
-              <option value="custom-lrc">⚡ Custom LRC / Jamendo API...</option>
-            </select>
-          </div>
+        <div class="track-header-display" id="trackHeaderDisplay">
+          <div class="track-title-main" id="currentTrackTitle">Midnight City</div>
+          <div class="track-artist-sub" id="currentTrackArtist">M83</div>
         </div>
       </div>
 
-      <!-- Navigation & Cockpit Performance Metrics -->
+      <!-- Right: Navigation, Stats & Settings -->
       <div class="header-right">
-        <nav class="cockpit-nav" aria-label="Cockpit Navigation">
-          <button class="nav-item active" id="navPractice">Flight Mode</button>
-          <button class="nav-item" id="btnCustomModalOpen">Custom Song</button>
+        <nav class="cockpit-nav" aria-label="Flight Navigation">
+          <button class="nav-item" id="navPractice">Practice</button>
+          <button class="nav-item active" id="navPlay">Play</button>
+          <button class="nav-item" id="navLeaderboard">Leaderboard</button>
         </nav>
 
-        <div class="cockpit-stats-hud">
-          <div class="stat-pill wpm-pill" title="Words Per Minute">
-            <span class="stat-label">WPM</span>
-            <span class="stat-value" id="hudWpm">0</span>
+        <div class="header-divider"></div>
+
+        <div class="cockpit-quick-stats">
+          <div class="quick-stat">
+            <span class="q-label">WPM</span>
+            <span class="q-value cyan-val" id="hudWpm">74</span>
           </div>
-          <div class="stat-pill acc-pill" title="Accuracy Percentage">
-            <span class="stat-label">ACC</span>
-            <span class="stat-value" id="hudAcc">100%</span>
-          </div>
-          <div class="stat-pill combo-pill" title="Streak Multiplier">
-            <span class="stat-label">COMBO</span>
-            <span class="stat-value" id="hudCombo">x1</span>
+          <div class="quick-stat">
+            <span class="q-label">ACC</span>
+            <span class="q-value pink-val" id="hudAcc">98%</span>
           </div>
         </div>
+
+        <button class="header-settings-btn" id="btnSettings" title="Settings / Track Selector" aria-label="Settings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
       </div>
     </header>
 
-    <!-- 2. CENTER STAGE (Lyrics HUD + Virtual Cockpit Keyboard) -->
+    <!-- 2. CENTER STAGE (Lyrics HUD & Pastel Soft 3D Keyboard) -->
     <main class="center-stage">
-      <!-- Cockpit Audio Engine Status Warning Strip -->
+      <!-- Audio Penalty HUD Indicator -->
       <div class="audio-engine-hud" id="audioStatusBadge">
         <span class="hud-led led-green" id="audioLed"></span>
-        <span class="engine-text" id="audioStatusText">AUDIO ENGINE: SYNCHRONIZED (FILTER CLEAR)</span>
+        <span class="engine-text" id="audioStatusText">AUDIO ENGINE: SYNCHRONIZED</span>
       </div>
 
       <!-- Main Glassmorphism Lyrics Display Panel -->
       <section class="lyrics-panel glass-panel" id="lyricsContainer" aria-live="polite">
-        <!-- Target Line Progress Bar -->
-        <div class="lyric-progress-track">
-          <div class="lyric-progress-fill" id="lyricProgressFill" style="width: 0%;"></div>
-        </div>
-
         <div class="lyric-stream">
           <!-- Line 1: Previous / Completed (Muted Grey) -->
           <div class="lyric-line lyric-prev" id="lyricPrev">
-            <span class="line-status-icon">✓</span>
-            <span class="line-text" id="lyricPrevText">(Cockpit Systems Initializing...)</span>
+            <span class="line-text" id="lyricPrevText">Waiting for the sun to rise</span>
           </div>
 
-          <!-- Line 2: Active / Current Target (Color-Coded Monospace) -->
+          <!-- Line 2: Active / Current Target (Cyan & Error Box) -->
           <div class="lyric-line lyric-active" id="lyricActive">
-            <span class="line-status-icon active-aim">▶</span>
             <div class="active-chars-container" id="activeChars">
-              <span class="char char-cursor">Press ENGAGE or Start Typing</span>
+              <!-- Active rendered character spans -->
+              <span class="char char-correct">The city is </span>
+              <span class="char char-error">m</span>
+              <span class="char char-pending">y playground</span>
             </div>
           </div>
 
           <!-- Line 3: Upcoming (Muted Grey) -->
           <div class="lyric-line lyric-next" id="lyricNext">
-            <span class="line-status-icon">⋯</span>
-            <span class="line-text" id="lyricNextText">Departing docking bay zero niner into hyperlane</span>
+            <span class="line-text" id="lyricNextText">Neon lights are shining bright</span>
           </div>
         </div>
       </section>
 
-      <!-- Virtual Cockpit 3D Soft QWERTY Keyboard Panel -->
-      <section class="keyboard-panel glass-panel" id="virtualKeyboard" aria-label="Virtual Cockpit Keyboard">
-        <!-- Row 1: Numbers & Symbols -->
-        <div class="kb-row kb-row-numbers">
-          <button class="key key-num pastel-pink" data-key="`">~<br>`</button>
-          <button class="key key-num pastel-pink" data-key="1">1</button>
-          <button class="key key-num pastel-pink" data-key="2">2</button>
-          <button class="key key-num pastel-pink" data-key="3">3</button>
-          <button class="key key-num pastel-pink" data-key="4">4</button>
-          <button class="key key-num pastel-pink" data-key="5">5</button>
-          <button class="key key-num pastel-pink" data-key="6">6</button>
-          <button class="key key-num pastel-pink" data-key="7">7</button>
-          <button class="key key-num pastel-pink" data-key="8">8</button>
-          <button class="key key-num pastel-pink" data-key="9">9</button>
-          <button class="key key-num pastel-pink" data-key="0">0</button>
-          <button class="key key-num pastel-pink" data-key="-">-</button>
-          <button class="key key-num pastel-pink" data-key="=">=</button>
-          <button class="key key-special key-backspace pastel-pink" data-key="Backspace">BACK</button>
+      <!-- Soft 3D Pastel Virtual Keyboard Panel -->
+      <section class="keyboard-panel glass-panel" id="virtualKeyboard" aria-label="Virtual Keyboard">
+        <!-- Row 1: Q W E R T Y U I O P -->
+        <div class="kb-row kb-row-1">
+          <button class="key key-3d key-cyan" data-key="q">Q</button>
+          <button class="key key-3d key-pink" data-key="w">W</button>
+          <button class="key key-3d key-purple" data-key="e">E</button>
+          <button class="key key-3d key-yellow" data-key="r">R</button>
+          <button class="key key-3d key-mint" data-key="t">T</button>
+          <button class="key key-3d key-cyan" data-key="y">Y</button>
+          <button class="key key-3d key-pink" data-key="u">U</button>
+          <button class="key key-3d key-purple" data-key="i">I</button>
+          <button class="key key-3d key-yellow" data-key="o">O</button>
+          <button class="key key-3d key-mint" data-key="p">P</button>
         </div>
 
-        <!-- Row 2: QWERTY -->
-        <div class="kb-row kb-row-q">
-          <button class="key key-special key-tab pastel-cyan" data-key="Tab">TAB</button>
-          <button class="key pastel-cyan" data-key="q">Q</button>
-          <button class="key pastel-cyan" data-key="w">W</button>
-          <button class="key pastel-cyan" data-key="e">E</button>
-          <button class="key pastel-cyan" data-key="r">R</button>
-          <button class="key pastel-cyan" data-key="t">T</button>
-          <button class="key pastel-cyan" data-key="y">Y</button>
-          <button class="key pastel-cyan" data-key="u">U</button>
-          <button class="key pastel-cyan" data-key="i">I</button>
-          <button class="key pastel-cyan" data-key="o">O</button>
-          <button class="key pastel-cyan" data-key="p">P</button>
-          <button class="key pastel-cyan" data-key="[">[</button>
-          <button class="key pastel-cyan" data-key="]">]</button>
-          <button class="key pastel-cyan" data-key="\">\</button>
+        <!-- Row 2: A S D F G H J K L -->
+        <div class="kb-row kb-row-2">
+          <button class="key key-3d key-yellow" data-key="a">A</button>
+          <button class="key key-3d key-mint" data-key="s">S</button>
+          <button class="key key-3d key-cyan" data-key="d">D</button>
+          <button class="key key-3d key-pink" data-key="f">F</button>
+          <button class="key key-3d key-purple" data-key="g">G</button>
+          <button class="key key-3d key-yellow" data-key="h">H</button>
+          <button class="key key-3d key-mint" data-key="j">J</button>
+          <button class="key key-3d key-cyan" data-key="k">K</button>
+          <button class="key key-3d key-pink" data-key="l">L</button>
         </div>
 
-        <!-- Row 3: ASDF -->
-        <div class="kb-row kb-row-a">
-          <button class="key key-special key-caps pastel-yellow" data-key="CapsLock">CAPS</button>
-          <button class="key pastel-yellow" data-key="a">A</button>
-          <button class="key pastel-yellow" data-key="s">S</button>
-          <button class="key pastel-yellow" data-key="d">D</button>
-          <button class="key pastel-yellow" data-key="f">F</button>
-          <button class="key pastel-yellow" data-key="g">G</button>
-          <button class="key pastel-yellow" data-key="h">H</button>
-          <button class="key pastel-yellow" data-key="j">J</button>
-          <button class="key pastel-yellow" data-key="k">K</button>
-          <button class="key pastel-yellow" data-key="l">L</button>
-          <button class="key pastel-yellow" data-key=";">;</button>
-          <button class="key pastel-yellow" data-key="'">'</button>
-          <button class="key key-special key-enter pastel-yellow" data-key="Enter">ENTER</button>
+        <!-- Row 3: Z X C V B N M -->
+        <div class="kb-row kb-row-3">
+          <button class="key key-3d key-purple" data-key="z">Z</button>
+          <button class="key key-3d key-yellow" data-key="x">X</button>
+          <button class="key key-3d key-mint" data-key="c">C</button>
+          <button class="key key-3d key-cyan" data-key="v">V</button>
+          <button class="key key-3d key-pink" data-key="b">B</button>
+          <button class="key key-3d key-purple" data-key="n">N</button>
+          <button class="key key-3d key-yellow" data-key="m">M</button>
         </div>
 
-        <!-- Row 4: ZXCV -->
-        <div class="kb-row kb-row-z">
-          <button class="key key-special key-shift pastel-green" data-key="Shift">SHIFT</button>
-          <button class="key pastel-green" data-key="z">Z</button>
-          <button class="key pastel-green" data-key="x">X</button>
-          <button class="key pastel-green" data-key="c">C</button>
-          <button class="key pastel-green" data-key="v">V</button>
-          <button class="key pastel-green" data-key="b">B</button>
-          <button class="key pastel-green" data-key="n">N</button>
-          <button class="key pastel-green" data-key="m">M</button>
-          <button class="key pastel-green" data-key=",">,</button>
-          <button class="key pastel-green" data-key=".">.</button>
-          <button class="key pastel-green" data-key="/">/</button>
-          <button class="key key-special key-shift pastel-green" data-key="Shift">SHIFT</button>
-        </div>
-
-        <!-- Row 5: Space Bar & Modifiers -->
-        <div class="kb-row kb-row-space">
-          <button class="key key-special pastel-lavender" data-key="Control">CTRL</button>
-          <button class="key key-special pastel-lavender" data-key="Alt">ALT</button>
-          <button class="key key-space pastel-lavender" data-key=" ">SPACEBAR</button>
-          <button class="key key-special pastel-lavender" data-key="Alt">ALT</button>
-          <button class="key key-special pastel-lavender" data-key="Control">CTRL</button>
+        <!-- Row 4: Modifier Pill, SPACEBAR, Modifier Pill -->
+        <div class="kb-row kb-row-4">
+          <button class="key key-3d key-mod key-mint" data-key="Shift" aria-label="Shift"></button>
+          <button class="key key-3d key-space" data-key=" ">SPACE</button>
+          <button class="key key-3d key-mod key-pink" data-key="Backspace" aria-label="Backspace"></button>
         </div>
       </section>
     </main>
 
     <!-- 3. BOTTOM FOOTER -->
     <footer class="cockpit-footer glass-panel">
-      <!-- Left: Restart & Reset Controls -->
+      <!-- Left: Restart -->
       <div class="footer-left">
-        <button class="cockpit-btn btn-secondary" id="btnRestart" title="Restart Track and Counters">
-          <svg class="btn-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M1 4v6h6M23 20v-6h-6"/>
-            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+        <button class="cockpit-footer-btn" id="btnRestart" title="Restart Song">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
           </svg>
           <span>RESTART</span>
         </button>
       </div>
 
-      <!-- Center: Transport Play/Pause Pill Button & Track Seeker -->
+      <!-- Center: Glowing Pink Pause/Play Circular Pill Button -->
       <div class="footer-center">
-        <div class="time-display" id="timeCurrent">00:00</div>
-        <div class="timeline-bar-wrapper">
-          <input type="range" class="cockpit-slider" id="timelineSlider" min="0" max="100" value="0" aria-label="Audio Timeline" />
-        </div>
-        <div class="time-display" id="timeDuration">02:00</div>
-
-        <button class="cockpit-btn btn-primary-play" id="btnPlayPause" aria-label="Play or Pause Track">
-          <svg class="play-icon" id="playIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-            <polygon id="playPolygon" points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          <span id="playButtonText">ENGAGE</span>
+        <button class="play-circle-btn" id="btnPlayPause" aria-label="Play or Pause Track">
+          <div class="play-circle-icon">
+            <span class="pause-bar" id="pauseBar1"></span>
+            <span class="pause-bar" id="pauseBar2"></span>
+          </div>
+          <span class="play-circle-label" id="playButtonText">PAUSE</span>
         </button>
       </div>
 
-      <!-- Right: Difficulty Toggle & Audio Volume Slider -->
+      <!-- Right: Difficulty Toggle -->
       <div class="footer-right">
-        <div class="difficulty-wrapper">
-          <span class="control-label">DIFFICULTY:</span>
-          <button class="diff-btn active" id="diffHard" data-diff="hard">HARD</button>
-        </div>
-
-        <div class="volume-control">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        <button class="cockpit-footer-btn" id="diffHard" title="Change Difficulty">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M4 15h16M4 9h16M8 3v18M16 3v18"/>
           </svg>
-          <input type="range" id="volumeSlider" class="cockpit-slider vol-slider" min="0" max="100" value="85" aria-label="Volume" />
-        </div>
+          <span id="diffText">HARD</span>
+        </button>
       </div>
     </footer>
   </div>
 
-  <!-- ================= CUSTOM SONG & LRC MODAL ================= -->
-  <div class="modal-overlay" id="customSongModal" aria-hidden="true">
+  <!-- ================= SETTINGS & TRACK SELECTOR MODAL ================= -->
+  <div class="modal-overlay" id="settingsModal" aria-hidden="true">
     <div class="modal-card glass-panel">
       <div class="modal-header">
-        <h2 class="modal-title">◈ CUSTOM LRC & AUDIO TRANSMISSION</h2>
-        <button class="modal-close-btn" id="btnCustomModalClose">&times;</button>
+        <h2 class="modal-title">◈ FLIGHT CONTROL & TRACK TELEMETRY</h2>
+        <button class="modal-close-btn" id="btnSettingsClose">&times;</button>
       </div>
       <div class="modal-body">
-        <label class="modal-field-label" for="customTitleInput">Track Title & Artist</label>
-        <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. Synth Runner // Neon Rider" />
+        <label class="modal-field-label" for="trackSelector">Select Song Mission</label>
+        <select id="trackSelector" class="modal-select">
+          <option value="midnight-city">Midnight City - M83 Homage (105 BPM)</option>
+          <option value="cyber-odyssey">Cyber Odyssey - Stellar Voyager (110 BPM)</option>
+          <option value="neon-pulse">Neon Pulse - RetroWave 2088 (125 BPM)</option>
+          <option value="stellar-horizon">Stellar Horizon - AstroPulse (120 BPM)</option>
+          <option value="custom-lrc">⚡ Custom LRC / Audio Stream...</option>
+        </select>
 
-        <label class="modal-field-label" for="customAudioUrl">Audio URL (MP3 / Jamendo stream link - optional)</label>
-        <input type="url" id="customAudioUrl" class="modal-input" placeholder="https://...mp3 (Leave empty for procedural synth)" />
+        <label class="modal-field-label" for="volumeSlider">Cockpit Volume</label>
+        <input type="range" id="volumeSlider" class="cockpit-slider vol-slider" min="0" max="100" value="85" />
 
-        <label class="modal-field-label" for="customLrcText">Paste .LRC Lyrics (Standard timestamped format)</label>
-        <textarea id="customLrcText" class="modal-textarea" rows="6" placeholder="[00:00.00] Intro&#10;[00:10.00] First synchronized lyric line..."></textarea>
+        <div class="custom-track-fields" id="customFields" style="display: none;">
+          <label class="modal-field-label" for="customTitleInput">Track Title & Artist</label>
+          <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. Synth Runner // Neon Rider" />
+
+          <label class="modal-field-label" for="customAudioUrl">Audio URL (Optional MP3 / Stream link)</label>
+          <input type="url" id="customAudioUrl" class="modal-input" placeholder="https://...mp3 (Leave empty for procedural synth)" />
+
+          <label class="modal-field-label" for="customLrcText">Paste .LRC Lyrics</label>
+          <textarea id="customLrcText" class="modal-textarea" rows="5" placeholder="[00:00.00] Intro&#10;[00:10.00] First synchronized lyric line..."></textarea>
+        </div>
       </div>
       <div class="modal-footer">
-        <button class="cockpit-btn btn-secondary" id="btnCustomCancel">CANCEL</button>
-        <button class="cockpit-btn btn-primary-play" id="btnCustomLoad">LOAD MISSION</button>
+        <button class="cockpit-btn btn-secondary" id="btnSettingsCancel">CLOSE</button>
+        <button class="cockpit-btn btn-primary-play" id="btnSettingsApply">ENGAGE TRACK</button>
       </div>
     </div>
   </div>
@@ -305,7 +254,7 @@
     <div class="modal-card glass-panel results-card">
       <div class="results-badge" id="resultsGradeBadge">RANK S</div>
       <h2 class="results-title">MISSION ACCOMPLISHED</h2>
-      <p class="results-subtitle" id="resultsTrackInfo">Cyber Odyssey // Stellar Voyager</p>
+      <p class="results-subtitle" id="resultsTrackInfo">Midnight City // M83</p>
 
       <div class="results-grid">
         <div class="result-box">
@@ -314,15 +263,15 @@
         </div>
         <div class="result-box">
           <span class="res-label">ACCURACY</span>
-          <span class="res-value green-val" id="resAcc">99%</span>
+          <span class="res-value pink-val" id="resAcc">99%</span>
         </div>
         <div class="result-box">
           <span class="res-label">MAX COMBO</span>
-          <span class="res-value pink-val" id="resCombo">x4 (82)</span>
+          <span class="res-value yellow-val" id="resCombo">x4 (82)</span>
         </div>
         <div class="result-box">
           <span class="res-label">LINES COMPLETED</span>
-          <span class="res-value purple-val" id="resLines">12 / 12</span>
+          <span class="res-value mint-val" id="resLines">10 / 10</span>
         </div>
       </div>
 
