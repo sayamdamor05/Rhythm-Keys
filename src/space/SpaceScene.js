@@ -373,8 +373,8 @@ export class SpaceScene {
    * Photo-Realistic Multi-Tier Celestial Planetary System
    */
   createRealisticCelestialSystem() {
-    // --- 1. Ringed Gas Giant (Saturn Archetype) ---
-    const saturnGeo = new THREE.SphereGeometry(7.5, 48, 48);
+    // --- 1. Ringed Gas Giant (Saturn Archetype) - UPPER LEFT SKY ---
+    const saturnGeo = new THREE.SphereGeometry(6.5, 48, 48);
     const saturnMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('gas-giant-saturn'),
       roughness: 0.9,
@@ -382,12 +382,11 @@ export class SpaceScene {
     });
     const saturnMesh = new THREE.Mesh(saturnGeo, saturnMat);
 
-    // Atmospheric Glow
-    const saturnGlow = this.createAtmosphericGlowMesh(7.5, 'rgba(192, 132, 252, 0.5)');
+    const saturnGlow = this.createAtmosphericGlowMesh(6.5, 'rgba(192, 132, 252, 0.45)');
     saturnMesh.add(saturnGlow);
 
     // Dust Ring with Cassini Division
-    const ringGeo = new THREE.RingGeometry(9.2, 15.6, 64);
+    const ringGeo = new THREE.RingGeometry(8.2, 13.8, 64);
     const ringCanvas = document.createElement('canvas');
     ringCanvas.width = 256;
     ringCanvas.height = 256;
@@ -407,7 +406,7 @@ export class SpaceScene {
       map: ringTexture,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.88,
       roughness: 0.95
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
@@ -415,30 +414,30 @@ export class SpaceScene {
     ringMesh.rotation.y = -Math.PI / 7;
     saturnMesh.add(ringMesh);
 
-    saturnMesh.position.set(-36, 10, -75);
+    saturnMesh.position.set(-42, 14, -90);
     saturnMesh.userData = {
-      baseX: -36,
-      baseY: 10,
+      baseX: -42,
+      baseY: 14,
       vz: 0.045,
       rotVelocity: new THREE.Vector3(0.0002, 0.0012, 0.0001),
-      resetZ: -180,
+      resetZ: -190,
       limitZ: 38
     };
     this.scene.add(saturnMesh);
     this.celestialBodies.push(saturnMesh);
 
-    // --- 2. Cratered Lunar Moon ---
-    const moonGeo = new THREE.SphereGeometry(5.2, 48, 48);
+    // --- 2. Cratered Lunar Moon - LOWER LEFT SKY ---
+    const moonGeo = new THREE.SphereGeometry(4.8, 48, 48);
     const moonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
       roughness: 0.95,
       metalness: 0.01
     });
     const moonPlanet = new THREE.Mesh(moonGeo, moonMat);
-    moonPlanet.position.set(-34, -13, -60);
+    moonPlanet.position.set(-38, -15, -55);
     moonPlanet.userData = {
-      baseX: -34,
-      baseY: -13,
+      baseX: -38,
+      baseY: -15,
       vz: 0.055,
       rotVelocity: new THREE.Vector3(0.0003, 0.0008, -0.0002),
       resetZ: -170,
@@ -447,9 +446,32 @@ export class SpaceScene {
     this.scene.add(moonPlanet);
     this.celestialBodies.push(moonPlanet);
 
-    // --- 3. Oceanic Exoplanet with Orbital Sub-Moon ---
+    // --- 3. Volcanic Magma Exoplanet - UPPER RIGHT SKY ---
+    const magmaGeo = new THREE.SphereGeometry(5.0, 48, 48);
+    const magmaMat = new THREE.MeshStandardMaterial({
+      map: this.createRealisticPlanetaryTexture('volcanic-magma'),
+      roughness: 0.92,
+      metalness: 0.05
+    });
+    const magmaPlanet = new THREE.Mesh(magmaGeo, magmaMat);
+    const magmaGlow = this.createAtmosphericGlowMesh(5.0, 'rgba(249, 115, 22, 0.45)');
+    magmaPlanet.add(magmaGlow);
+
+    magmaPlanet.position.set(42, 15, -85);
+    magmaPlanet.userData = {
+      baseX: 42,
+      baseY: 15,
+      vz: 0.05,
+      rotVelocity: new THREE.Vector3(0.0003, 0.0014, -0.0002),
+      resetZ: -180,
+      limitZ: 38
+    };
+    this.scene.add(magmaPlanet);
+    this.celestialBodies.push(magmaPlanet);
+
+    // --- 4. Oceanic Exoplanet with Orbital Sub-Moon - LOWER RIGHT SKY ---
     const oceanGroup = new THREE.Group();
-    const oceanGeo = new THREE.SphereGeometry(6.2, 48, 48);
+    const oceanGeo = new THREE.SphereGeometry(5.6, 48, 48);
     const oceanMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('oceanic-terrestrial'),
       roughness: 0.8,
@@ -458,23 +480,23 @@ export class SpaceScene {
     const oceanPlanet = new THREE.Mesh(oceanGeo, oceanMat);
     oceanGroup.add(oceanPlanet);
 
-    const oceanGlow = this.createAtmosphericGlowMesh(6.2, 'rgba(56, 189, 248, 0.55)');
+    const oceanGlow = this.createAtmosphericGlowMesh(5.6, 'rgba(56, 189, 248, 0.5)');
     oceanGroup.add(oceanGlow);
 
     // Sub-Moon
-    const subMoonGeo = new THREE.SphereGeometry(1.2, 24, 24);
+    const subMoonGeo = new THREE.SphereGeometry(1.0, 24, 24);
     const subMoonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
       roughness: 0.95
     });
     const subMoon = new THREE.Mesh(subMoonGeo, subMoonMat);
-    subMoon.position.set(9.0, 1.2, 0);
+    subMoon.position.set(8.0, 1.0, 0);
     oceanGroup.add(subMoon);
 
-    oceanGroup.position.set(38, -6, -65);
+    oceanGroup.position.set(40, -14, -60);
     oceanGroup.userData = {
-      baseX: 38,
-      baseY: -6,
+      baseX: 40,
+      baseY: -14,
       vz: 0.06,
       orbitMesh: subMoon,
       orbitSpeed: 0.0015,
@@ -485,66 +507,9 @@ export class SpaceScene {
     this.scene.add(oceanGroup);
     this.celestialBodies.push(oceanGroup);
 
-    // --- 4. Volcanic Magma Exoplanet ---
-    const magmaGeo = new THREE.SphereGeometry(5.4, 48, 48);
-    const magmaMat = new THREE.MeshStandardMaterial({
-      map: this.createRealisticPlanetaryTexture('volcanic-magma'),
-      roughness: 0.92,
-      metalness: 0.05
-    });
-    const magmaPlanet = new THREE.Mesh(magmaGeo, magmaMat);
-    const magmaGlow = this.createAtmosphericGlowMesh(5.4, 'rgba(249, 115, 22, 0.5)');
-    magmaPlanet.add(magmaGlow);
-
-    magmaPlanet.position.set(39, 14, -80);
-    magmaPlanet.userData = {
-      baseX: 39,
-      baseY: 14,
-      vz: 0.05,
-      rotVelocity: new THREE.Vector3(0.0003, 0.0014, -0.0002),
-      resetZ: -185,
-      limitZ: 38
-    };
-    this.scene.add(magmaPlanet);
-    this.celestialBodies.push(magmaPlanet);
-
-    // --- 6. Ice Giant with Vertical Polar Ring ---
-    const iceGeo = new THREE.SphereGeometry(4.8, 48, 48);
-    const iceMat = new THREE.MeshStandardMaterial({
-      map: this.createRealisticPlanetaryTexture('ice-giant-aquamarine'),
-      roughness: 0.88,
-      metalness: 0.01
-    });
-    const icePlanet = new THREE.Mesh(iceGeo, iceMat);
-    const iceGlow = this.createAtmosphericGlowMesh(4.8, 'rgba(56, 189, 248, 0.5)');
-    icePlanet.add(iceGlow);
-
-    const iceRingGeo = new THREE.RingGeometry(6.4, 9.4, 48);
-    const iceRingMat = new THREE.MeshBasicMaterial({
-      color: 0xbae6fd,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.6
-    });
-    const iceRing = new THREE.Mesh(iceRingGeo, iceRingMat);
-    iceRing.rotation.y = Math.PI / 2.1;
-    icePlanet.add(iceRing);
-
-    icePlanet.position.set(-37, -2, -90);
-    icePlanet.userData = {
-      baseX: -37,
-      baseY: -2,
-      vz: 0.052,
-      rotVelocity: new THREE.Vector3(0.0002, 0.0011, 0.0004),
-      resetZ: -190,
-      limitZ: 38
-    };
-    this.scene.add(icePlanet);
-    this.celestialBodies.push(icePlanet);
-
-    // --- 7. Deep-Space Orbital Relay Station ---
+    // --- 5. Distant Deep-Space Orbital Relay Station - TOP HORIZON ---
     const stationGroup = new THREE.Group();
-    const hubGeo = new THREE.CylinderGeometry(0.9, 0.9, 4.2, 16);
+    const hubGeo = new THREE.CylinderGeometry(0.8, 0.8, 3.6, 16);
     const stationMat = new THREE.MeshStandardMaterial({
       color: 0x94a3b8,
       roughness: 0.5,
@@ -553,83 +518,46 @@ export class SpaceScene {
     const hubMesh = new THREE.Mesh(hubGeo, stationMat);
     stationGroup.add(hubMesh);
 
-    const torusGeo = new THREE.TorusGeometry(3.6, 0.4, 12, 32);
+    const torusGeo = new THREE.TorusGeometry(3.0, 0.35, 12, 32);
     const torusMesh = new THREE.Mesh(torusGeo, stationMat);
     torusMesh.rotation.x = Math.PI / 2;
     stationGroup.add(torusMesh);
 
-    const beaconGeo = new THREE.SphereGeometry(0.3, 8, 8);
+    const beaconGeo = new THREE.SphereGeometry(0.25, 8, 8);
     const beaconMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
     const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
-    beaconMesh.position.set(0, 2.3, 0);
+    beaconMesh.position.set(0, 2.0, 0);
     stationGroup.add(beaconMesh);
 
-    stationGroup.position.set(34, 10, -50);
+    stationGroup.position.set(0, 24, -130);
     stationGroup.userData = {
-      baseX: 34,
-      baseY: 10,
-      vz: 0.07,
+      baseX: 0,
+      baseY: 24,
+      vz: 0.04,
       rotVelocity: new THREE.Vector3(0.001, 0.008, 0.002),
-      resetZ: -160,
+      resetZ: -200,
       limitZ: 38
     };
     this.scene.add(stationGroup);
     this.celestialBodies.push(stationGroup);
-
-    // --- 8. Long-Period Icy Comet with Trailing Tail ---
-    const cometGroup = new THREE.Group();
-    const cometNucleusGeo = new THREE.DodecahedronGeometry(1.4, 1);
-    const cometMat = new THREE.MeshStandardMaterial({
-      color: 0xe2e8f0,
-      roughness: 0.96
-    });
-    const cometNucleus = new THREE.Mesh(cometNucleusGeo, cometMat);
-    cometGroup.add(cometNucleus);
-
-    const tailGeo = new THREE.ConeGeometry(2.4, 32, 16, 1, true);
-    const tailMat = new THREE.MeshBasicMaterial({
-      color: 0x7dd3fc,
-      transparent: true,
-      opacity: 0.4,
-      blending: THREE.AdditiveBlending,
-      side: THREE.DoubleSide
-    });
-    const tailMesh = new THREE.Mesh(tailGeo, tailMat);
-    tailMesh.rotation.x = -Math.PI / 2;
-    tailMesh.position.z = -16;
-    cometGroup.add(tailMesh);
-
-    cometGroup.position.set(-30, 18, -45);
-    cometGroup.userData = {
-      baseX: -30,
-      baseY: 18,
-      vz: 0.09,
-      rotVelocity: new THREE.Vector3(0.002, 0.003, 0.005),
-      resetZ: -150,
-      limitZ: 38
-    };
-    this.scene.add(cometGroup);
-    this.celestialBodies.push(cometGroup);
   }
 
   /**
-   * Realistic Matte Rocky Asteroids
+   * Realistic Matte Rocky Asteroids (Widely Separated)
    */
   createRealisticAsteroidBelt() {
     const asteroidGeometries = [
-      new THREE.DodecahedronGeometry(1.6, 0),
-      new THREE.IcosahedronGeometry(1.4, 0),
-      new THREE.DodecahedronGeometry(1.2, 0),
-      new THREE.IcosahedronGeometry(1.8, 0),
-      new THREE.DodecahedronGeometry(1.3, 0)
+      new THREE.DodecahedronGeometry(1.5, 0),
+      new THREE.IcosahedronGeometry(1.3, 0),
+      new THREE.DodecahedronGeometry(1.1, 0),
+      new THREE.IcosahedronGeometry(1.6, 0)
     ];
 
     const asteroidConfigs = [
-      { color: 0x78716c, x: 27, y: 6, z: -40, vz: 0.08, rot: new THREE.Vector3(0.003, 0.005, 0.002) },
-      { color: 0x57534e, x: 29, y: -4, z: -60, vz: 0.075, rot: new THREE.Vector3(-0.003, 0.004, 0.003) },
-      { color: 0xa8a29e, x: -28, y: 7, z: -50, vz: 0.085, rot: new THREE.Vector3(0.002, -0.004, 0.005) },
-      { color: 0x64748b, x: -27, y: -7, z: -70, vz: 0.07, rot: new THREE.Vector3(0.004, 0.003, -0.002) },
-      { color: 0x71717a, x: 26, y: 16, z: -80, vz: 0.065, rot: new THREE.Vector3(-0.003, 0.005, 0.003) }
+      { color: 0x78716c, x: 28, y: 0, z: -35, vz: 0.08, rot: new THREE.Vector3(0.003, 0.005, 0.002) },
+      { color: 0x57534e, x: -28, y: 0, z: -70, vz: 0.075, rot: new THREE.Vector3(-0.003, 0.004, 0.003) },
+      { color: 0xa8a29e, x: 26, y: -22, z: -105, vz: 0.07, rot: new THREE.Vector3(0.002, -0.004, 0.005) },
+      { color: 0x64748b, x: -26, y: 22, z: -140, vz: 0.065, rot: new THREE.Vector3(0.004, 0.003, -0.002) }
     ];
 
     asteroidConfigs.forEach((cfg, idx) => {
