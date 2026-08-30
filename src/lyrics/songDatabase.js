@@ -1,5 +1,5 @@
 /**
- * songDatabase.js // Clean song database with synchronized lyrics for Rhythm Keys
+ * songDatabase.js // Song database with synchronized lyrics for Rhythm Keys
  */
 
 export const SONG_DATABASE = {
@@ -7,6 +7,7 @@ export const SONG_DATABASE = {
     id: 'midnight-city',
     title: 'Midnight City',
     artist: 'M83',
+    genre: 'Synthwave / Dream Pop',
     duration: 120,
     bpm: 105,
     lrc: `[00:00.00] Waiting for the sun to rise
@@ -24,6 +25,7 @@ export const SONG_DATABASE = {
     id: 'cyber-odyssey',
     title: 'Cyber Odyssey',
     artist: 'Stellar Voyager',
+    genre: 'Space Cyberpunk',
     duration: 110,
     bpm: 110,
     lrc: `[00:00.00] Departing docking bay zero niner into the hyperlane
@@ -41,6 +43,7 @@ export const SONG_DATABASE = {
     id: 'neon-pulse',
     title: 'Neon Pulse',
     artist: 'RetroWave 2088',
+    genre: 'Darksynth / Outrun',
     duration: 100,
     bpm: 125,
     lrc: `[00:00.00] Synthesizers blazing through the obsidian streets
@@ -51,5 +54,36 @@ export const SONG_DATABASE = {
 [00:32.50] Faster than the shadows pursuing our slipstream
 [00:39.00] Heartbeats synchronized to one hundred twenty BPM
 [00:45.50] Infinite horizons expanding beneath neon skies`
+  },
+  'starlight-hyperdrive': {
+    id: 'starlight-hyperdrive',
+    title: 'Starlight Hyperdrive',
+    artist: 'Chiptune Rush',
+    genre: 'Arcade / Chiptune Electro',
+    duration: 95,
+    bpm: 130,
+    lrc: `[00:00.00] Power on sequence initializing core reactors
+[00:06.00] Jump coordinates calculated across quantum relays
+[00:12.00] Accelerating through asteroid belts at maximum throttle
+[00:18.00] Golden solar flares illuminating the starship hull
+[00:24.00] Gravity wells navigated with pinpoint flight precision
+[00:30.00] Plasma trails glowing incandescent behind our thrusters
+[00:36.00] Reaching apex resonance inside the hyperspace corridor
+[00:42.00] Supernova beacons guiding our journey to new galaxies`
+  },
+  'cosmic-horizon': {
+    id: 'cosmic-horizon',
+    title: 'Cosmic Horizon',
+    artist: 'Astral Flow',
+    genre: 'Ambient Downtempo',
+    duration: 115,
+    bpm: 95,
+    lrc: `[00:00.00] Drifting gently through quiet rings of turquoise dust
+[00:07.50] Starlight whispers echoing across the silent deep
+[00:15.00] Gentle waves of gravity cradle our solitary orbit
+[00:22.50] Distant constellations painting ancient stories in light
+[00:30.00] Time slows down as planetary shadows rise and fall
+[00:37.50] A serene stillness settling over the endless cosmos
+[00:45.00] Infinite peace discovered at the edge of the universe`
   }
 };

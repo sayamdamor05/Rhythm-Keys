@@ -17,11 +17,16 @@ export class SpaceScene {
     this.starVelocities = null;
     this.starCount = 1800;
     this.forwardSpeed = 0.8;
+    this.audioEnergy = 0;
     this.celestialBodies = [];
     this.animationFrameId = null;
     this.clock = new THREE.Clock();
 
     this.init();
+  }
+
+  setAudioEnergy(energy) {
+    this.audioEnergy = Math.max(0, Math.min(1, energy));
   }
 
   init() {
@@ -93,9 +98,9 @@ export class SpaceScene {
   createCosmicNebulaLayers() {
     const nebulaGeo = new THREE.PlaneGeometry(140, 95);
     const nebulaColors = [
-      { color1: 'rgba(142, 36, 170, 0.35)', color2: 'rgba(26, 35, 126, 0.2)' },
-      { color1: 'rgba(0, 184, 212, 0.25)', color2: 'rgba(106, 27, 154, 0.2)' },
-      { color1: 'rgba(245, 0, 87, 0.2)', color2: 'rgba(49, 27, 146, 0.15)' }
+      { color1: 'rgba(255, 255, 255, 0.08)', color2: 'rgba(15, 23, 42, 0.3)' },
+      { color1: 'rgba(148, 163, 184, 0.06)', color2: 'rgba(2, 6, 23, 0.4)' },
+      { color1: 'rgba(203, 213, 225, 0.05)', color2: 'rgba(15, 23, 42, 0.2)' }
     ];
 
     nebulaColors.forEach((cfg, idx) => {
@@ -131,7 +136,7 @@ export class SpaceScene {
   }
 
   /**
-   * Creates 3D particle starfield with outward streaking forward velocity
+   * Creates 3D particle starfield with clean monochrome starlight
    */
   create3DStarfield() {
     const canvas = document.createElement('canvas');
@@ -140,8 +145,8 @@ export class SpaceScene {
     const ctx = canvas.getContext('2d');
     const radGrad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     radGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    radGrad.addColorStop(0.3, 'rgba(128, 216, 255, 0.75)');
-    radGrad.addColorStop(0.7, 'rgba(255, 128, 171, 0.35)');
+    radGrad.addColorStop(0.3, 'rgba(226, 232, 240, 0.8)');
+    radGrad.addColorStop(0.7, 'rgba(148, 163, 184, 0.3)');
     radGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
     ctx.fillStyle = radGrad;
     ctx.beginPath();
@@ -157,10 +162,10 @@ export class SpaceScene {
 
     const palette = [
       new THREE.Color(0xffffff),
-      new THREE.Color(0x80d8ff),
-      new THREE.Color(0xff80ab),
-      new THREE.Color(0xffd54f),
-      new THREE.Color(0xa7ffeb)
+      new THREE.Color(0xf1f5f9),
+      new THREE.Color(0xe2e8f0),
+      new THREE.Color(0xcbd5e1),
+      new THREE.Color(0x94a3b8)
     ];
 
     for (let i = 0; i < this.starCount; i++) {
@@ -181,11 +186,11 @@ export class SpaceScene {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 1.9,
+      size: 1.6,
       map: starTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -205,41 +210,36 @@ export class SpaceScene {
     canvas.height = 1024;
     const ctx = canvas.getContext('2d');
 
-    if (type === 'yellow-saturn') {
+    if (type === 'yellow-saturn' || type === 'lunar-slate') {
       const grad = ctx.createLinearGradient(0, 0, 0, 1024);
-      grad.addColorStop(0.0, '#fff9c4');
-      grad.addColorStop(0.2, '#ffd54f');
-      grad.addColorStop(0.45, '#ffb300');
-      grad.addColorStop(0.65, '#ffa000');
-      grad.addColorStop(0.85, '#ff8f00');
-      grad.addColorStop(1.0, '#f57c00');
+      grad.addColorStop(0.0, '#ffffff');
+      grad.addColorStop(0.2, '#e2e8f0');
+      grad.addColorStop(0.45, '#94a3b8');
+      grad.addColorStop(0.65, '#64748b');
+      grad.addColorStop(0.85, '#334155');
+      grad.addColorStop(1.0, '#1e293b');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
       for (let y = 100; y < 1024; y += 90) {
-        ctx.fillRect(0, y, 1024, 28);
+        ctx.fillRect(0, y, 1024, 20);
       }
-
-      ctx.fillStyle = '#ff6f00';
-      for (let y = 140; y < 1024; y += 120) {
-        ctx.fillRect(0, y, 1024, 18);
-      }
-    } else if (type === 'pink-craters') {
+    } else if (type === 'pink-craters' || type === 'cratered-moon') {
       const grad = ctx.createRadialGradient(400, 400, 50, 512, 512, 512);
-      grad.addColorStop(0.0, '#ff80ab');
-      grad.addColorStop(0.45, '#f50057');
-      grad.addColorStop(0.85, '#c51162');
-      grad.addColorStop(1.0, '#4a0025');
+      grad.addColorStop(0.0, '#e2e8f0');
+      grad.addColorStop(0.45, '#94a3b8');
+      grad.addColorStop(0.85, '#475569');
+      grad.addColorStop(1.0, '#0f172a');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
       const craters = [
-        { x: 300, y: 350, r: 65, color1: '#880e4f', color2: '#c51162' },
-        { x: 700, y: 400, r: 85, color1: '#880e4f', color2: '#c51162' },
-        { x: 450, y: 750, r: 75, color1: '#880e4f', color2: '#c51162' },
-        { x: 800, y: 800, r: 50, color1: '#880e4f', color2: '#c51162' },
-        { x: 200, y: 700, r: 40, color1: '#880e4f', color2: '#c51162' }
+        { x: 300, y: 350, r: 65, color1: '#1e293b', color2: '#334155' },
+        { x: 700, y: 400, r: 85, color1: '#1e293b', color2: '#334155' },
+        { x: 450, y: 750, r: 75, color1: '#1e293b', color2: '#334155' },
+        { x: 800, y: 800, r: 50, color1: '#1e293b', color2: '#334155' },
+        { x: 200, y: 700, r: 40, color1: '#1e293b', color2: '#334155' }
       ];
 
       craters.forEach(c => {
@@ -253,42 +253,29 @@ export class SpaceScene {
         ctx.arc(c.x - c.r * 0.15, c.y - c.r * 0.15, c.r * 0.8, 0, Math.PI * 2);
         ctx.fill();
       });
-    } else if (type === 'blue-swirl') {
+    } else if (type === 'blue-swirl' || type === 'obsidian-bands') {
       const grad = ctx.createLinearGradient(0, 0, 1024, 1024);
-      grad.addColorStop(0.0, '#80d8ff');
-      grad.addColorStop(0.3, '#00b0ff');
-      grad.addColorStop(0.65, '#00468c');
-      grad.addColorStop(1.0, '#011b40');
+      grad.addColorStop(0.0, '#cbd5e1');
+      grad.addColorStop(0.3, '#64748b');
+      grad.addColorStop(0.65, '#334155');
+      grad.addColorStop(1.0, '#0f172a');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
       for (let y = 80; y < 1024; y += 140) {
         ctx.beginPath();
         ctx.ellipse(512, y, 512, 45, 0, 0, Math.PI * 2);
         ctx.fill();
       }
-    } else if (type === 'turquoise-mint') {
+    } else {
       const grad = ctx.createRadialGradient(350, 350, 40, 512, 512, 512);
-      grad.addColorStop(0.0, '#a7ffeb');
-      grad.addColorStop(0.4, '#1de9b6');
-      grad.addColorStop(0.85, '#00695c');
-      grad.addColorStop(1.0, '#00332c');
+      grad.addColorStop(0.0, '#f8fafc');
+      grad.addColorStop(0.4, '#94a3b8');
+      grad.addColorStop(0.85, '#334155');
+      grad.addColorStop(1.0, '#020617');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
-    } else if (type === 'amethyst-bands') {
-      const grad = ctx.createLinearGradient(0, 0, 0, 1024);
-      grad.addColorStop(0.0, '#e9d5ff');
-      grad.addColorStop(0.3, '#c084fc');
-      grad.addColorStop(0.6, '#9333ea');
-      grad.addColorStop(1.0, '#581c87');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1024, 1024);
-
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-      for (let y = 120; y < 1024; y += 110) {
-        ctx.fillRect(0, y, 1024, 22);
-      }
     }
 
     const texture = new THREE.CanvasTexture(canvas);
@@ -312,30 +299,28 @@ export class SpaceScene {
     });
     const saturnMesh = new THREE.Mesh(saturnGeo, saturnMat);
 
-    // 3D Double-Sided Pink Saturn Ring
+    // 3D Double-Sided Lunar Saturn Ring
     const ringGeo = new THREE.RingGeometry(4.8, 7.6, 64);
     const ringCanvas = document.createElement('canvas');
     ringCanvas.width = 256;
     ringCanvas.height = 256;
     const ringCtx = ringCanvas.getContext('2d');
     const ringGrad = ringCtx.createRadialGradient(128, 128, 30, 128, 128, 128);
-    ringGrad.addColorStop(0, '#ff4081');
-    ringGrad.addColorStop(0.5, '#f50057');
-    ringGrad.addColorStop(0.9, '#c51162');
-    ringGrad.addColorStop(1, 'rgba(197, 17, 98, 0)');
+    ringGrad.addColorStop(0, '#ffffff');
+    ringGrad.addColorStop(0.5, '#cbd5e1');
+    ringGrad.addColorStop(0.9, '#475569');
+    ringGrad.addColorStop(1, 'rgba(71, 85, 105, 0)');
     ringCtx.fillStyle = ringGrad;
     ringCtx.fillRect(0, 0, 256, 256);
 
     const ringTexture = new THREE.CanvasTexture(ringCanvas);
     const ringMat = new THREE.MeshStandardMaterial({
       map: ringTexture,
-      color: 0xff4081,
+      color: 0xe2e8f0,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.95,
-      roughness: 0.3,
-      emissive: 0x880e4f,
-      emissiveIntensity: 0.3
+      opacity: 0.8,
+      roughness: 0.4
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
     ringMesh.rotation.x = Math.PI / 2.6;
@@ -555,13 +540,17 @@ export class SpaceScene {
   animate() {
     this.animationFrameId = requestAnimationFrame(this.animate);
 
+    // Audio-reactive dynamic speed multiplier
+    const speedBoost = 1.0 + (this.audioEnergy * 0.8);
+    const effectiveSpeed = this.forwardSpeed * speedBoost;
+
     // 1. Particle Starfield Forward Kinematics
     if (this.stars && this.starPositions) {
       const pos = this.starPositions;
       const vels = this.starVelocities;
       for (let i = 0; i < this.starCount; i++) {
         const i3 = i * 3;
-        pos[i3 + 2] += this.forwardSpeed * vels[i];
+        pos[i3 + 2] += effectiveSpeed * vels[i];
 
         // Recycle star to distance when it flies past camera
         if (pos[i3 + 2] > 26) {

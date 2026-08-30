@@ -25,6 +25,67 @@ export class AudioController {
     this.normalFilterFreq = 20000; // All-pass / crystal clear
     this.muffledFilterFreq = 380;   // Low-pass muffle on typo
     this.currentVolume = 0.85;
+    this.sfxEnabled = true;
+  }
+
+  /**
+   * Plays a crisp synthetic mechanical switch click
+   */
+  playKeyClick(isCorrect = true) {
+    if (!this.sfxEnabled || !this.ctx) return;
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    const filter = this.ctx.createBiquadFilter();
+
+    osc.type = isCorrect ? 'sine' : 'sawtooth';
+    osc.frequency.setValueAtTime(isCorrect ? 1200 : 320, t);
+    osc.frequency.exponentialRampToValueAtTime(isCorrect ? 400 : 120, t + 0.035);
+
+    filter.type = isCorrect ? 'bandpass' : 'lowpass';
+    filter.frequency.setValueAtTime(isCorrect ? 2400 : 600, t);
+    filter.Q.setValueAtTime(2.0, t);
+
+    gain.gain.setValueAtTime(isCorrect ? 0.08 : 0.12, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(t);
+    osc.stop(t + 0.04);
+  }
+
+  /**
+   * Returns average normalized audio energy level (0.0 to 1.0)
+   */
+  getAudioEnergy() {
+    if (!this.analyser || !this.isPlaying) return 0;
+    const data = this.getFrequencyData();
+    if (!data || data.length === 0) return 0;
+    let sum = 0;
+    for (let i = 0; i < data.length; i++) {
+      sum += data[i];
+    }
+    return sum / (data.length * 255);
+  }
+
+  /**
+   * Retrieves frequency data array for visualizer animation
+   * @returns {Uint8Array}
+   */
+  getFrequencyData() {
+    if (!this.analyser) {
+      return new Uint8Array(16);
+    }
+    const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+    this.analyser.getByteFrequencyData(dataArray);
+    return dataArray;
   }
 
   /**

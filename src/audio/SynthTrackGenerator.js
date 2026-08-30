@@ -22,7 +22,7 @@ export class SynthTrackGenerator {
     this.masterGain.gain.setValueAtTime(0.45, this.ctx.currentTime);
     this.masterGain.connect(this.destination);
 
-    // Minor pentatonic scales for musical synthwave chords and lead arps
+    // Pentatonic & modal scales for synthwave chords, leads, and chiptune arpeggios
     this.scales = {
       'cyber-odyssey': {
         bpm: 110,
@@ -57,8 +57,19 @@ export class SynthTrackGenerator {
         ],
         lead: [523.25, 587.33, 659.25, 783.99, 880]
       },
-      'stellar-horizon': {
-        bpm: 120,
+      'starlight-hyperdrive': {
+        bpm: 130,
+        bass: [98.0, 110.0, 123.47, 130.81], // G2, A2, B2, C3
+        chords: [
+          [392, 493.88, 587.33], // G
+          [440, 523.25, 659.25], // Am
+          [493.88, 622.25, 739.99], // B
+          [523.25, 659.25, 783.99]  // C
+        ],
+        lead: [783.99, 880, 987.77, 1046.5, 1174.66, 1318.51]
+      },
+      'cosmic-horizon': {
+        bpm: 95,
         bass: [82.41, 87.31, 98.0, 110.0], // E2, F2, G2, A2
         chords: [
           [329.63, 392, 493.88], // Em
