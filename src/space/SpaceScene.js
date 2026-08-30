@@ -312,65 +312,80 @@ export class SpaceScene {
 
       // Atmospheric cloud swirls
       ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-      for (let i = 0; i < 8; i++) {
-        ctx.beginPath();
-        ctx.arc(100 + i * 110, 180 + (i % 3) * 60, 45, 0, Math.PI * 2);
-        ctx.fill();
+      // Photo-realistic Earth-like continental biomes and bathymetry
+      for (let y = 0; y < 512; y++) {
+        for (let x = 0; x < 1024; x++) {
+          const nx = x / 1024;
+          const ny = y / 512;
+          const elevation = SpaceScene.fbm(nx * 4.5, ny * 4.5, 6, 0.55, 2.0);
+          const idx = (y * 1024 + x) * 4;
+
+          if (elevation > 0.52) {
+            // Continental landmass (forests, savannah, mountain peaks)
+            const veg = (elevation - 0.52) / 0.48;
+            data[idx] = Math.floor(34 + veg * 95);       // R
+            data[idx + 1] = Math.floor(110 + veg * 80);  // G
+            data[idx + 2] = Math.floor(45 + veg * 40);   // B
+          } else {
+            // Oceanic bathymetry (deep abyss to shallow turquoise coastal shelves)
+            const depth = elevation / 0.52;
+            data[idx] = Math.floor(6 + depth * 22);      // R
+            data[idx + 1] = Math.floor(40 + depth * 90);  // G
+            data[idx + 2] = Math.floor(100 + depth * 140); // B
+          }
+          data[idx + 3] = 255;
+        }
       }
+      ctx.putImageData(imgData, 0, 0);
 
     } else if (type === 'volcanic-magma') {
-      // Magma/Lava planet with molten fissure networks
-      ctx.fillStyle = '#1c1917'; // Basaltic dark crust
-      ctx.fillRect(0, 0, 1024, 512);
+      // Photo-realistic tectonic magma rift plates
+      for (let y = 0; y < 512; y++) {
+        for (let x = 0; x < 1024; x++) {
+          const nx = x / 1024;
+          const ny = y / 512;
+          const crust = SpaceScene.fbm(nx * 6.0, ny * 6.0, 5, 0.5, 2.0);
+          const rift = Math.abs(Math.sin(crust * 16.0));
+          const idx = (y * 1024 + x) * 4;
 
-      // Glowing lava fissures and caldera lakes
-      ctx.strokeStyle = '#ea580c';
-      ctx.lineWidth = 14;
-      ctx.beginPath();
-      ctx.moveTo(120, 80);
-      ctx.lineTo(240, 180);
-      ctx.lineTo(380, 140);
-      ctx.lineTo(520, 290);
-      ctx.lineTo(680, 220);
-      ctx.lineTo(850, 360);
-      ctx.stroke();
-
-      ctx.strokeStyle = '#facc15';
-      ctx.lineWidth = 6;
-      ctx.stroke();
-
-      // Caldera lakes
-      const calderas = [{ x: 300, y: 320, r: 45 }, { x: 740, y: 160, r: 35 }, { x: 580, y: 400, r: 38 }];
-      calderas.forEach(c => {
-        const rad = ctx.createRadialGradient(c.x, c.y, 5, c.x, c.y, c.r);
-        rad.addColorStop(0, '#fef08a');
-        rad.addColorStop(0.4, '#f97316');
-        rad.addColorStop(0.8, '#dc2626');
-        rad.addColorStop(1, '#1c1917');
-        ctx.fillStyle = rad;
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fill();
-      });
+          if (rift < 0.12) {
+            // Incandescent magma channel
+            const mag = (0.12 - rift) / 0.12;
+            data[idx] = 255;                             // R
+            data[idx + 1] = Math.floor(90 + mag * 165);  // G
+            data[idx + 2] = Math.floor(10 + mag * 60);   // B
+          } else {
+            // Cooled basaltic volcanic crust
+            const b = Math.floor(25 + crust * 30);
+            data[idx] = b;
+            data[idx + 1] = Math.floor(b * 0.9);
+            data[idx + 2] = Math.floor(b * 0.85);
+          }
+          data[idx + 3] = 255;
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
 
     } else if (type === 'ice-giant-aquamarine') {
-      // Aquamarine methane clouds with delicate horizontal atmospheric striations
-      const grad = ctx.createLinearGradient(0, 0, 0, 512);
-      grad.addColorStop(0.0, '#0c4a6e');
-      grad.addColorStop(0.25, '#0284c7');
-      grad.addColorStop(0.5, '#38bdf8');
-      grad.addColorStop(0.75, '#7dd3fc');
-      grad.addColorStop(1.0, '#0369a1');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1024, 512);
+      // Photo-realistic methane ice giant atmospheric haze
+      for (let y = 0; y < 512; y++) {
+        const ny = y / 512;
+        const poleHaze = Math.cos((ny - 0.5) * Math.PI);
+        for (let x = 0; x < 1024; x++) {
+          const nx = x / 1024;
+          const noise = SpaceScene.fbm(nx * 10.0, ny * 18.0, 4, 0.45, 2.1);
+          const idx = (y * 1024 + x) * 4;
 
-      for (let y = 15; y < 512; y += 12) {
-        ctx.fillStyle = (y % 24 === 0) ? 'rgba(255, 255, 255, 0.15)' : 'rgba(12, 74, 110, 0.12)';
-        ctx.fillRect(0, y, 1024, 6);
+          data[idx] = Math.floor(20 + noise * 50 + poleHaze * 30);     // R
+          data[idx + 1] = Math.floor(130 + noise * 60 + poleHaze * 50); // G
+          data[idx + 2] = Math.floor(200 + noise * 45 + poleHaze * 35); // B
+          data[idx + 3] = 255;
+        }
       }
+      ctx.putImageData(imgData, 0, 0);
 
     } else {
-      // Golden Sun / Stellar Core with convective solar granules
+      // Photorealistic Solar Corona Surface
       const grad = ctx.createRadialGradient(512, 256, 40, 512, 256, 512);
       grad.addColorStop(0.0, '#fef08a');
       grad.addColorStop(0.3, '#fde047');
@@ -387,30 +402,71 @@ export class SpaceScene {
   }
 
   /**
-   * Realistic Matte Celestial Bodies with Atmosphere & Natural Physics
+   * Procedural Cloud Layer Texture for Terrestrial Worlds
+   */
+  createCloudLayerTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 512;
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.createImageData(1024, 512);
+    const data = imgData.data;
+
+    for (let y = 0; y < 512; y++) {
+      for (let x = 0; x < 1024; x++) {
+        const nx = x / 1024;
+        const ny = y / 512;
+        const clouds = SpaceScene.fbm(nx * 8.0, ny * 6.0, 5, 0.5, 2.2);
+        const idx = (y * 1024 + x) * 4;
+
+        if (clouds > 0.48) {
+          const alpha = (clouds - 0.48) / 0.52;
+          data[idx] = 255;
+          data[idx + 1] = 255;
+          data[idx + 2] = 255;
+          data[idx + 3] = Math.floor(alpha * 220);
+        } else {
+          data[idx + 3] = 0;
+        }
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    return texture;
+  }
+
+  /**
+   * Photo-Realistic Multi-Tier Celestial Planetary System
    */
   createRealisticCelestialSystem() {
-    // --- 1. Ringed Gas Giant (Saturn Archetype) ---
-    const saturnGeo = new THREE.SphereGeometry(4.2, 64, 64);
+    // --- 1. Ringed Gas Giant (Saturn Archetype) with Rayleigh Atmosphere ---
+    const saturnGeo = new THREE.SphereGeometry(4.4, 64, 64);
     const saturnMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('gas-giant-saturn'),
-      roughness: 0.88,
-      metalness: 0.02
+      roughness: 0.92,
+      metalness: 0.01
     });
     const saturnMesh = new THREE.Mesh(saturnGeo, saturnMat);
 
-    // Realistic Dust Ring with Inner Cassini Divisions
-    const ringGeo = new THREE.RingGeometry(5.4, 9.2, 96);
+    // Add Atmospheric Rayleigh Scattering Limb Halo
+    const saturnAtmosphere = this.createAtmosphericGlowMesh(4.4, 0xc084fc, 3.4);
+    saturnMesh.add(saturnAtmosphere);
+
+    // Realistic Dust Ring with Inner Cassini Divisions & Encke Gap
+    const ringGeo = new THREE.RingGeometry(5.6, 9.6, 128);
     const ringCanvas = document.createElement('canvas');
     ringCanvas.width = 512;
     ringCanvas.height = 512;
     const ringCtx = ringCanvas.getContext('2d');
-    const ringGrad = ringCtx.createRadialGradient(256, 256, 60, 256, 256, 256);
+    const ringGrad = ringCtx.createRadialGradient(256, 256, 70, 256, 256, 256);
     ringGrad.addColorStop(0.0, 'rgba(216, 180, 254, 0)');
-    ringGrad.addColorStop(0.15, 'rgba(216, 180, 254, 0.7)');
-    ringGrad.addColorStop(0.5, 'rgba(244, 114, 182, 0.85)');
-    ringGrad.addColorStop(0.62, 'rgba(15, 23, 42, 0.1)'); // Cassini Division gap
-    ringGrad.addColorStop(0.72, 'rgba(192, 132, 252, 0.75)');
+    ringGrad.addColorStop(0.12, 'rgba(216, 180, 254, 0.6)');
+    ringGrad.addColorStop(0.48, 'rgba(244, 114, 182, 0.82)');
+    ringGrad.addColorStop(0.58, 'rgba(15, 23, 42, 0.08)'); // Cassini Division Gap
+    ringGrad.addColorStop(0.68, 'rgba(192, 132, 252, 0.78)');
+    ringGrad.addColorStop(0.85, 'rgba(192, 132, 252, 0.4)');
     ringGrad.addColorStop(1.0, 'rgba(192, 132, 252, 0)');
     ringCtx.fillStyle = ringGrad;
     ringCtx.fillRect(0, 0, 512, 512);
@@ -420,8 +476,8 @@ export class SpaceScene {
       map: ringTexture,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.82,
-      roughness: 0.9,
+      opacity: 0.85,
+      roughness: 0.95,
       metalness: 0.0
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
@@ -441,11 +497,11 @@ export class SpaceScene {
     this.scene.add(saturnMesh);
     this.celestialBodies.push(saturnMesh);
 
-    // --- 2. Cratered Terrestrial Moon with Realistic Regolith ---
+    // --- 2. Cratered Terrestrial Moon with Regolith Bump Shading ---
     const moonGeo = new THREE.SphereGeometry(3.6, 64, 64);
     const moonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
-      roughness: 0.94,
+      roughness: 0.96,
       metalness: 0.01
     });
     const moonPlanet = new THREE.Mesh(moonGeo, moonMat);
@@ -461,72 +517,93 @@ export class SpaceScene {
     this.scene.add(moonPlanet);
     this.celestialBodies.push(moonPlanet);
 
-    // --- 3. Oceanic Exoplanet with Orbital Satellite Moon ---
-    const oceanGeo = new THREE.SphereGeometry(3.4, 64, 64);
+    // --- 3. Oceanic Exoplanet with Dual 3D Cloud Layer & Atmospheric Glow ---
+    const oceanGroup = new THREE.Group();
+    const oceanGeo = new THREE.SphereGeometry(3.5, 64, 64);
     const oceanMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('oceanic-terrestrial'),
-      roughness: 0.82,
-      metalness: 0.04
+      roughness: 0.78,
+      metalness: 0.02
     });
     const oceanPlanet = new THREE.Mesh(oceanGeo, oceanMat);
+    oceanGroup.add(oceanPlanet);
 
+    // Independent 3D Floating Cloud Sphere (Parallax Depth)
+    const cloudGeo = new THREE.SphereGeometry(3.56, 48, 48);
+    const cloudMat = new THREE.MeshStandardMaterial({
+      map: this.createCloudLayerTexture(),
+      transparent: true,
+      opacity: 0.85,
+      roughness: 0.95,
+      blending: THREE.NormalBlending
+    });
+    const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
+    oceanGroup.add(cloudMesh);
+
+    // Atmospheric Rayleigh Scattering
+    const oceanAtmosphere = this.createAtmosphericGlowMesh(3.5, 0x38bdf8, 3.2);
+    oceanGroup.add(oceanAtmosphere);
+
+    // Orbiting Sub-Moon
     const subMoonGeo = new THREE.SphereGeometry(0.75, 32, 32);
     const subMoonMat = new THREE.MeshStandardMaterial({
-      color: 0xcbd5e1,
+      map: this.createRealisticPlanetaryTexture('cratered-lunar'),
       roughness: 0.95
     });
     const subMoon = new THREE.Mesh(subMoonGeo, subMoonMat);
-    subMoon.position.set(5.2, 0.6, 0);
-    oceanPlanet.add(subMoon);
+    subMoon.position.set(5.4, 0.6, 0);
+    oceanGroup.add(subMoon);
 
-    oceanPlanet.position.set(28, -8, -120);
-    oceanPlanet.userData = {
+    oceanGroup.position.set(28, -8, -120);
+    oceanGroup.userData = {
       baseX: 28,
       baseY: -8,
       vz: 0.06,
       orbitMesh: subMoon,
+      cloudMesh: cloudMesh,
       orbitSpeed: 0.0015,
       rotVelocity: new THREE.Vector3(0.0002, 0.0016, 0.0003),
       resetZ: -250,
       limitZ: 38
     };
-    this.scene.add(oceanPlanet);
-    this.celestialBodies.push(oceanPlanet);
+    this.scene.add(oceanGroup);
+    this.celestialBodies.push(oceanGroup);
 
-    // --- 4. The Vela Pulsar / Magnetar with Relativistic Plasma Beams ---
+    // --- 4. The Vela Pulsar / Magnetar with Relativistic Synchrotron Plasma Jets ---
     const pulsarGroup = new THREE.Group();
     const coreGeo = new THREE.SphereGeometry(1.6, 32, 32);
-    const coreMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+    const coreMat = new THREE.MeshBasicMaterial({ color: 0x67e8f9 });
     const pulsarCore = new THREE.Mesh(coreGeo, coreMat);
     pulsarGroup.add(pulsarCore);
 
-    // Accretion Disk Glow
-    const diskGeo = new THREE.RingGeometry(2.0, 4.8, 48);
+    // Accretion Disk
+    const diskGeo = new THREE.RingGeometry(2.2, 5.2, 64);
     const diskMat = new THREE.MeshBasicMaterial({
       color: 0x818cf8,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.6
+      opacity: 0.55,
+      blending: THREE.AdditiveBlending
     });
     const diskMesh = new THREE.Mesh(diskGeo, diskMat);
     diskMesh.rotation.x = Math.PI / 2;
     pulsarGroup.add(diskMesh);
 
-    // Relativistic Plasma Jet Cones (Top & Bottom magnetic poles)
-    const jetGeo = new THREE.ConeGeometry(1.2, 18, 24, 1, true);
+    // Relativistic Particle Cones
+    const jetGeo = new THREE.ConeGeometry(1.4, 20, 32, 1, true);
     const jetMat = new THREE.MeshBasicMaterial({
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.4,
       side: THREE.DoubleSide,
       blending: THREE.AdditiveBlending
     });
     const topJet = new THREE.Mesh(jetGeo, jetMat);
-    topJet.position.y = 9.5;
+    topJet.position.y = 10.5;
     pulsarGroup.add(topJet);
 
     const bottomJet = new THREE.Mesh(jetGeo, jetMat);
-    bottomJet.position.y = -9.5;
+    bottomJet.position.y = -10.5;
     bottomJet.rotation.x = Math.PI;
     pulsarGroup.add(bottomJet);
 
@@ -535,21 +612,24 @@ export class SpaceScene {
       baseX: -29,
       baseY: 14,
       vz: 0.04,
-      rotVelocity: new THREE.Vector3(0.004, 0.035, 0.002), // Rapid pulsar rotation
+      rotVelocity: new THREE.Vector3(0.004, 0.035, 0.002),
       resetZ: -310,
       limitZ: 38
     };
     this.scene.add(pulsarGroup);
     this.celestialBodies.push(pulsarGroup);
 
-    // --- 5. Volcanic Magma Exoplanet (55 Cancri e / Mustafar Archetype) ---
-    const magmaGeo = new THREE.SphereGeometry(3.1, 48, 48);
+    // --- 5. Volcanic Magma Exoplanet with Atmosphere Glow ---
+    const magmaGeo = new THREE.SphereGeometry(3.2, 48, 48);
     const magmaMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('volcanic-magma'),
       roughness: 0.92,
-      metalness: 0.08
+      metalness: 0.05
     });
     const magmaPlanet = new THREE.Mesh(magmaGeo, magmaMat);
+    const magmaAtmosphere = this.createAtmosphericGlowMesh(3.2, 0xf97316, 3.8);
+    magmaPlanet.add(magmaAtmosphere);
+
     magmaPlanet.position.set(27, -13, -165);
     magmaPlanet.userData = {
       baseX: 27,
@@ -562,17 +642,18 @@ export class SpaceScene {
     this.scene.add(magmaPlanet);
     this.celestialBodies.push(magmaPlanet);
 
-    // --- 6. Ice Giant with Vertical Polar Ring (Uranus Archetype) ---
+    // --- 6. Ice Giant with Vertical Polar Ring & Cyan Methane Halo ---
     const iceGeo = new THREE.SphereGeometry(3.3, 48, 48);
     const iceMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('ice-giant-aquamarine'),
-      roughness: 0.85,
+      roughness: 0.88,
       metalness: 0.01
     });
     const icePlanet = new THREE.Mesh(iceGeo, iceMat);
+    const iceAtmosphere = this.createAtmosphericGlowMesh(3.3, 0x38bdf8, 3.0);
+    icePlanet.add(iceAtmosphere);
 
-    // Vertical Polar Ring
-    const iceRingGeo = new THREE.RingGeometry(4.2, 6.2, 64);
+    const iceRingGeo = new THREE.RingGeometry(4.4, 6.4, 64);
     const iceRingMat = new THREE.MeshBasicMaterial({
       color: 0xbae6fd,
       side: THREE.DoubleSide,
@@ -580,7 +661,7 @@ export class SpaceScene {
       opacity: 0.5
     });
     const iceRing = new THREE.Mesh(iceRingGeo, iceRingMat);
-    iceRing.rotation.y = Math.PI / 2.1; // Perpendicular polar tilt
+    iceRing.rotation.y = Math.PI / 2.1;
     icePlanet.add(iceRing);
 
     icePlanet.position.set(-26, 0.5, -150);
@@ -595,25 +676,22 @@ export class SpaceScene {
     this.scene.add(icePlanet);
     this.celestialBodies.push(icePlanet);
 
-    // --- 7. Deep-Space Orbital Relay Beacon / Space Station ---
+    // --- 7. Deep-Space Orbital Relay Station ---
     const stationGroup = new THREE.Group();
-    // Central Hub
     const hubGeo = new THREE.CylinderGeometry(0.6, 0.6, 2.8, 16);
     const stationMat = new THREE.MeshStandardMaterial({
       color: 0x94a3b8,
-      roughness: 0.6,
+      roughness: 0.5,
       metalness: 0.8
     });
     const hubMesh = new THREE.Mesh(hubGeo, stationMat);
     stationGroup.add(hubMesh);
 
-    // Rotating Torus Ring
     const torusGeo = new THREE.TorusGeometry(2.4, 0.25, 12, 32);
     const torusMesh = new THREE.Mesh(torusGeo, stationMat);
     torusMesh.rotation.x = Math.PI / 2;
     stationGroup.add(torusMesh);
 
-    // Navigation Beacon Light (Red Pulse)
     const beaconGeo = new THREE.SphereGeometry(0.2, 8, 8);
     const beaconMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
     const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
@@ -625,24 +703,23 @@ export class SpaceScene {
       baseX: 26,
       baseY: 9.5,
       vz: 0.07,
-      rotVelocity: new THREE.Vector3(0.001, 0.008, 0.002), // Continuous station spin
+      rotVelocity: new THREE.Vector3(0.001, 0.008, 0.002),
       resetZ: -240,
       limitZ: 38
     };
     this.scene.add(stationGroup);
     this.celestialBodies.push(stationGroup);
 
-    // --- 8. Long-Period Icy Comet with Streaming Ion Tail ---
+    // --- 8. Long-Period Icy Comet with Trailing Ion & Dust Tail ---
     const cometGroup = new THREE.Group();
     const cometNucleusGeo = new THREE.DodecahedronGeometry(0.9, 1);
     const cometMat = new THREE.MeshStandardMaterial({
       color: 0xe2e8f0,
-      roughness: 0.95
+      roughness: 0.96
     });
     const cometNucleus = new THREE.Mesh(cometNucleusGeo, cometMat);
     cometGroup.add(cometNucleus);
 
-    // Trailing Ion Tail
     const tailGeo = new THREE.ConeGeometry(1.6, 22, 16, 1, true);
     const tailMat = new THREE.MeshBasicMaterial({
       color: 0x7dd3fc,
@@ -660,7 +737,7 @@ export class SpaceScene {
     cometGroup.userData = {
       baseX: -24,
       baseY: -5,
-      vz: 0.09, // Comet moves swifter along its hyperbolic trajectory
+      vz: 0.09,
       rotVelocity: new THREE.Vector3(0.002, 0.003, 0.005),
       resetZ: -220,
       limitZ: 38
@@ -670,18 +747,30 @@ export class SpaceScene {
   }
 
   /**
-   * Realistic Matte Rocky Asteroid Belt with 3-Axis Tumbling Physics
+   * Realistic Matte Rocky Asteroids with Procedural Craggy Surface Deformations
    */
   createRealisticAsteroidBelt() {
     const asteroidGeometries = [
-      new THREE.DodecahedronGeometry(1.4, 1),
-      new THREE.IcosahedronGeometry(1.2, 0),
-      new THREE.DodecahedronGeometry(1.0, 0),
-      new THREE.IcosahedronGeometry(1.5, 1),
+      new THREE.DodecahedronGeometry(1.4, 2),
+      new THREE.IcosahedronGeometry(1.2, 1),
+      new THREE.DodecahedronGeometry(1.0, 1),
+      new THREE.IcosahedronGeometry(1.5, 2),
       new THREE.DodecahedronGeometry(1.1, 1)
     ];
 
-    // Realistic Chondrite / Carbonaceous Rock Mineral Palette (Matte, No Gloss)
+    // Deform asteroid vertices with fractal noise for realistic rocky boulders
+    asteroidGeometries.forEach(geo => {
+      const pos = geo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const vx = pos.getX(i);
+        const vy = pos.getY(i);
+        const vz = pos.getZ(i);
+        const noise = 1.0 + (SpaceScene.fbm(vx * 3.0, vy * 3.0, 3, 0.5, 2.0) - 0.5) * 0.35;
+        pos.setXYZ(i, vx * noise, vy * noise, vz * noise);
+      }
+      geo.computeVertexNormals();
+    });
+
     const asteroidConfigs = [
       { color: 0x78716c, x: 27, y: 6, z: -70, vz: 0.08, rot: new THREE.Vector3(0.003, 0.005, 0.002) },
       { color: 0x57534e, x: 29, y: -4, z: -110, vz: 0.075, rot: new THREE.Vector3(-0.003, 0.004, 0.003) },
@@ -694,8 +783,8 @@ export class SpaceScene {
       const geo = asteroidGeometries[idx % asteroidGeometries.length];
       const mat = new THREE.MeshStandardMaterial({
         color: cfg.color,
-        roughness: 0.95, // Ultra-rough matte asteroid rock
-        metalness: 0.05,
+        roughness: 0.98,
+        metalness: 0.02,
         flatShading: true
       });
 
@@ -769,11 +858,14 @@ export class SpaceScene {
       body.rotation.y += u.rotVelocity.y;
       body.rotation.z += u.rotVelocity.z;
 
-      // Realistic Satellite Moon Orbiting
+      // Realistic Satellite Moon Orbiting & Cloud Parallax
       if (u.orbitMesh) {
         const angle = Date.now() * u.orbitSpeed;
-        u.orbitMesh.position.x = Math.cos(angle) * 5.2;
-        u.orbitMesh.position.z = Math.sin(angle) * 5.2;
+        u.orbitMesh.position.x = Math.cos(angle) * 5.4;
+        u.orbitMesh.position.z = Math.sin(angle) * 5.4;
+      }
+      if (u.cloudMesh) {
+        u.cloudMesh.rotation.y += 0.0006;
       }
 
       // Smooth, majestic cruising forward travel
