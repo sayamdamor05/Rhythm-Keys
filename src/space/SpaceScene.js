@@ -1,6 +1,6 @@
 /**
- * SpaceScene.js // Realistic 3D Cosmic Exploration Simulation for Rhythm Keys
- * Spaceship Cruising Kinematics // Matte Realistic Planetary Textures // Natural Orbital & Parallax Physics
+ * SpaceScene.js // Rock-Solid Ultra-High Performance 3D Space Cosmos
+ * Instantaneous Procedural Textures // Realistic Atmospheric Planets // Spaceship Cruising Flight
  */
 
 import * as THREE from 'three';
@@ -14,14 +14,13 @@ export class SpaceScene {
     this.stars = null;
     this.starPositions = null;
     this.starVelocities = null;
-    this.starCount = 1600;
+    this.starCount = 2000;
     
     // Controlled, majestic cruising velocity
     this.cruisingSpeed = 0.28;
     this.audioEnergy = 0;
     this.celestialBodies = [];
     this.animationFrameId = null;
-    this.clock = new THREE.Clock();
 
     // Subtle spaceship flight stabilization / cockpit drift
     this.shipSway = {
@@ -40,58 +39,58 @@ export class SpaceScene {
   }
 
   init() {
-    // 1. Scene & Camera (Inside Spaceship Observation Deck)
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      52,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1400
-    );
-    this.camera.position.set(0, 0, 24);
+    try {
+      // 1. Scene & Perspective Camera (Observation Deck View)
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(
+        54,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1500
+      );
+      this.camera.position.set(0, 0, 24);
 
-    // 2. High-Precision WebGL Renderer (Matte Physical Shading)
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: this.canvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance'
-    });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor(0x000000, 0.0); // Pure transparent for crisp gradient compositing
-    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.2;
+      // 2. High-Performance WebGL Renderer
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      this.renderer.setClearColor(0x000000, 0.0);
 
-    // 3. Realistic Astrophysical Lighting (Dominant Solar Star + Luminous Backfill)
-    const cosmicAmbient = new THREE.AmbientLight(0x6366f1, 1.8);
-    this.scene.add(cosmicAmbient);
+      // 3. Astrophysical Sunlight & Ambient
+      const cosmicAmbient = new THREE.AmbientLight(0x6366f1, 2.0);
+      this.scene.add(cosmicAmbient);
 
-    // Primary Solar Star Key Light
-    const stellarSun = new THREE.DirectionalLight(0xfffbeb, 4.5);
-    stellarSun.position.set(60, 40, 30);
-    this.scene.add(stellarSun);
+      const stellarSun = new THREE.DirectionalLight(0xfffbeb, 4.5);
+      stellarSun.position.set(60, 40, 30);
+      this.scene.add(stellarSun);
 
-    // Soft Rim Light for atmospheric scattering
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 2.2);
-    rimLight.position.set(-50, -20, -10);
-    this.scene.add(rimLight);
+      const rimLight = new THREE.DirectionalLight(0x38bdf8, 2.2);
+      rimLight.position.set(-50, -20, -10);
+      this.scene.add(rimLight);
 
-    // 4. Build Environment Layers
-    this.createVolumetricCosmicClouds();
-    this.createStardustField();
-    this.createRealisticCelestialSystem();
-    this.createRealisticAsteroidBelt();
+      // 4. Build Environment Layers
+      this.createVolumetricCosmicClouds();
+      this.createStardustField();
+      this.createRealisticCelestialSystem();
+      this.createRealisticAsteroidBelt();
 
-    // 5. Window & Mouse Events for Ship Drift
-    this.handleResize = this.handleResize.bind(this);
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    window.addEventListener('resize', this.handleResize);
-    window.addEventListener('mousemove', this.handleMouseMove);
+      // 5. Window & Mouse Events
+      this.handleResize = this.handleResize.bind(this);
+      this.handleMouseMove = this.handleMouseMove.bind(this);
+      window.addEventListener('resize', this.handleResize);
+      window.addEventListener('mousemove', this.handleMouseMove);
 
-    // 6. Start Physics Loop
-    this.animate = this.animate.bind(this);
-    this.animate();
+      // 6. Start Render Loop
+      this.animate = this.animate.bind(this);
+      this.animate();
+    } catch (err) {
+      console.error("SpaceScene init error:", err);
+    }
   }
 
   handleMouseMove(e) {
@@ -107,24 +106,24 @@ export class SpaceScene {
   createVolumetricCosmicClouds() {
     const nebulaGeo = new THREE.PlaneGeometry(240, 160);
     const nebulaConfigs = [
-      { color1: 'rgba(168, 85, 247, 0.14)', color2: 'rgba(30, 27, 75, 0.25)', x: -35, y: 15, z: -220 },
-      { color1: 'rgba(56, 189, 248, 0.12)', color2: 'rgba(15, 23, 42, 0.3)', x: 40, y: -20, z: -260 },
-      { color1: 'rgba(244, 114, 182, 0.10)', color2: 'rgba(49, 10, 50, 0.2)', x: 0, y: 30, z: -300 }
+      { color1: 'rgba(168, 85, 247, 0.18)', color2: 'rgba(30, 27, 75, 0.35)', x: -35, y: 15, z: -140 },
+      { color1: 'rgba(56, 189, 248, 0.16)', color2: 'rgba(15, 23, 42, 0.35)', x: 40, y: -20, z: -160 },
+      { color1: 'rgba(244, 114, 182, 0.14)', color2: 'rgba(49, 10, 50, 0.25)', x: 0, y: 25, z: -180 }
     ];
 
     nebulaConfigs.forEach((cfg) => {
       const canvas = document.createElement('canvas');
-      canvas.width = 512;
-      canvas.height = 512;
+      canvas.width = 256;
+      canvas.height = 256;
       const ctx = canvas.getContext('2d');
 
-      const grad = ctx.createRadialGradient(256, 256, 30, 256, 256, 256);
+      const grad = ctx.createRadialGradient(128, 128, 20, 128, 128, 128);
       grad.addColorStop(0, cfg.color1);
       grad.addColorStop(0.65, cfg.color2);
       grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
       ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 512, 512);
+      ctx.fillRect(0, 0, 256, 256);
 
       const texture = new THREE.CanvasTexture(canvas);
       const material = new THREE.MeshBasicMaterial({
@@ -150,8 +149,8 @@ export class SpaceScene {
     const ctx = canvas.getContext('2d');
     const radGrad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     radGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    radGrad.addColorStop(0.35, 'rgba(254, 240, 138, 0.8)');
-    radGrad.addColorStop(0.7, 'rgba(186, 230, 253, 0.3)');
+    radGrad.addColorStop(0.35, 'rgba(254, 240, 138, 0.9)');
+    radGrad.addColorStop(0.7, 'rgba(56, 189, 248, 0.4)');
     radGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = radGrad;
     ctx.beginPath();
@@ -165,38 +164,37 @@ export class SpaceScene {
     const colors = new Float32Array(this.starCount * 3);
     const velocities = new Float32Array(this.starCount);
 
-    // Realistic Stellar Classes (O, B, A, F, G, K, M)
     const stellarSpectrum = [
-      new THREE.Color(0xffffff), // Class A (Pure White)
-      new THREE.Color(0xfef08a), // Class G (Solar Yellow)
-      new THREE.Color(0x38bdf8), // Class B (Sky Blue)
-      new THREE.Color(0xfbcfe8), // Class M (Soft Pink/Red Dwarf)
-      new THREE.Color(0xc084fc)  // Class F (Pale Lavender)
+      new THREE.Color(0xffffff),
+      new THREE.Color(0xfef08a),
+      new THREE.Color(0x38bdf8),
+      new THREE.Color(0xfbcfe8),
+      new THREE.Color(0xc084fc)
     ];
 
     for (let i = 0; i < this.starCount; i++) {
       const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 260;
-      positions[i3 + 1] = (Math.random() - 0.5) * 160;
-      positions[i3 + 2] = -Math.random() * 350;
+      positions[i3] = (Math.random() - 0.5) * 240;
+      positions[i3 + 1] = (Math.random() - 0.5) * 150;
+      positions[i3 + 2] = -Math.random() * 300;
 
       const col = stellarSpectrum[Math.floor(Math.random() * stellarSpectrum.length)];
       colors[i3] = col.r;
       colors[i3 + 1] = col.g;
       colors[i3 + 2] = col.b;
 
-      velocities[i] = Math.random() * 0.4 + 0.35;
+      velocities[i] = Math.random() * 0.45 + 0.35;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 2.5,
+      size: 2.8,
       map: starTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.92,
+      opacity: 0.95,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -208,189 +206,134 @@ export class SpaceScene {
   }
 
   /**
-   * Procedural Realistic Matte Planet Surface Textures
+   * Fast, High-Quality Procedural Planetary Texture Generator
    */
   createRealisticPlanetaryTexture(type) {
     const canvas = document.createElement('canvas');
-    canvas.width = 1024;
-    canvas.height = 512;
+    canvas.width = 512;
+    canvas.height = 256;
     const ctx = canvas.getContext('2d');
 
     if (type === 'gas-giant-saturn') {
-      // Realistic multi-layered atmospheric bands & subtle storm swirls
-      const grad = ctx.createLinearGradient(0, 0, 0, 512);
-      grad.addColorStop(0.0, '#4a3b69');
-      grad.addColorStop(0.15, '#7c5295');
-      grad.addColorStop(0.3, '#c084fc');
-      grad.addColorStop(0.45, '#e9d5ff');
+      const grad = ctx.createLinearGradient(0, 0, 0, 256);
+      grad.addColorStop(0.0, '#3b0764');
+      grad.addColorStop(0.2, '#6b21a8');
+      grad.addColorStop(0.4, '#c084fc');
       grad.addColorStop(0.55, '#f472b6');
-      grad.addColorStop(0.7, '#a855f7');
-      grad.addColorStop(0.85, '#6b21a8');
-      grad.addColorStop(1.0, '#3b0764');
+      grad.addColorStop(0.7, '#e9d5ff');
+      grad.addColorStop(0.85, '#a855f7');
+      grad.addColorStop(1.0, '#4a3b69');
       ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1024, 512);
+      ctx.fillRect(0, 0, 512, 256);
 
-      // Fine atmospheric micro-bands
-      for (let y = 10; y < 512; y += 8) {
-        ctx.fillStyle = (y % 16 === 0) ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.1)';
-        ctx.fillRect(0, y, 1024, 4);
+      for (let y = 6; y < 256; y += 8) {
+        ctx.fillStyle = (y % 16 === 0) ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)';
+        ctx.fillRect(0, y, 512, 4);
       }
 
-      // Atmospheric storm cyclones
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+      ctx.fillStyle = 'rgba(254, 240, 138, 0.6)';
       ctx.beginPath();
-      ctx.ellipse(320, 220, 48, 18, 0.1, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = 'rgba(244, 114, 182, 0.25)';
-      ctx.beginPath();
-      ctx.ellipse(750, 310, 36, 14, -0.1, 0, Math.PI * 2);
+      ctx.ellipse(180, 120, 36, 14, 0.08, 0, Math.PI * 2);
       ctx.fill();
 
     } else if (type === 'cratered-lunar') {
-      // Realistic lunar basalt & cratered terrain
-      ctx.fillStyle = '#475569';
-      ctx.fillRect(0, 0, 1024, 512);
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(0, 0, 512, 256);
 
-      // Basaltic maria plains
       ctx.fillStyle = '#334155';
       ctx.beginPath();
-      ctx.ellipse(380, 260, 140, 90, 0.3, 0, Math.PI * 2);
+      ctx.ellipse(160, 120, 70, 45, 0.3, 0, Math.PI * 2);
       ctx.fill();
       ctx.beginPath();
-      ctx.ellipse(720, 300, 120, 80, -0.2, 0, Math.PI * 2);
+      ctx.ellipse(360, 150, 60, 40, -0.2, 0, Math.PI * 2);
       ctx.fill();
 
-      // Realistic impact craters with elevated rims and shadow interiors
       const craters = [
-        { x: 220, y: 160, r: 42 },
-        { x: 520, y: 190, r: 35 },
-        { x: 440, y: 380, r: 50 },
-        { x: 800, y: 220, r: 38 },
-        { x: 880, y: 370, r: 45 },
-        { x: 140, y: 340, r: 28 },
-        { x: 640, y: 140, r: 24 }
+        { x: 110, y: 80, r: 22 }, { x: 260, y: 95, r: 25 }, { x: 210, y: 190, r: 28 },
+        { x: 410, y: 100, r: 20 }, { x: 440, y: 180, r: 24 }, { x: 70, y: 170, r: 16 }
       ];
-
       craters.forEach(c => {
-        // Shadow base
         ctx.fillStyle = '#1e293b';
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
         ctx.fill();
 
-        // Sunlight illuminated rim (illuminated from upper-left)
-        ctx.fillStyle = '#94a3b8';
+        ctx.fillStyle = '#cbd5e1';
         ctx.beginPath();
-        ctx.arc(c.x - c.r * 0.2, c.y - c.r * 0.2, c.r * 0.85, 0, Math.PI * 2);
+        ctx.arc(c.x - c.r * 0.22, c.y - c.r * 0.22, c.r * 0.88, 0, Math.PI * 2);
         ctx.fill();
 
-        // Crater floor
-        ctx.fillStyle = '#334155';
+        ctx.fillStyle = '#475569';
         ctx.beginPath();
-        ctx.arc(c.x - c.r * 0.05, c.y - c.r * 0.05, c.r * 0.7, 0, Math.PI * 2);
+        ctx.arc(c.x - c.r * 0.08, c.y - c.r * 0.08, c.r * 0.72, 0, Math.PI * 2);
         ctx.fill();
       });
 
     } else if (type === 'oceanic-terrestrial') {
-      // Deep blue oceanic planet with landmasses and swirling cloud belts
-      ctx.fillStyle = '#0369a1';
-      ctx.fillRect(0, 0, 1024, 512);
+      ctx.fillStyle = '#0284c7';
+      ctx.fillRect(0, 0, 512, 256);
 
-      // Continents
       ctx.fillStyle = '#15803d';
       ctx.beginPath();
-      ctx.ellipse(260, 240, 120, 80, 0.4, 0, Math.PI * 2);
+      ctx.ellipse(140, 120, 65, 45, 0.4, 0, Math.PI * 2);
       ctx.fill();
-
-      ctx.fillStyle = '#16a34a';
       ctx.beginPath();
-      ctx.ellipse(680, 270, 160, 95, -0.3, 0, Math.PI * 2);
+      ctx.ellipse(340, 135, 80, 50, -0.3, 0, Math.PI * 2);
       ctx.fill();
 
-      // Atmospheric cloud swirls
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-      // Photo-realistic Earth-like continental biomes and bathymetry
-      for (let y = 0; y < 512; y++) {
-        for (let x = 0; x < 1024; x++) {
-          const nx = x / 1024;
-          const ny = y / 512;
-          const elevation = SpaceScene.fbm(nx * 4.5, ny * 4.5, 6, 0.55, 2.0);
-          const idx = (y * 1024 + x) * 4;
-
-          if (elevation > 0.52) {
-            // Continental landmass (forests, savannah, mountain peaks)
-            const veg = (elevation - 0.52) / 0.48;
-            data[idx] = Math.floor(34 + veg * 95);       // R
-            data[idx + 1] = Math.floor(110 + veg * 80);  // G
-            data[idx + 2] = Math.floor(45 + veg * 40);   // B
-          } else {
-            // Oceanic bathymetry (deep abyss to shallow turquoise coastal shelves)
-            const depth = elevation / 0.52;
-            data[idx] = Math.floor(6 + depth * 22);      // R
-            data[idx + 1] = Math.floor(40 + depth * 90);  // G
-            data[idx + 2] = Math.floor(100 + depth * 140); // B
-          }
-          data[idx + 3] = 255;
-        }
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      for (let i = 0; i < 6; i++) {
+        ctx.beginPath();
+        ctx.arc(60 + i * 80, 90 + (i % 3) * 35, 24, 0, Math.PI * 2);
+        ctx.fill();
       }
-      ctx.putImageData(imgData, 0, 0);
 
     } else if (type === 'volcanic-magma') {
-      // Photo-realistic tectonic magma rift plates
-      for (let y = 0; y < 512; y++) {
-        for (let x = 0; x < 1024; x++) {
-          const nx = x / 1024;
-          const ny = y / 512;
-          const crust = SpaceScene.fbm(nx * 6.0, ny * 6.0, 5, 0.5, 2.0);
-          const rift = Math.abs(Math.sin(crust * 16.0));
-          const idx = (y * 1024 + x) * 4;
+      ctx.fillStyle = '#1c1917';
+      ctx.fillRect(0, 0, 512, 256);
 
-          if (rift < 0.12) {
-            // Incandescent magma channel
-            const mag = (0.12 - rift) / 0.12;
-            data[idx] = 255;                             // R
-            data[idx + 1] = Math.floor(90 + mag * 165);  // G
-            data[idx + 2] = Math.floor(10 + mag * 60);   // B
-          } else {
-            // Cooled basaltic volcanic crust
-            const b = Math.floor(25 + crust * 30);
-            data[idx] = b;
-            data[idx + 1] = Math.floor(b * 0.9);
-            data[idx + 2] = Math.floor(b * 0.85);
-          }
-          data[idx + 3] = 255;
-        }
-      }
-      ctx.putImageData(imgData, 0, 0);
+      ctx.strokeStyle = '#ea580c';
+      ctx.lineWidth = 8;
+      ctx.beginPath();
+      ctx.moveTo(60, 40);
+      ctx.lineTo(120, 90);
+      ctx.lineTo(190, 70);
+      ctx.lineTo(260, 145);
+      ctx.lineTo(340, 110);
+      ctx.lineTo(430, 180);
+      ctx.stroke();
+
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      const calderas = [{ x: 150, y: 160, r: 24 }, { x: 370, y: 80, r: 18 }];
+      calderas.forEach(c => {
+        const rad = ctx.createRadialGradient(c.x, c.y, 2, c.x, c.y, c.r);
+        rad.addColorStop(0, '#fef08a');
+        rad.addColorStop(0.4, '#f97316');
+        rad.addColorStop(0.8, '#dc2626');
+        rad.addColorStop(1, '#1c1917');
+        ctx.fillStyle = rad;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
 
     } else if (type === 'ice-giant-aquamarine') {
-      // Photo-realistic methane ice giant atmospheric haze
-      for (let y = 0; y < 512; y++) {
-        const ny = y / 512;
-        const poleHaze = Math.cos((ny - 0.5) * Math.PI);
-        for (let x = 0; x < 1024; x++) {
-          const nx = x / 1024;
-          const noise = SpaceScene.fbm(nx * 10.0, ny * 18.0, 4, 0.45, 2.1);
-          const idx = (y * 1024 + x) * 4;
-
-          data[idx] = Math.floor(20 + noise * 50 + poleHaze * 30);     // R
-          data[idx + 1] = Math.floor(130 + noise * 60 + poleHaze * 50); // G
-          data[idx + 2] = Math.floor(200 + noise * 45 + poleHaze * 35); // B
-          data[idx + 3] = 255;
-        }
-      }
-      ctx.putImageData(imgData, 0, 0);
-
-    } else {
-      // Photorealistic Solar Corona Surface
-      const grad = ctx.createRadialGradient(512, 256, 40, 512, 256, 512);
-      grad.addColorStop(0.0, '#fef08a');
-      grad.addColorStop(0.3, '#fde047');
-      grad.addColorStop(0.65, '#f97316');
-      grad.addColorStop(1.0, '#c2410c');
+      const grad = ctx.createLinearGradient(0, 0, 0, 256);
+      grad.addColorStop(0.0, '#0c4a6e');
+      grad.addColorStop(0.3, '#0284c7');
+      grad.addColorStop(0.5, '#38bdf8');
+      grad.addColorStop(0.7, '#7dd3fc');
+      grad.addColorStop(1.0, '#0369a1');
       ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1024, 512);
+      ctx.fillRect(0, 0, 512, 256);
+
+      for (let y = 8; y < 256; y += 10) {
+        ctx.fillStyle = (y % 20 === 0) ? 'rgba(255, 255, 255, 0.18)' : 'rgba(12, 74, 110, 0.15)';
+        ctx.fillRect(0, y, 512, 4);
+      }
     }
 
     const texture = new THREE.CanvasTexture(canvas);
@@ -400,83 +343,72 @@ export class SpaceScene {
   }
 
   /**
-   * Procedural Cloud Layer Texture for Terrestrial Worlds
+   * Atmospheric Glow Halo Sprite
    */
-  createCloudLayerTexture() {
+  createAtmosphericGlowMesh(radius, glowColor = '#38bdf8') {
     const canvas = document.createElement('canvas');
-    canvas.width = 1024;
-    canvas.height = 512;
+    canvas.width = 128;
+    canvas.height = 128;
     const ctx = canvas.getContext('2d');
-    const imgData = ctx.createImageData(1024, 512);
-    const data = imgData.data;
+    const grad = ctx.createRadialGradient(64, 64, 30, 64, 64, 64);
+    grad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+    grad.addColorStop(0.65, glowColor);
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 128, 128);
 
-    for (let y = 0; y < 512; y++) {
-      for (let x = 0; x < 1024; x++) {
-        const nx = x / 1024;
-        const ny = y / 512;
-        const clouds = SpaceScene.fbm(nx * 8.0, ny * 6.0, 5, 0.5, 2.2);
-        const idx = (y * 1024 + x) * 4;
-
-        if (clouds > 0.48) {
-          const alpha = (clouds - 0.48) / 0.52;
-          data[idx] = 255;
-          data[idx + 1] = 255;
-          data[idx + 2] = 255;
-          data[idx + 3] = Math.floor(alpha * 220);
-        } else {
-          data[idx + 3] = 0;
-        }
-      }
-    }
-    ctx.putImageData(imgData, 0, 0);
     const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.ClampToEdgeWrapping;
-    return texture;
+    const spriteMat = new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      opacity: 0.85
+    });
+    const sprite = new THREE.Sprite(spriteMat);
+    sprite.scale.set(radius * 2.8, radius * 2.8, 1);
+    return sprite;
   }
 
   /**
    * Photo-Realistic Multi-Tier Celestial Planetary System
    */
   createRealisticCelestialSystem() {
-    // --- 1. Ringed Gas Giant (Saturn Archetype) with Rayleigh Atmosphere ---
-    const saturnGeo = new THREE.SphereGeometry(7.2, 64, 64);
+    // --- 1. Ringed Gas Giant (Saturn Archetype) ---
+    const saturnGeo = new THREE.SphereGeometry(7.5, 48, 48);
     const saturnMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('gas-giant-saturn'),
-      roughness: 0.92,
+      roughness: 0.9,
       metalness: 0.01
     });
     const saturnMesh = new THREE.Mesh(saturnGeo, saturnMat);
 
-    // Add Atmospheric Rayleigh Scattering Limb Halo
-    const saturnAtmosphere = this.createAtmosphericGlowMesh(7.2, 0xc084fc, 3.2);
-    saturnMesh.add(saturnAtmosphere);
+    // Atmospheric Glow
+    const saturnGlow = this.createAtmosphericGlowMesh(7.5, 'rgba(192, 132, 252, 0.5)');
+    saturnMesh.add(saturnGlow);
 
-    // Realistic Dust Ring with Inner Cassini Divisions & Encke Gap
-    const ringGeo = new THREE.RingGeometry(9.0, 15.2, 128);
+    // Dust Ring with Cassini Division
+    const ringGeo = new THREE.RingGeometry(9.2, 15.6, 64);
     const ringCanvas = document.createElement('canvas');
-    ringCanvas.width = 512;
-    ringCanvas.height = 512;
+    ringCanvas.width = 256;
+    ringCanvas.height = 256;
     const ringCtx = ringCanvas.getContext('2d');
-    const ringGrad = ringCtx.createRadialGradient(256, 256, 70, 256, 256, 256);
+    const ringGrad = ringCtx.createRadialGradient(128, 128, 35, 128, 128, 128);
     ringGrad.addColorStop(0.0, 'rgba(216, 180, 254, 0)');
-    ringGrad.addColorStop(0.12, 'rgba(216, 180, 254, 0.6)');
+    ringGrad.addColorStop(0.15, 'rgba(216, 180, 254, 0.7)');
     ringGrad.addColorStop(0.48, 'rgba(244, 114, 182, 0.85)');
-    ringGrad.addColorStop(0.58, 'rgba(15, 23, 42, 0.05)'); // Cassini Division Gap
+    ringGrad.addColorStop(0.58, 'rgba(15, 23, 42, 0.05)');
     ringGrad.addColorStop(0.68, 'rgba(192, 132, 252, 0.8)');
-    ringGrad.addColorStop(0.85, 'rgba(192, 132, 252, 0.4)');
     ringGrad.addColorStop(1.0, 'rgba(192, 132, 252, 0)');
     ringCtx.fillStyle = ringGrad;
-    ringCtx.fillRect(0, 0, 512, 512);
+    ringCtx.fillRect(0, 0, 256, 256);
 
     const ringTexture = new THREE.CanvasTexture(ringCanvas);
     const ringMat = new THREE.MeshStandardMaterial({
       map: ringTexture,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.88,
-      roughness: 0.95,
-      metalness: 0.0
+      opacity: 0.9,
+      roughness: 0.95
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
     ringMesh.rotation.x = Math.PI / 2.35;
@@ -495,11 +427,11 @@ export class SpaceScene {
     this.scene.add(saturnMesh);
     this.celestialBodies.push(saturnMesh);
 
-    // --- 2. Cratered Terrestrial Moon with Regolith Bump Shading ---
-    const moonGeo = new THREE.SphereGeometry(5.2, 64, 64);
+    // --- 2. Cratered Lunar Moon ---
+    const moonGeo = new THREE.SphereGeometry(5.2, 48, 48);
     const moonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
-      roughness: 0.96,
+      roughness: 0.95,
       metalness: 0.01
     });
     const moonPlanet = new THREE.Mesh(moonGeo, moonMat);
@@ -515,35 +447,22 @@ export class SpaceScene {
     this.scene.add(moonPlanet);
     this.celestialBodies.push(moonPlanet);
 
-    // --- 3. Oceanic Exoplanet with Dual 3D Cloud Layer & Atmospheric Glow ---
+    // --- 3. Oceanic Exoplanet with Orbital Sub-Moon ---
     const oceanGroup = new THREE.Group();
-    const oceanGeo = new THREE.SphereGeometry(6.2, 64, 64);
+    const oceanGeo = new THREE.SphereGeometry(6.2, 48, 48);
     const oceanMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('oceanic-terrestrial'),
-      roughness: 0.78,
+      roughness: 0.8,
       metalness: 0.02
     });
     const oceanPlanet = new THREE.Mesh(oceanGeo, oceanMat);
     oceanGroup.add(oceanPlanet);
 
-    // Independent 3D Floating Cloud Sphere (Parallax Depth)
-    const cloudGeo = new THREE.SphereGeometry(6.3, 48, 48);
-    const cloudMat = new THREE.MeshStandardMaterial({
-      map: this.createCloudLayerTexture(),
-      transparent: true,
-      opacity: 0.85,
-      roughness: 0.95,
-      blending: THREE.NormalBlending
-    });
-    const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
-    oceanGroup.add(cloudMesh);
+    const oceanGlow = this.createAtmosphericGlowMesh(6.2, 'rgba(56, 189, 248, 0.55)');
+    oceanGroup.add(oceanGlow);
 
-    // Atmospheric Rayleigh Scattering
-    const oceanAtmosphere = this.createAtmosphericGlowMesh(6.2, 0x38bdf8, 3.0);
-    oceanGroup.add(oceanAtmosphere);
-
-    // Orbiting Sub-Moon
-    const subMoonGeo = new THREE.SphereGeometry(1.2, 32, 32);
+    // Sub-Moon
+    const subMoonGeo = new THREE.SphereGeometry(1.2, 24, 24);
     const subMoonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
       roughness: 0.95
@@ -558,7 +477,6 @@ export class SpaceScene {
       baseY: -6,
       vz: 0.06,
       orbitMesh: subMoon,
-      cloudMesh: cloudMesh,
       orbitSpeed: 0.0015,
       rotVelocity: new THREE.Vector3(0.0002, 0.0016, 0.0003),
       resetZ: -175,
@@ -567,15 +485,14 @@ export class SpaceScene {
     this.scene.add(oceanGroup);
     this.celestialBodies.push(oceanGroup);
 
-    // --- 4. The Vela Pulsar / Magnetar with Relativistic Synchrotron Plasma Jets ---
+    // --- 4. The Vela Pulsar / Magnetar with Relativistic Plasma Jets ---
     const pulsarGroup = new THREE.Group();
-    const coreGeo = new THREE.SphereGeometry(2.4, 32, 32);
+    const coreGeo = new THREE.SphereGeometry(2.4, 24, 24);
     const coreMat = new THREE.MeshBasicMaterial({ color: 0x67e8f9 });
     const pulsarCore = new THREE.Mesh(coreGeo, coreMat);
     pulsarGroup.add(pulsarCore);
 
-    // Accretion Disk
-    const diskGeo = new THREE.RingGeometry(3.2, 7.5, 64);
+    const diskGeo = new THREE.RingGeometry(3.2, 7.5, 32);
     const diskMat = new THREE.MeshBasicMaterial({
       color: 0x818cf8,
       side: THREE.DoubleSide,
@@ -587,8 +504,8 @@ export class SpaceScene {
     diskMesh.rotation.x = Math.PI / 2;
     pulsarGroup.add(diskMesh);
 
-    // Relativistic Particle Cones
-    const jetGeo = new THREE.ConeGeometry(2.2, 28, 32, 1, true);
+    // Particle Cones
+    const jetGeo = new THREE.ConeGeometry(2.2, 28, 24, 1, true);
     const jetMat = new THREE.MeshBasicMaterial({
       color: 0x38bdf8,
       transparent: true,
@@ -617,7 +534,7 @@ export class SpaceScene {
     this.scene.add(pulsarGroup);
     this.celestialBodies.push(pulsarGroup);
 
-    // --- 5. Volcanic Magma Exoplanet with Atmosphere Glow ---
+    // --- 5. Volcanic Magma Exoplanet ---
     const magmaGeo = new THREE.SphereGeometry(5.4, 48, 48);
     const magmaMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('volcanic-magma'),
@@ -625,8 +542,8 @@ export class SpaceScene {
       metalness: 0.05
     });
     const magmaPlanet = new THREE.Mesh(magmaGeo, magmaMat);
-    const magmaAtmosphere = this.createAtmosphericGlowMesh(5.4, 0xf97316, 3.6);
-    magmaPlanet.add(magmaAtmosphere);
+    const magmaGlow = this.createAtmosphericGlowMesh(5.4, 'rgba(249, 115, 22, 0.5)');
+    magmaPlanet.add(magmaGlow);
 
     magmaPlanet.position.set(39, 14, -80);
     magmaPlanet.userData = {
@@ -640,7 +557,7 @@ export class SpaceScene {
     this.scene.add(magmaPlanet);
     this.celestialBodies.push(magmaPlanet);
 
-    // --- 6. Ice Giant with Vertical Polar Ring & Cyan Methane Halo ---
+    // --- 6. Ice Giant with Vertical Polar Ring ---
     const iceGeo = new THREE.SphereGeometry(4.8, 48, 48);
     const iceMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('ice-giant-aquamarine'),
@@ -648,10 +565,10 @@ export class SpaceScene {
       metalness: 0.01
     });
     const icePlanet = new THREE.Mesh(iceGeo, iceMat);
-    const iceAtmosphere = this.createAtmosphericGlowMesh(4.8, 0x38bdf8, 3.0);
-    icePlanet.add(iceAtmosphere);
+    const iceGlow = this.createAtmosphericGlowMesh(4.8, 'rgba(56, 189, 248, 0.5)');
+    icePlanet.add(iceGlow);
 
-    const iceRingGeo = new THREE.RingGeometry(6.4, 9.4, 64);
+    const iceRingGeo = new THREE.RingGeometry(6.4, 9.4, 48);
     const iceRingMat = new THREE.MeshBasicMaterial({
       color: 0xbae6fd,
       side: THREE.DoubleSide,
@@ -708,7 +625,7 @@ export class SpaceScene {
     this.scene.add(stationGroup);
     this.celestialBodies.push(stationGroup);
 
-    // --- 8. Long-Period Icy Comet with Trailing Ion & Dust Tail ---
+    // --- 8. Long-Period Icy Comet with Trailing Tail ---
     const cometGroup = new THREE.Group();
     const cometNucleusGeo = new THREE.DodecahedronGeometry(1.4, 1);
     const cometMat = new THREE.MeshStandardMaterial({
@@ -745,36 +662,23 @@ export class SpaceScene {
   }
 
   /**
-   * Realistic Matte Rocky Asteroids with Procedural Craggy Surface Deformations
+   * Realistic Matte Rocky Asteroids
    */
   createRealisticAsteroidBelt() {
     const asteroidGeometries = [
-      new THREE.DodecahedronGeometry(1.4, 2),
-      new THREE.IcosahedronGeometry(1.2, 1),
-      new THREE.DodecahedronGeometry(1.0, 1),
-      new THREE.IcosahedronGeometry(1.5, 2),
-      new THREE.DodecahedronGeometry(1.1, 1)
+      new THREE.DodecahedronGeometry(1.6, 0),
+      new THREE.IcosahedronGeometry(1.4, 0),
+      new THREE.DodecahedronGeometry(1.2, 0),
+      new THREE.IcosahedronGeometry(1.8, 0),
+      new THREE.DodecahedronGeometry(1.3, 0)
     ];
 
-    // Deform asteroid vertices with fractal noise for realistic rocky boulders
-    asteroidGeometries.forEach(geo => {
-      const pos = geo.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        const vx = pos.getX(i);
-        const vy = pos.getY(i);
-        const vz = pos.getZ(i);
-        const noise = 1.0 + (SpaceScene.fbm(vx * 3.0, vy * 3.0, 3, 0.5, 2.0) - 0.5) * 0.35;
-        pos.setXYZ(i, vx * noise, vy * noise, vz * noise);
-      }
-      geo.computeVertexNormals();
-    });
-
     const asteroidConfigs = [
-      { color: 0x78716c, x: 27, y: 6, z: -70, vz: 0.08, rot: new THREE.Vector3(0.003, 0.005, 0.002) },
-      { color: 0x57534e, x: 29, y: -4, z: -110, vz: 0.075, rot: new THREE.Vector3(-0.003, 0.004, 0.003) },
-      { color: 0xa8a29e, x: -28, y: 7, z: -85, vz: 0.085, rot: new THREE.Vector3(0.002, -0.004, 0.005) },
-      { color: 0x64748b, x: -27, y: -7, z: -130, vz: 0.07, rot: new THREE.Vector3(0.004, 0.003, -0.002) },
-      { color: 0x71717a, x: 26, y: 16, z: -160, vz: 0.065, rot: new THREE.Vector3(-0.003, 0.005, 0.003) }
+      { color: 0x78716c, x: 27, y: 6, z: -40, vz: 0.08, rot: new THREE.Vector3(0.003, 0.005, 0.002) },
+      { color: 0x57534e, x: 29, y: -4, z: -60, vz: 0.075, rot: new THREE.Vector3(-0.003, 0.004, 0.003) },
+      { color: 0xa8a29e, x: -28, y: 7, z: -50, vz: 0.085, rot: new THREE.Vector3(0.002, -0.004, 0.005) },
+      { color: 0x64748b, x: -27, y: -7, z: -70, vz: 0.07, rot: new THREE.Vector3(0.004, 0.003, -0.002) },
+      { color: 0x71717a, x: 26, y: 16, z: -80, vz: 0.065, rot: new THREE.Vector3(-0.003, 0.005, 0.003) }
     ];
 
     asteroidConfigs.forEach((cfg, idx) => {
@@ -793,7 +697,7 @@ export class SpaceScene {
         baseY: cfg.y,
         vz: cfg.vz,
         rotVelocity: cfg.rot,
-        resetZ: -230,
+        resetZ: -160,
         limitZ: 38
       };
 
@@ -816,11 +720,10 @@ export class SpaceScene {
   animate() {
     this.animationFrameId = requestAnimationFrame(this.animate);
 
-    // Dynamic audio energy response
     const speedBoost = 1.0 + (this.audioEnergy * 0.5);
     const currentSpeed = this.cruisingSpeed * speedBoost;
 
-    // 1. Realistic Spaceship Cockpit Sway / Flight Inertia
+    // 1. Spaceship Cockpit Sway / Flight Inertia
     this.shipSway.currentX += (this.shipSway.targetX - this.shipSway.currentX) * 0.03;
     this.shipSway.currentY += (this.shipSway.targetY - this.shipSway.currentY) * 0.03;
     this.shipSway.roll = -this.shipSway.currentX * 0.015;
@@ -837,10 +740,9 @@ export class SpaceScene {
         const i3 = i * 3;
         pos[i3 + 2] += currentSpeed * vels[i];
 
-        // Reset past camera back to deep distance
         if (pos[i3 + 2] > 24) {
-          pos[i3 + 2] = -420;
-          pos[i3] = (Math.random() - 0.5) * 220;
+          pos[i3 + 2] = -300;
+          pos[i3] = (Math.random() - 0.5) * 240;
           pos[i3 + 1] = (Math.random() - 0.5) * 150;
         }
       }
@@ -851,29 +753,21 @@ export class SpaceScene {
     for (const body of this.celestialBodies) {
       const u = body.userData;
 
-      // 3-Axis Rotational Inertia (Axial Tilt Spin & Asteroid Tumbling)
       body.rotation.x += u.rotVelocity.x;
       body.rotation.y += u.rotVelocity.y;
       body.rotation.z += u.rotVelocity.z;
 
-      // Realistic Satellite Moon Orbiting & Cloud Parallax
       if (u.orbitMesh) {
         const angle = Date.now() * u.orbitSpeed;
-        u.orbitMesh.position.x = Math.cos(angle) * 5.4;
-        u.orbitMesh.position.z = Math.sin(angle) * 5.4;
-      }
-      if (u.cloudMesh) {
-        u.cloudMesh.rotation.y += 0.0006;
+        u.orbitMesh.position.x = Math.cos(angle) * 9.0;
+        u.orbitMesh.position.z = Math.sin(angle) * 9.0;
       }
 
-      // Smooth, majestic cruising forward travel
       body.position.z += u.vz * speedBoost;
 
-      // Margin preservation with gentle parallax drift
       body.position.x = u.baseX - (this.shipSway.currentX * 0.3);
       body.position.y = u.baseY - (this.shipSway.currentY * 0.2);
 
-      // Smooth recycle to distant deep space
       if (body.position.z > u.limitZ) {
         body.position.z = u.resetZ;
       }
