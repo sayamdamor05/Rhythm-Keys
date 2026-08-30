@@ -318,6 +318,57 @@ export class SpaceScene {
         ctx.fill();
       }
 
+    } else if (type === 'volcanic-magma') {
+      // Magma/Lava planet with molten fissure networks
+      ctx.fillStyle = '#1c1917'; // Basaltic dark crust
+      ctx.fillRect(0, 0, 1024, 512);
+
+      // Glowing lava fissures and caldera lakes
+      ctx.strokeStyle = '#ea580c';
+      ctx.lineWidth = 14;
+      ctx.beginPath();
+      ctx.moveTo(120, 80);
+      ctx.lineTo(240, 180);
+      ctx.lineTo(380, 140);
+      ctx.lineTo(520, 290);
+      ctx.lineTo(680, 220);
+      ctx.lineTo(850, 360);
+      ctx.stroke();
+
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      // Caldera lakes
+      const calderas = [{ x: 300, y: 320, r: 45 }, { x: 740, y: 160, r: 35 }, { x: 580, y: 400, r: 38 }];
+      calderas.forEach(c => {
+        const rad = ctx.createRadialGradient(c.x, c.y, 5, c.x, c.y, c.r);
+        rad.addColorStop(0, '#fef08a');
+        rad.addColorStop(0.4, '#f97316');
+        rad.addColorStop(0.8, '#dc2626');
+        rad.addColorStop(1, '#1c1917');
+        ctx.fillStyle = rad;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+    } else if (type === 'ice-giant-aquamarine') {
+      // Aquamarine methane clouds with delicate horizontal atmospheric striations
+      const grad = ctx.createLinearGradient(0, 0, 0, 512);
+      grad.addColorStop(0.0, '#0c4a6e');
+      grad.addColorStop(0.25, '#0284c7');
+      grad.addColorStop(0.5, '#38bdf8');
+      grad.addColorStop(0.75, '#7dd3fc');
+      grad.addColorStop(1.0, '#0369a1');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1024, 512);
+
+      for (let y = 15; y < 512; y += 12) {
+        ctx.fillStyle = (y % 24 === 0) ? 'rgba(255, 255, 255, 0.15)' : 'rgba(12, 74, 110, 0.12)';
+        ctx.fillRect(0, y, 1024, 6);
+      }
+
     } else {
       // Golden Sun / Stellar Core with convective solar granules
       const grad = ctx.createRadialGradient(512, 256, 40, 512, 256, 512);
@@ -341,7 +392,6 @@ export class SpaceScene {
   createRealisticCelestialSystem() {
     // --- 1. Ringed Gas Giant (Saturn Archetype) ---
     const saturnGeo = new THREE.SphereGeometry(4.2, 64, 64);
-    // Matte surface: high roughness, zero specular glare
     const saturnMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('gas-giant-saturn'),
       roughness: 0.88,
@@ -375,17 +425,15 @@ export class SpaceScene {
       metalness: 0.0
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-    // Realistic axial tilt (26.7°)
     ringMesh.rotation.x = Math.PI / 2.35;
     ringMesh.rotation.y = -Math.PI / 7;
     saturnMesh.add(ringMesh);
 
-    // Positioned in distant deep space (majestic slow parallax)
     saturnMesh.position.set(-28, 12, -180);
     saturnMesh.userData = {
       baseX: -28,
       baseY: 12,
-      vz: 0.045, // Slow, realistic cruiser parallax
+      vz: 0.045,
       rotVelocity: new THREE.Vector3(0.0002, 0.0012, 0.0001),
       resetZ: -280,
       limitZ: 38
@@ -397,7 +445,7 @@ export class SpaceScene {
     const moonGeo = new THREE.SphereGeometry(3.6, 64, 64);
     const moonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
-      roughness: 0.94, // Ultra-matte rock
+      roughness: 0.94,
       metalness: 0.01
     });
     const moonPlanet = new THREE.Mesh(moonGeo, moonMat);
@@ -422,7 +470,6 @@ export class SpaceScene {
     });
     const oceanPlanet = new THREE.Mesh(oceanGeo, oceanMat);
 
-    // Natural Orbiting Rocky Sub-Moon
     const subMoonGeo = new THREE.SphereGeometry(0.75, 32, 32);
     const subMoonMat = new THREE.MeshStandardMaterial({
       color: 0xcbd5e1,
@@ -446,23 +493,180 @@ export class SpaceScene {
     this.scene.add(oceanPlanet);
     this.celestialBodies.push(oceanPlanet);
 
-    // --- 4. Distant Giant Star / Sol Horizon ---
-    const starGeo = new THREE.SphereGeometry(4.0, 48, 48);
-    const starMat = new THREE.MeshBasicMaterial({
-      map: this.createRealisticPlanetaryTexture('stellar-sun')
+    // --- 4. The Vela Pulsar / Magnetar with Relativistic Plasma Beams ---
+    const pulsarGroup = new THREE.Group();
+    const coreGeo = new THREE.SphereGeometry(1.6, 32, 32);
+    const coreMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+    const pulsarCore = new THREE.Mesh(coreGeo, coreMat);
+    pulsarGroup.add(pulsarCore);
+
+    // Accretion Disk Glow
+    const diskGeo = new THREE.RingGeometry(2.0, 4.8, 48);
+    const diskMat = new THREE.MeshBasicMaterial({
+      color: 0x818cf8,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.6
     });
-    const distantStar = new THREE.Mesh(starGeo, starMat);
-    distantStar.position.set(29, 13, -210);
-    distantStar.userData = {
-      baseX: 29,
-      baseY: 13,
-      vz: 0.038, // Extremely distant, slow majestic approach
-      rotVelocity: new THREE.Vector3(0.0001, 0.0006, 0.0001),
-      resetZ: -300,
+    const diskMesh = new THREE.Mesh(diskGeo, diskMat);
+    diskMesh.rotation.x = Math.PI / 2;
+    pulsarGroup.add(diskMesh);
+
+    // Relativistic Plasma Jet Cones (Top & Bottom magnetic poles)
+    const jetGeo = new THREE.ConeGeometry(1.2, 18, 24, 1, true);
+    const jetMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.45,
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending
+    });
+    const topJet = new THREE.Mesh(jetGeo, jetMat);
+    topJet.position.y = 9.5;
+    pulsarGroup.add(topJet);
+
+    const bottomJet = new THREE.Mesh(jetGeo, jetMat);
+    bottomJet.position.y = -9.5;
+    bottomJet.rotation.x = Math.PI;
+    pulsarGroup.add(bottomJet);
+
+    pulsarGroup.position.set(-29, 14, -220);
+    pulsarGroup.userData = {
+      baseX: -29,
+      baseY: 14,
+      vz: 0.04,
+      rotVelocity: new THREE.Vector3(0.004, 0.035, 0.002), // Rapid pulsar rotation
+      resetZ: -310,
       limitZ: 38
     };
-    this.scene.add(distantStar);
-    this.celestialBodies.push(distantStar);
+    this.scene.add(pulsarGroup);
+    this.celestialBodies.push(pulsarGroup);
+
+    // --- 5. Volcanic Magma Exoplanet (55 Cancri e / Mustafar Archetype) ---
+    const magmaGeo = new THREE.SphereGeometry(3.1, 48, 48);
+    const magmaMat = new THREE.MeshStandardMaterial({
+      map: this.createRealisticPlanetaryTexture('volcanic-magma'),
+      roughness: 0.92,
+      metalness: 0.08
+    });
+    const magmaPlanet = new THREE.Mesh(magmaGeo, magmaMat);
+    magmaPlanet.position.set(27, -13, -165);
+    magmaPlanet.userData = {
+      baseX: 27,
+      baseY: -13,
+      vz: 0.05,
+      rotVelocity: new THREE.Vector3(0.0003, 0.0014, -0.0002),
+      resetZ: -270,
+      limitZ: 38
+    };
+    this.scene.add(magmaPlanet);
+    this.celestialBodies.push(magmaPlanet);
+
+    // --- 6. Ice Giant with Vertical Polar Ring (Uranus Archetype) ---
+    const iceGeo = new THREE.SphereGeometry(3.3, 48, 48);
+    const iceMat = new THREE.MeshStandardMaterial({
+      map: this.createRealisticPlanetaryTexture('ice-giant-aquamarine'),
+      roughness: 0.85,
+      metalness: 0.01
+    });
+    const icePlanet = new THREE.Mesh(iceGeo, iceMat);
+
+    // Vertical Polar Ring
+    const iceRingGeo = new THREE.RingGeometry(4.2, 6.2, 64);
+    const iceRingMat = new THREE.MeshBasicMaterial({
+      color: 0xbae6fd,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.5
+    });
+    const iceRing = new THREE.Mesh(iceRingGeo, iceRingMat);
+    iceRing.rotation.y = Math.PI / 2.1; // Perpendicular polar tilt
+    icePlanet.add(iceRing);
+
+    icePlanet.position.set(-26, 0.5, -150);
+    icePlanet.userData = {
+      baseX: -26,
+      baseY: 0.5,
+      vz: 0.052,
+      rotVelocity: new THREE.Vector3(0.0002, 0.0011, 0.0004),
+      resetZ: -260,
+      limitZ: 38
+    };
+    this.scene.add(icePlanet);
+    this.celestialBodies.push(icePlanet);
+
+    // --- 7. Deep-Space Orbital Relay Beacon / Space Station ---
+    const stationGroup = new THREE.Group();
+    // Central Hub
+    const hubGeo = new THREE.CylinderGeometry(0.6, 0.6, 2.8, 16);
+    const stationMat = new THREE.MeshStandardMaterial({
+      color: 0x94a3b8,
+      roughness: 0.6,
+      metalness: 0.8
+    });
+    const hubMesh = new THREE.Mesh(hubGeo, stationMat);
+    stationGroup.add(hubMesh);
+
+    // Rotating Torus Ring
+    const torusGeo = new THREE.TorusGeometry(2.4, 0.25, 12, 32);
+    const torusMesh = new THREE.Mesh(torusGeo, stationMat);
+    torusMesh.rotation.x = Math.PI / 2;
+    stationGroup.add(torusMesh);
+
+    // Navigation Beacon Light (Red Pulse)
+    const beaconGeo = new THREE.SphereGeometry(0.2, 8, 8);
+    const beaconMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+    const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
+    beaconMesh.position.set(0, 1.6, 0);
+    stationGroup.add(beaconMesh);
+
+    stationGroup.position.set(26, 9.5, -95);
+    stationGroup.userData = {
+      baseX: 26,
+      baseY: 9.5,
+      vz: 0.07,
+      rotVelocity: new THREE.Vector3(0.001, 0.008, 0.002), // Continuous station spin
+      resetZ: -240,
+      limitZ: 38
+    };
+    this.scene.add(stationGroup);
+    this.celestialBodies.push(stationGroup);
+
+    // --- 8. Long-Period Icy Comet with Streaming Ion Tail ---
+    const cometGroup = new THREE.Group();
+    const cometNucleusGeo = new THREE.DodecahedronGeometry(0.9, 1);
+    const cometMat = new THREE.MeshStandardMaterial({
+      color: 0xe2e8f0,
+      roughness: 0.95
+    });
+    const cometNucleus = new THREE.Mesh(cometNucleusGeo, cometMat);
+    cometGroup.add(cometNucleus);
+
+    // Trailing Ion Tail
+    const tailGeo = new THREE.ConeGeometry(1.6, 22, 16, 1, true);
+    const tailMat = new THREE.MeshBasicMaterial({
+      color: 0x7dd3fc,
+      transparent: true,
+      opacity: 0.35,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide
+    });
+    const tailMesh = new THREE.Mesh(tailGeo, tailMat);
+    tailMesh.rotation.x = -Math.PI / 2;
+    tailMesh.position.z = -11;
+    cometGroup.add(tailMesh);
+
+    cometGroup.position.set(-24, -5, -80);
+    cometGroup.userData = {
+      baseX: -24,
+      baseY: -5,
+      vz: 0.09, // Comet moves swifter along its hyperbolic trajectory
+      rotVelocity: new THREE.Vector3(0.002, 0.003, 0.005),
+      resetZ: -220,
+      limitZ: 38
+    };
+    this.scene.add(cometGroup);
+    this.celestialBodies.push(cometGroup);
   }
 
   /**
