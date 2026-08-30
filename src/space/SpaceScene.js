@@ -485,56 +485,7 @@ export class SpaceScene {
     this.scene.add(oceanGroup);
     this.celestialBodies.push(oceanGroup);
 
-    // --- 4. The Vela Pulsar / Magnetar with Relativistic Plasma Jets ---
-    const pulsarGroup = new THREE.Group();
-    const coreGeo = new THREE.SphereGeometry(2.4, 24, 24);
-    const coreMat = new THREE.MeshBasicMaterial({ color: 0x67e8f9 });
-    const pulsarCore = new THREE.Mesh(coreGeo, coreMat);
-    pulsarGroup.add(pulsarCore);
-
-    const diskGeo = new THREE.RingGeometry(3.2, 7.5, 32);
-    const diskMat = new THREE.MeshBasicMaterial({
-      color: 0x818cf8,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.65,
-      blending: THREE.AdditiveBlending
-    });
-    const diskMesh = new THREE.Mesh(diskGeo, diskMat);
-    diskMesh.rotation.x = Math.PI / 2;
-    pulsarGroup.add(diskMesh);
-
-    // Particle Cones
-    const jetGeo = new THREE.ConeGeometry(2.2, 28, 24, 1, true);
-    const jetMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
-      transparent: true,
-      opacity: 0.45,
-      side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending
-    });
-    const topJet = new THREE.Mesh(jetGeo, jetMat);
-    topJet.position.y = 14.5;
-    pulsarGroup.add(topJet);
-
-    const bottomJet = new THREE.Mesh(jetGeo, jetMat);
-    bottomJet.position.y = -14.5;
-    bottomJet.rotation.x = Math.PI;
-    pulsarGroup.add(bottomJet);
-
-    pulsarGroup.position.set(-40, 16, -95);
-    pulsarGroup.userData = {
-      baseX: -40,
-      baseY: 16,
-      vz: 0.04,
-      rotVelocity: new THREE.Vector3(0.004, 0.035, 0.002),
-      resetZ: -200,
-      limitZ: 38
-    };
-    this.scene.add(pulsarGroup);
-    this.celestialBodies.push(pulsarGroup);
-
-    // --- 5. Volcanic Magma Exoplanet ---
+    // --- 4. Volcanic Magma Exoplanet ---
     const magmaGeo = new THREE.SphereGeometry(5.4, 48, 48);
     const magmaMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('volcanic-magma'),
