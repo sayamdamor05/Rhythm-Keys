@@ -59,24 +59,23 @@ export class SpaceScene {
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor(0x121028, 0.75);
+    this.renderer.setClearColor(0x000000, 0.0); // Pure transparent for crisp gradient compositing
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.05;
+    this.renderer.toneMappingExposure = 1.2;
 
-    // 3. Realistic Astrophysical Lighting (Single Dominant Distant Star + Soft Cosmic Ambient)
-    // Deep Space Ambient (Soft Twilight Ray)
-    const cosmicAmbient = new THREE.AmbientLight(0x403666, 1.4);
+    // 3. Realistic Astrophysical Lighting (Dominant Solar Star + Luminous Backfill)
+    const cosmicAmbient = new THREE.AmbientLight(0x6366f1, 1.8);
     this.scene.add(cosmicAmbient);
 
-    // Primary Solar Star Key Light (Distant Sunlight from upper-left)
-    const stellarSun = new THREE.DirectionalLight(0xfff8e7, 3.2);
-    stellarSun.position.set(80, 50, 40);
+    // Primary Solar Star Key Light
+    const stellarSun = new THREE.DirectionalLight(0xfffbeb, 4.5);
+    stellarSun.position.set(60, 40, 30);
     this.scene.add(stellarSun);
 
-    // Distant Nebula Backfill Light (Subtle soft violet-cyan diffuse)
-    const nebulaBackfill = new THREE.DirectionalLight(0x6366f1, 0.9);
-    nebulaBackfill.position.set(-60, -30, -50);
-    this.scene.add(nebulaBackfill);
+    // Soft Rim Light for atmospheric scattering
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 2.2);
+    rimLight.position.set(-50, -20, -10);
+    this.scene.add(rimLight);
 
     // 4. Build Environment Layers
     this.createVolumetricCosmicClouds();
@@ -170,23 +169,22 @@ export class SpaceScene {
     const stellarSpectrum = [
       new THREE.Color(0xffffff), // Class A (Pure White)
       new THREE.Color(0xfef08a), // Class G (Solar Yellow)
-      new THREE.Color(0xbae6fd), // Class B (Sky Blue)
+      new THREE.Color(0x38bdf8), // Class B (Sky Blue)
       new THREE.Color(0xfbcfe8), // Class M (Soft Pink/Red Dwarf)
-      new THREE.Color(0xe0e7ff)  // Class F (Pale White-Blue)
+      new THREE.Color(0xc084fc)  // Class F (Pale Lavender)
     ];
 
     for (let i = 0; i < this.starCount; i++) {
       const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 220;
-      positions[i3 + 1] = (Math.random() - 0.5) * 150;
-      positions[i3 + 2] = -Math.random() * 450;
+      positions[i3] = (Math.random() - 0.5) * 260;
+      positions[i3 + 1] = (Math.random() - 0.5) * 160;
+      positions[i3 + 2] = -Math.random() * 350;
 
       const col = stellarSpectrum[Math.floor(Math.random() * stellarSpectrum.length)];
       colors[i3] = col.r;
       colors[i3 + 1] = col.g;
       colors[i3 + 2] = col.b;
 
-      // Realistic parallax velocity distribution
       velocities[i] = Math.random() * 0.4 + 0.35;
     }
 
@@ -194,11 +192,11 @@ export class SpaceScene {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 1.6,
+      size: 2.5,
       map: starTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.92,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -442,7 +440,7 @@ export class SpaceScene {
    */
   createRealisticCelestialSystem() {
     // --- 1. Ringed Gas Giant (Saturn Archetype) with Rayleigh Atmosphere ---
-    const saturnGeo = new THREE.SphereGeometry(4.4, 64, 64);
+    const saturnGeo = new THREE.SphereGeometry(7.2, 64, 64);
     const saturnMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('gas-giant-saturn'),
       roughness: 0.92,
@@ -451,11 +449,11 @@ export class SpaceScene {
     const saturnMesh = new THREE.Mesh(saturnGeo, saturnMat);
 
     // Add Atmospheric Rayleigh Scattering Limb Halo
-    const saturnAtmosphere = this.createAtmosphericGlowMesh(4.4, 0xc084fc, 3.4);
+    const saturnAtmosphere = this.createAtmosphericGlowMesh(7.2, 0xc084fc, 3.2);
     saturnMesh.add(saturnAtmosphere);
 
     // Realistic Dust Ring with Inner Cassini Divisions & Encke Gap
-    const ringGeo = new THREE.RingGeometry(5.6, 9.6, 128);
+    const ringGeo = new THREE.RingGeometry(9.0, 15.2, 128);
     const ringCanvas = document.createElement('canvas');
     ringCanvas.width = 512;
     ringCanvas.height = 512;
@@ -463,9 +461,9 @@ export class SpaceScene {
     const ringGrad = ringCtx.createRadialGradient(256, 256, 70, 256, 256, 256);
     ringGrad.addColorStop(0.0, 'rgba(216, 180, 254, 0)');
     ringGrad.addColorStop(0.12, 'rgba(216, 180, 254, 0.6)');
-    ringGrad.addColorStop(0.48, 'rgba(244, 114, 182, 0.82)');
-    ringGrad.addColorStop(0.58, 'rgba(15, 23, 42, 0.08)'); // Cassini Division Gap
-    ringGrad.addColorStop(0.68, 'rgba(192, 132, 252, 0.78)');
+    ringGrad.addColorStop(0.48, 'rgba(244, 114, 182, 0.85)');
+    ringGrad.addColorStop(0.58, 'rgba(15, 23, 42, 0.05)'); // Cassini Division Gap
+    ringGrad.addColorStop(0.68, 'rgba(192, 132, 252, 0.8)');
     ringGrad.addColorStop(0.85, 'rgba(192, 132, 252, 0.4)');
     ringGrad.addColorStop(1.0, 'rgba(192, 132, 252, 0)');
     ringCtx.fillStyle = ringGrad;
@@ -476,7 +474,7 @@ export class SpaceScene {
       map: ringTexture,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.88,
       roughness: 0.95,
       metalness: 0.0
     });
@@ -485,33 +483,33 @@ export class SpaceScene {
     ringMesh.rotation.y = -Math.PI / 7;
     saturnMesh.add(ringMesh);
 
-    saturnMesh.position.set(-28, 12, -180);
+    saturnMesh.position.set(-36, 10, -75);
     saturnMesh.userData = {
-      baseX: -28,
-      baseY: 12,
+      baseX: -36,
+      baseY: 10,
       vz: 0.045,
       rotVelocity: new THREE.Vector3(0.0002, 0.0012, 0.0001),
-      resetZ: -280,
+      resetZ: -180,
       limitZ: 38
     };
     this.scene.add(saturnMesh);
     this.celestialBodies.push(saturnMesh);
 
     // --- 2. Cratered Terrestrial Moon with Regolith Bump Shading ---
-    const moonGeo = new THREE.SphereGeometry(3.6, 64, 64);
+    const moonGeo = new THREE.SphereGeometry(5.2, 64, 64);
     const moonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
       roughness: 0.96,
       metalness: 0.01
     });
     const moonPlanet = new THREE.Mesh(moonGeo, moonMat);
-    moonPlanet.position.set(-27, -12, -140);
+    moonPlanet.position.set(-34, -13, -60);
     moonPlanet.userData = {
-      baseX: -27,
-      baseY: -12,
+      baseX: -34,
+      baseY: -13,
       vz: 0.055,
       rotVelocity: new THREE.Vector3(0.0003, 0.0008, -0.0002),
-      resetZ: -260,
+      resetZ: -170,
       limitZ: 38
     };
     this.scene.add(moonPlanet);
@@ -519,7 +517,7 @@ export class SpaceScene {
 
     // --- 3. Oceanic Exoplanet with Dual 3D Cloud Layer & Atmospheric Glow ---
     const oceanGroup = new THREE.Group();
-    const oceanGeo = new THREE.SphereGeometry(3.5, 64, 64);
+    const oceanGeo = new THREE.SphereGeometry(6.2, 64, 64);
     const oceanMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('oceanic-terrestrial'),
       roughness: 0.78,
@@ -529,7 +527,7 @@ export class SpaceScene {
     oceanGroup.add(oceanPlanet);
 
     // Independent 3D Floating Cloud Sphere (Parallax Depth)
-    const cloudGeo = new THREE.SphereGeometry(3.56, 48, 48);
+    const cloudGeo = new THREE.SphereGeometry(6.3, 48, 48);
     const cloudMat = new THREE.MeshStandardMaterial({
       map: this.createCloudLayerTexture(),
       transparent: true,
@@ -541,29 +539,29 @@ export class SpaceScene {
     oceanGroup.add(cloudMesh);
 
     // Atmospheric Rayleigh Scattering
-    const oceanAtmosphere = this.createAtmosphericGlowMesh(3.5, 0x38bdf8, 3.2);
+    const oceanAtmosphere = this.createAtmosphericGlowMesh(6.2, 0x38bdf8, 3.0);
     oceanGroup.add(oceanAtmosphere);
 
     // Orbiting Sub-Moon
-    const subMoonGeo = new THREE.SphereGeometry(0.75, 32, 32);
+    const subMoonGeo = new THREE.SphereGeometry(1.2, 32, 32);
     const subMoonMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('cratered-lunar'),
       roughness: 0.95
     });
     const subMoon = new THREE.Mesh(subMoonGeo, subMoonMat);
-    subMoon.position.set(5.4, 0.6, 0);
+    subMoon.position.set(9.0, 1.2, 0);
     oceanGroup.add(subMoon);
 
-    oceanGroup.position.set(28, -8, -120);
+    oceanGroup.position.set(38, -6, -65);
     oceanGroup.userData = {
-      baseX: 28,
-      baseY: -8,
+      baseX: 38,
+      baseY: -6,
       vz: 0.06,
       orbitMesh: subMoon,
       cloudMesh: cloudMesh,
       orbitSpeed: 0.0015,
       rotVelocity: new THREE.Vector3(0.0002, 0.0016, 0.0003),
-      resetZ: -250,
+      resetZ: -175,
       limitZ: 38
     };
     this.scene.add(oceanGroup);
@@ -571,18 +569,18 @@ export class SpaceScene {
 
     // --- 4. The Vela Pulsar / Magnetar with Relativistic Synchrotron Plasma Jets ---
     const pulsarGroup = new THREE.Group();
-    const coreGeo = new THREE.SphereGeometry(1.6, 32, 32);
+    const coreGeo = new THREE.SphereGeometry(2.4, 32, 32);
     const coreMat = new THREE.MeshBasicMaterial({ color: 0x67e8f9 });
     const pulsarCore = new THREE.Mesh(coreGeo, coreMat);
     pulsarGroup.add(pulsarCore);
 
     // Accretion Disk
-    const diskGeo = new THREE.RingGeometry(2.2, 5.2, 64);
+    const diskGeo = new THREE.RingGeometry(3.2, 7.5, 64);
     const diskMat = new THREE.MeshBasicMaterial({
       color: 0x818cf8,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.65,
       blending: THREE.AdditiveBlending
     });
     const diskMesh = new THREE.Mesh(diskGeo, diskMat);
@@ -590,87 +588,87 @@ export class SpaceScene {
     pulsarGroup.add(diskMesh);
 
     // Relativistic Particle Cones
-    const jetGeo = new THREE.ConeGeometry(1.4, 20, 32, 1, true);
+    const jetGeo = new THREE.ConeGeometry(2.2, 28, 32, 1, true);
     const jetMat = new THREE.MeshBasicMaterial({
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.45,
       side: THREE.DoubleSide,
       blending: THREE.AdditiveBlending
     });
     const topJet = new THREE.Mesh(jetGeo, jetMat);
-    topJet.position.y = 10.5;
+    topJet.position.y = 14.5;
     pulsarGroup.add(topJet);
 
     const bottomJet = new THREE.Mesh(jetGeo, jetMat);
-    bottomJet.position.y = -10.5;
+    bottomJet.position.y = -14.5;
     bottomJet.rotation.x = Math.PI;
     pulsarGroup.add(bottomJet);
 
-    pulsarGroup.position.set(-29, 14, -220);
+    pulsarGroup.position.set(-40, 16, -95);
     pulsarGroup.userData = {
-      baseX: -29,
-      baseY: 14,
+      baseX: -40,
+      baseY: 16,
       vz: 0.04,
       rotVelocity: new THREE.Vector3(0.004, 0.035, 0.002),
-      resetZ: -310,
+      resetZ: -200,
       limitZ: 38
     };
     this.scene.add(pulsarGroup);
     this.celestialBodies.push(pulsarGroup);
 
     // --- 5. Volcanic Magma Exoplanet with Atmosphere Glow ---
-    const magmaGeo = new THREE.SphereGeometry(3.2, 48, 48);
+    const magmaGeo = new THREE.SphereGeometry(5.4, 48, 48);
     const magmaMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('volcanic-magma'),
       roughness: 0.92,
       metalness: 0.05
     });
     const magmaPlanet = new THREE.Mesh(magmaGeo, magmaMat);
-    const magmaAtmosphere = this.createAtmosphericGlowMesh(3.2, 0xf97316, 3.8);
+    const magmaAtmosphere = this.createAtmosphericGlowMesh(5.4, 0xf97316, 3.6);
     magmaPlanet.add(magmaAtmosphere);
 
-    magmaPlanet.position.set(27, -13, -165);
+    magmaPlanet.position.set(39, 14, -80);
     magmaPlanet.userData = {
-      baseX: 27,
-      baseY: -13,
+      baseX: 39,
+      baseY: 14,
       vz: 0.05,
       rotVelocity: new THREE.Vector3(0.0003, 0.0014, -0.0002),
-      resetZ: -270,
+      resetZ: -185,
       limitZ: 38
     };
     this.scene.add(magmaPlanet);
     this.celestialBodies.push(magmaPlanet);
 
     // --- 6. Ice Giant with Vertical Polar Ring & Cyan Methane Halo ---
-    const iceGeo = new THREE.SphereGeometry(3.3, 48, 48);
+    const iceGeo = new THREE.SphereGeometry(4.8, 48, 48);
     const iceMat = new THREE.MeshStandardMaterial({
       map: this.createRealisticPlanetaryTexture('ice-giant-aquamarine'),
       roughness: 0.88,
       metalness: 0.01
     });
     const icePlanet = new THREE.Mesh(iceGeo, iceMat);
-    const iceAtmosphere = this.createAtmosphericGlowMesh(3.3, 0x38bdf8, 3.0);
+    const iceAtmosphere = this.createAtmosphericGlowMesh(4.8, 0x38bdf8, 3.0);
     icePlanet.add(iceAtmosphere);
 
-    const iceRingGeo = new THREE.RingGeometry(4.4, 6.4, 64);
+    const iceRingGeo = new THREE.RingGeometry(6.4, 9.4, 64);
     const iceRingMat = new THREE.MeshBasicMaterial({
       color: 0xbae6fd,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.5
+      opacity: 0.6
     });
     const iceRing = new THREE.Mesh(iceRingGeo, iceRingMat);
     iceRing.rotation.y = Math.PI / 2.1;
     icePlanet.add(iceRing);
 
-    icePlanet.position.set(-26, 0.5, -150);
+    icePlanet.position.set(-37, -2, -90);
     icePlanet.userData = {
-      baseX: -26,
-      baseY: 0.5,
+      baseX: -37,
+      baseY: -2,
       vz: 0.052,
       rotVelocity: new THREE.Vector3(0.0002, 0.0011, 0.0004),
-      resetZ: -260,
+      resetZ: -190,
       limitZ: 38
     };
     this.scene.add(icePlanet);
@@ -678,7 +676,7 @@ export class SpaceScene {
 
     // --- 7. Deep-Space Orbital Relay Station ---
     const stationGroup = new THREE.Group();
-    const hubGeo = new THREE.CylinderGeometry(0.6, 0.6, 2.8, 16);
+    const hubGeo = new THREE.CylinderGeometry(0.9, 0.9, 4.2, 16);
     const stationMat = new THREE.MeshStandardMaterial({
       color: 0x94a3b8,
       roughness: 0.5,
@@ -687,24 +685,24 @@ export class SpaceScene {
     const hubMesh = new THREE.Mesh(hubGeo, stationMat);
     stationGroup.add(hubMesh);
 
-    const torusGeo = new THREE.TorusGeometry(2.4, 0.25, 12, 32);
+    const torusGeo = new THREE.TorusGeometry(3.6, 0.4, 12, 32);
     const torusMesh = new THREE.Mesh(torusGeo, stationMat);
     torusMesh.rotation.x = Math.PI / 2;
     stationGroup.add(torusMesh);
 
-    const beaconGeo = new THREE.SphereGeometry(0.2, 8, 8);
+    const beaconGeo = new THREE.SphereGeometry(0.3, 8, 8);
     const beaconMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
     const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
-    beaconMesh.position.set(0, 1.6, 0);
+    beaconMesh.position.set(0, 2.3, 0);
     stationGroup.add(beaconMesh);
 
-    stationGroup.position.set(26, 9.5, -95);
+    stationGroup.position.set(34, 10, -50);
     stationGroup.userData = {
-      baseX: 26,
-      baseY: 9.5,
+      baseX: 34,
+      baseY: 10,
       vz: 0.07,
       rotVelocity: new THREE.Vector3(0.001, 0.008, 0.002),
-      resetZ: -240,
+      resetZ: -160,
       limitZ: 38
     };
     this.scene.add(stationGroup);
@@ -712,7 +710,7 @@ export class SpaceScene {
 
     // --- 8. Long-Period Icy Comet with Trailing Ion & Dust Tail ---
     const cometGroup = new THREE.Group();
-    const cometNucleusGeo = new THREE.DodecahedronGeometry(0.9, 1);
+    const cometNucleusGeo = new THREE.DodecahedronGeometry(1.4, 1);
     const cometMat = new THREE.MeshStandardMaterial({
       color: 0xe2e8f0,
       roughness: 0.96
@@ -720,26 +718,26 @@ export class SpaceScene {
     const cometNucleus = new THREE.Mesh(cometNucleusGeo, cometMat);
     cometGroup.add(cometNucleus);
 
-    const tailGeo = new THREE.ConeGeometry(1.6, 22, 16, 1, true);
+    const tailGeo = new THREE.ConeGeometry(2.4, 32, 16, 1, true);
     const tailMat = new THREE.MeshBasicMaterial({
       color: 0x7dd3fc,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.4,
       blending: THREE.AdditiveBlending,
       side: THREE.DoubleSide
     });
     const tailMesh = new THREE.Mesh(tailGeo, tailMat);
     tailMesh.rotation.x = -Math.PI / 2;
-    tailMesh.position.z = -11;
+    tailMesh.position.z = -16;
     cometGroup.add(tailMesh);
 
-    cometGroup.position.set(-24, -5, -80);
+    cometGroup.position.set(-30, 18, -45);
     cometGroup.userData = {
-      baseX: -24,
-      baseY: -5,
+      baseX: -30,
+      baseY: 18,
       vz: 0.09,
       rotVelocity: new THREE.Vector3(0.002, 0.003, 0.005),
-      resetZ: -220,
+      resetZ: -150,
       limitZ: 38
     };
     this.scene.add(cometGroup);
