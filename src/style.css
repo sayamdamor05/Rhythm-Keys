@@ -529,8 +529,8 @@ html, body {
   appearance: none;
   border: none;
   font-family: var(--font-mono);
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 800;
   height: var(--key-height);
   width: var(--key-width);
   border-radius: var(--key-radius);
@@ -540,30 +540,102 @@ html, body {
   justify-content: center;
   text-align: center;
   position: relative;
-  transition: transform var(--trans-press), box-shadow var(--trans-press), background var(--trans-press);
+  transition: transform var(--trans-press), box-shadow var(--trans-press), filter var(--trans-press), background var(--trans-press);
 }
 
 .key-3d:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
+  filter: brightness(1.15);
 }
 
 .key-3d:active, .key-3d.key-pressed {
-  transform: translateY(2px) !important;
+  transform: translateY(2.5px) !important;
 }
 
-/* Uniform High-End Slate Keycaps */
-.key-alpha {
-  background: var(--key-bg);
-  color: var(--text-bright);
-  border: var(--key-border);
-  box-shadow: var(--key-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
+/* --- Multi-Color Keycap Colorways --- */
 
-.key-alpha:active, .key-alpha.key-pressed {
-  box-shadow: 0 1px 0 #0a0d14, 0 0 12px var(--color-cyan-glow);
-  background: var(--color-cyan);
+/* 1. Mako Cyan Keycap */
+.key-cyan {
+  background: linear-gradient(180deg, #103854 0%, #082136 100%);
+  color: #e0f2fe;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #04121f, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+}
+.key-cyan:active, .key-cyan.key-pressed {
+  box-shadow: 0 1px 0 #04121f, 0 0 16px rgba(56, 189, 248, 0.7);
+  background: #38bdf8;
   color: #030712;
-  border-color: #ffffff;
+}
+
+/* 2. Royal Sapphire Keycap */
+.key-sapphire {
+  background: linear-gradient(180deg, #162c5a 0%, #0c1c3d 100%);
+  color: #dbeafe;
+  border: 1px solid rgba(96, 165, 250, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #060f24, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+}
+.key-sapphire:active, .key-sapphire.key-pressed {
+  box-shadow: 0 1px 0 #060f24, 0 0 16px rgba(96, 165, 250, 0.8);
+  background: #60a5fa;
+  color: #030712;
+}
+
+/* 3. Emerald Keycap */
+.key-emerald {
+  background: linear-gradient(180deg, #0d3d2e 0%, #06261d 100%);
+  color: #d1fae5;
+  border: 1px solid rgba(52, 211, 153, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #031610, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+}
+.key-emerald:active, .key-emerald.key-pressed {
+  box-shadow: 0 1px 0 #031610, 0 0 16px rgba(52, 211, 153, 0.7);
+  background: #34d399;
+  color: #030712;
+}
+
+/* 4. Limit Gold Keycap */
+.key-gold {
+  background: linear-gradient(180deg, #3d300b 0%, #241d06 100%);
+  color: #fef08a;
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #141003, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+.key-gold:active, .key-gold.key-pressed {
+  box-shadow: 0 1px 0 #141003, 0 0 16px rgba(251, 191, 36, 0.8);
+  background: #fbbf24;
+  color: #030712;
+}
+
+/* 5. Ruby Keycap */
+.key-ruby {
+  background: linear-gradient(180deg, #421325 0%, #290916 100%);
+  color: #ffe4e6;
+  border: 1px solid rgba(244, 63, 94, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #17040c, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-shadow: 0 0 8px rgba(244, 63, 94, 0.5);
+}
+.key-ruby:active, .key-ruby.key-pressed {
+  box-shadow: 0 1px 0 #17040c, 0 0 16px rgba(244, 63, 94, 0.8);
+  background: #f43f5e;
+  color: #030712;
+}
+
+/* 6. Purple Keycap */
+.key-purple {
+  background: linear-gradient(180deg, #32184d 0%, #1c0c2e 100%);
+  color: #f3e8ff;
+  border: 1px solid rgba(192, 132, 252, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #10061c, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-shadow: 0 0 8px rgba(192, 132, 252, 0.5);
+}
+.key-purple:active, .key-purple.key-pressed {
+  box-shadow: 0 1px 0 #10061c, 0 0 16px rgba(192, 132, 252, 0.8);
+  background: #c084fc;
+  color: #030712;
 }
 
 /* Home-row nibs on F & J */
@@ -573,47 +645,48 @@ html, body {
 
 .home-nib {
   position: absolute;
-  bottom: 6px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   width: 10px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.4);
+  background: #ffffff;
+  box-shadow: 0 0 6px #ffffff;
   border-radius: 1px;
 }
 
 /* Modifiers */
 .key-mod {
-  width: 54px;
+  width: 56px;
   font-size: 0.75rem;
-  background: #10141f;
-  color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 var(--key-depth) 0 #07090f;
+  background: linear-gradient(180deg, #141c2c 0%, #0a0f1a 100%);
+  color: var(--text-silver);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 var(--key-depth) 0 #05080e, 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .key-mod:active, .key-mod.key-pressed {
-  box-shadow: 0 1px 0 #07090f;
+  box-shadow: 0 1px 0 #05080e, 0 0 12px rgba(255, 255, 255, 0.5);
   color: #ffffff;
-  background: #1f2738;
+  background: #25334d;
 }
 
 /* Spacebar */
 .key-space {
   flex: 1;
-  max-width: 360px;
-  background: var(--key-bg);
-  color: var(--text-muted);
+  max-width: 370px;
+  background: linear-gradient(180deg, #103854 0%, #082136 100%);
+  color: #e0f2fe;
   font-size: 0.75rem;
   letter-spacing: 2px;
-  border: var(--key-border);
-  box-shadow: var(--key-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #04121f, 0 0 12px rgba(56, 189, 248, 0.2);
 }
 
 .key-space:active, .key-space.key-pressed {
-  box-shadow: 0 1px 0 #0a0d14, 0 0 16px var(--color-cyan-glow);
+  box-shadow: 0 1px 0 #04121f, 0 0 20px rgba(56, 189, 248, 0.8);
   color: #030712;
-  background: var(--color-cyan);
+  background: #38bdf8;
 }
 
 /* ==========================================================================
