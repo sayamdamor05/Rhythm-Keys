@@ -5,11 +5,12 @@
 
 /* --- 1. DESIGN TOKENS --- */
 :root {
-  /* Pastel Cosmic Canvas */
-  --bg-cosmos: #0f1123;
-  --card-puffy-bg: rgba(255, 255, 255, 0.12);
-  --card-puffy-border: 2px solid rgba(255, 255, 255, 0.28);
-  --card-puffy-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.45);
+  /* Dreamy Pastel Twilight Cosmic Canvas */
+  --bg-cosmos: #181734;
+  --bg-gradient: radial-gradient(circle at 50% 30%, #2e266d 0%, #1c1844 50%, #12102b 100%);
+  --card-puffy-bg: rgba(255, 255, 255, 0.16);
+  --card-puffy-border: 2px solid rgba(255, 255, 255, 0.32);
+  --card-puffy-shadow: 0 16px 36px rgba(15, 17, 35, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.45);
   --card-radius: 22px;
 
   /* Typography */
@@ -17,30 +18,41 @@
   --font-body: 'Quicksand', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Delicious Pastel Candy Palette (Matching Image Reference) */
-  --candy-pink: #f472b6;
-  --candy-pink-glow: rgba(244, 114, 182, 0.6);
-  --candy-sky: #38bdf8;
-  --candy-sky-glow: rgba(56, 189, 248, 0.6);
-  --candy-mint: #4ade80;
-  --candy-mint-glow: rgba(74, 222, 128, 0.6);
-  --candy-gold: #fde047;
-  --candy-gold-glow: rgba(253, 224, 71, 0.6);
-  --candy-purple: #c084fc;
-  --candy-purple-glow: rgba(192, 132, 252, 0.6);
-  --candy-coral: #fb7185;
-  --candy-coral-glow: rgba(251, 113, 133, 0.6);
+  /* Harmonized Soft Pastel Candy Palette (Matching Image Reference) */
+  --candy-pink: #f9a8d4;
+  --candy-pink-dark: #ec4899;
+  --candy-pink-glow: rgba(244, 114, 182, 0.45);
+  
+  --candy-sky: #7dd3fc;
+  --candy-sky-dark: #0284c7;
+  --candy-sky-glow: rgba(56, 189, 248, 0.45);
+  
+  --candy-mint: #86efac;
+  --candy-mint-dark: #22c55e;
+  --candy-mint-glow: rgba(74, 222, 128, 0.45);
+  
+  --candy-gold: #fef08a;
+  --candy-gold-dark: #eab308;
+  --candy-gold-glow: rgba(253, 224, 71, 0.45);
+  
+  --candy-purple: #d8b4fe;
+  --candy-purple-dark: #a855f7;
+  --candy-purple-glow: rgba(192, 132, 252, 0.45);
+  
+  --candy-coral: #fda4af;
+  --candy-coral-dark: #f43f5e;
+  --candy-coral-glow: rgba(251, 113, 133, 0.45);
 
   --text-white: #ffffff;
   --text-cream: #fdf4ff;
   --text-pastel-blue: #bae6fd;
-  --text-muted: #94a3b8;
+  --text-muted: #cbd5e1;
 
   /* 3D Keycap Geometry */
   --key-radius: 12px;
   --key-height: 48px;
   --key-width: 48px;
-  --key-depth: 5px;
+  --key-depth: 4px;
 
   /* Bouncy Claymorphic Physics */
   --trans-bounce: 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -59,7 +71,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: var(--bg-cosmos) !important;
+  background: var(--bg-gradient) !important;
   font-family: var(--font-brand);
   color: var(--text-white);
   -webkit-font-smoothing: antialiased;
@@ -107,7 +119,7 @@ html, body {
 }
 
 .puffy-card:hover {
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.45), inset 0 2px 5px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 42px rgba(15, 17, 35, 0.35), inset 0 2px 5px rgba(255, 255, 255, 0.6);
 }
 
 /* --- TOP HEADER --- */
@@ -180,13 +192,13 @@ html, body {
   cursor: pointer;
   padding: 4px 16px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all var(--trans-smooth);
 }
 
 .track-header-block:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
   transform: scale(1.02);
 }
 
@@ -248,10 +260,10 @@ html, body {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(20, 18, 48, 0.35);
   padding: 4px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .nav-btn {
@@ -280,7 +292,7 @@ html, body {
 .nav-divider {
   width: 2px;
   height: 22px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
   border-radius: 1px;
 }
 
@@ -294,10 +306,10 @@ html, body {
   display: flex;
   align-items: center;
   gap: 5px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   padding: 4px 10px;
   border-radius: 12px;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   font-family: var(--font-brand);
   box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
@@ -320,7 +332,7 @@ html, body {
 .stat-unit-score .stat-unit-val { color: var(--candy-gold); }
 
 .settings-btn {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
   width: 36px;
@@ -376,7 +388,7 @@ html, body {
 }
 
 .practice-speed-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   color: var(--text-white);
   font-family: var(--font-brand);
@@ -420,7 +432,7 @@ html, body {
   align-items: center;
   text-align: center;
   position: relative;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.1) 100%);
 }
 
 .judgment-overlay {
@@ -474,7 +486,7 @@ html, body {
 
 .lyric-prev {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .lyric-active {
@@ -512,25 +524,25 @@ html, body {
 
 .char-error {
   color: #ffffff;
-  background: var(--candy-coral);
+  background: var(--candy-coral-dark);
   border-radius: 4px;
   padding: 0 2px;
   box-shadow: 0 0 12px var(--candy-coral-glow);
 }
 
 .char-pending {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .lyric-next {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .line-progress-track {
   width: 100%;
   height: 6px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -545,7 +557,7 @@ html, body {
 }
 
 /* ==========================================================================
-   4. GLOSSY 3D CANDY MECHANICAL KEYBOARD
+   4. HARMONIZED GLOSSY 3D PASTEL MECHANICAL KEYBOARD
    ========================================================================== */
 .keyboard-panel {
   width: 100%;
@@ -555,6 +567,9 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 16px 36px rgba(15, 17, 35, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.35);
 }
 
 .kb-row {
@@ -585,97 +600,103 @@ html, body {
 
 .key-3d:hover {
   transform: translateY(-2px) scale(1.03);
-  filter: brightness(1.12);
+  filter: brightness(1.08);
 }
 
 .key-3d:active, .key-3d.key-pressed {
-  transform: translateY(3px) scale(0.96) !important;
+  transform: translateY(2.5px) scale(0.96) !important;
 }
 
-/* --- Candy Colorways (Glossy Claymorphism) --- */
+/* --- Harmonized Pastel Candy Colorways --- */
 
-/* 1. Glossy Sky Blue */
+/* 1. Soft Sky Cyan */
 .key-cyan {
-  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
-  color: #ffffff;
-  box-shadow: 0 var(--key-depth) 0 #0369a1, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #7dd3fc 0%, #38bdf8 100%);
+  color: #0c4a6e;
+  box-shadow: 0 var(--key-depth) 0 #0284c7, 0 6px 14px rgba(15, 23, 42, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 .key-cyan:active, .key-cyan.key-pressed {
-  box-shadow: 0 1px 0 #0369a1, 0 0 18px var(--candy-sky-glow);
+  box-shadow: 0 1px 0 #0284c7, 0 0 16px var(--candy-sky-glow);
   background: #38bdf8;
+  color: #ffffff;
 }
 
-/* 2. Glossy Sapphire Lilac */
+/* 2. Soft Pastel Lavender */
 .key-sapphire {
-  background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%);
-  color: #ffffff;
-  box-shadow: 0 var(--key-depth) 0 #3730a3, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #a5b4fc 0%, #818cf8 100%);
+  color: #1e1b4b;
+  box-shadow: 0 var(--key-depth) 0 #6366f1, 0 6px 14px rgba(15, 23, 42, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 .key-sapphire:active, .key-sapphire.key-pressed {
-  box-shadow: 0 1px 0 #3730a3, 0 0 18px rgba(99, 102, 241, 0.8);
+  box-shadow: 0 1px 0 #6366f1, 0 0 16px rgba(99, 102, 241, 0.6);
   background: #818cf8;
+  color: #ffffff;
 }
 
-/* 3. Glossy Mint Emerald */
+/* 3. Soft Pastel Mint */
 .key-emerald {
-  background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);
-  color: #ffffff;
-  box-shadow: 0 var(--key-depth) 0 #15803d, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #86efac 0%, #4ade80 100%);
+  color: #064e3b;
+  box-shadow: 0 var(--key-depth) 0 #22c55e, 0 6px 14px rgba(15, 23, 42, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 .key-emerald:active, .key-emerald.key-pressed {
-  box-shadow: 0 1px 0 #15803d, 0 0 18px var(--candy-mint-glow);
+  box-shadow: 0 1px 0 #22c55e, 0 0 16px var(--candy-mint-glow);
   background: #4ade80;
+  color: #ffffff;
 }
 
-/* 4. Glossy Buttercup Sunshine */
+/* 4. Soft Buttercup Yellow */
 .key-gold {
-  background: linear-gradient(180deg, #fde047 0%, #eab308 100%);
+  background: linear-gradient(180deg, #fef08a 0%, #fde047 100%);
   color: #713f12;
-  box-shadow: 0 var(--key-depth) 0 #ca8a04, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.85);
+  box-shadow: 0 var(--key-depth) 0 #eab308, 0 6px 14px rgba(15, 23, 42, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.8);
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 .key-gold:active, .key-gold.key-pressed {
-  box-shadow: 0 1px 0 #ca8a04, 0 0 18px var(--candy-gold-glow);
+  box-shadow: 0 1px 0 #eab308, 0 0 16px var(--candy-gold-glow);
   background: #fde047;
 }
 
-/* 5. Glossy Berry Coral */
+/* 5. Soft Rose Coral */
 .key-ruby {
-  background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%);
-  color: #ffffff;
-  box-shadow: 0 var(--key-depth) 0 #be123c, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #fda4af 0%, #fb7185 100%);
+  color: #881337;
+  box-shadow: 0 var(--key-depth) 0 #f43f5e, 0 6px 14px rgba(15, 23, 42, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 .key-ruby:active, .key-ruby.key-pressed {
-  box-shadow: 0 1px 0 #be123c, 0 0 18px var(--candy-coral-glow);
+  box-shadow: 0 1px 0 #f43f5e, 0 0 16px var(--candy-coral-glow);
   background: #fb7185;
+  color: #ffffff;
 }
 
-/* 6. Glossy Lavender Purple */
+/* 6. Soft Pastel Lilac */
 .key-purple {
-  background: linear-gradient(180deg, #c084fc 0%, #9333ea 100%);
-  color: #ffffff;
-  box-shadow: 0 var(--key-depth) 0 #7e22ce, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #d8b4fe 0%, #c084fc 100%);
+  color: #581c87;
+  box-shadow: 0 var(--key-depth) 0 #a855f7, 0 6px 14px rgba(15, 23, 42, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 .key-purple:active, .key-purple.key-pressed {
-  box-shadow: 0 1px 0 #7e22ce, 0 0 18px var(--candy-purple-glow);
+  box-shadow: 0 1px 0 #a855f7, 0 0 16px var(--candy-purple-glow);
   background: #c084fc;
+  color: #ffffff;
 }
 
-/* 7. Glossy Bubblegum Pink */
+/* 7. Soft Bubblegum Pink */
 .key-pink {
-  background: linear-gradient(180deg, #f472b6 0%, #db2777 100%);
-  color: #ffffff;
-  box-shadow: 0 var(--key-depth) 0 #be185d, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #f9a8d4 0%, #f472b6 100%);
+  color: #831843;
+  box-shadow: 0 var(--key-depth) 0 #ec4899, 0 6px 14px rgba(15, 23, 42, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 .key-pink:active, .key-pink.key-pressed {
-  box-shadow: 0 1px 0 #be185d, 0 0 18px var(--candy-pink-glow);
+  box-shadow: 0 1px 0 #ec4899, 0 0 16px var(--candy-pink-glow);
   background: #f472b6;
+  color: #ffffff;
 }
 
 /* Home-row tactile nibs on F & J */
@@ -706,17 +727,17 @@ html, body {
 .key-space.key-rainbow {
   flex: 1;
   max-width: 380px;
-  background: linear-gradient(90deg, #f472b6 0%, #c084fc 25%, #38bdf8 50%, #4ade80 75%, #fde047 100%);
-  color: #ffffff;
+  background: linear-gradient(90deg, #f9a8d4 0%, #d8b4fe 25%, #7dd3fc 50%, #86efac 75%, #fef08a 100%);
+  color: #475569;
   font-size: 0.88rem;
   letter-spacing: 2px;
-  box-shadow: 0 var(--key-depth) 0 #7e22ce, 0 8px 18px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 var(--key-depth) 0 #a855f7, 0 6px 16px rgba(15, 23, 42, 0.25), inset 0 2px 3px rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .key-space.key-rainbow:active, .key-space.key-rainbow.key-pressed {
-  box-shadow: 0 1px 0 #7e22ce, 0 0 24px rgba(244, 114, 182, 0.9);
-  filter: brightness(1.2);
+  box-shadow: 0 1px 0 #a855f7, 0 0 20px rgba(244, 114, 182, 0.7);
+  filter: brightness(1.1);
 }
 
 /* ==========================================================================

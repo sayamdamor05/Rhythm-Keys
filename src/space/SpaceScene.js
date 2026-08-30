@@ -44,17 +44,17 @@ export class SpaceScene {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
-      alpha: false,
+      alpha: true,
       powerPreference: 'high-performance'
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor(0x060314, 1.0);
+    this.renderer.setClearColor(0x181734, 0.7);
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     // 3. Volumetric 3D Lighting Setup
-    const ambientLight = new THREE.AmbientLight(0x3a2552, 2.2);
+    const ambientLight = new THREE.AmbientLight(0x5b427d, 2.6);
     this.scene.add(ambientLight);
 
     // Key Light (Warm Sun Glow)
