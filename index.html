@@ -3,94 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RHYTHM KEYS // CRYSTAL CHRONICLE</title>
+  <title>Rhythm Keys // Precision Rhythm-Typing Engine</title>
   
-  <!-- Typography: Cinzel, Space Grotesk & JetBrains Mono -->
+  <!-- Typography: Space Grotesk & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   
   <!-- Three.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
-  <!-- ================= 1. FULLSCREEN 3D CRYSTAL COSMOS CANVAS ================= -->
+  <!-- ================= 1. FULLSCREEN 3D SPACE CANVAS ================= -->
   <canvas id="spaceCanvas" class="three-space-canvas"></canvas>
 
-  <!-- ================= 2. FOREGROUND FLOATING FINAL FANTASY UI ================= -->
+  <!-- ================= 2. FOREGROUND FLOATING APPLICATION ================= -->
   <div class="app-ui-container" id="app">
     <!-- TOP HEADER -->
-    <header class="ui-header ff-window">
-      <!-- Left: Brand Crest & Crystal Core -->
+    <header class="ui-header glass-card">
+      <!-- Left: Brand -->
       <div class="header-left">
-        <div class="ff-brand-badge">
-          <div class="crystal-core-icon">
-            <div class="crystal-diamond"></div>
-          </div>
-          <div class="brand-text-group">
-            <span class="ff-brand-title">RHYTHM KEYS</span>
-            <span class="ff-system-tag">CHRONICLE // VER 2.5</span>
-          </div>
+        <div class="brand-badge">
+          <span class="brand-status-dot"></span>
+          <span class="brand-name">RHYTHM KEYS</span>
         </div>
       </div>
 
-      <!-- Center: Track Info & Mako Spectrum Visualizer -->
+      <!-- Center: Track Info & Real-Time Spectrum -->
       <div class="header-center">
-        <div class="track-header-block ff-subwindow" id="btnHeaderTrackPicker" role="button" tabindex="0" title="Click to Change Track">
+        <div class="track-header-block" id="btnHeaderTrackPicker" role="button" tabindex="0" title="Click to Change Track">
           <div class="track-meta-row">
-            <span class="ff-icon-note">♪</span>
             <span class="track-title-text" id="currentTrackTitle">Midnight City</span>
-            <span class="track-sep">❖</span>
+            <span class="track-sep">/</span>
             <span class="track-artist-text" id="currentTrackArtist">M83</span>
           </div>
           <div class="visualizer-container">
-            <canvas id="headerSpectrumCanvas" width="150" height="16" class="spectrum-canvas"></canvas>
+            <canvas id="headerSpectrumCanvas" width="140" height="14" class="spectrum-canvas"></canvas>
             <span class="track-bpm-badge" id="trackBpmBadge">105 BPM</span>
           </div>
         </div>
       </div>
 
-      <!-- Right: Navigation, Battle HUD Telemetry & Settings -->
+      <!-- Right: Navigation, Telemetry HUD & Settings -->
       <div class="header-right">
-        <nav class="header-nav ff-nav-group" aria-label="Modes">
-          <button class="nav-btn active" id="navPlay">COMMENCE</button>
+        <nav class="header-nav" aria-label="Modes">
+          <button class="nav-btn active" id="navPlay">PLAY</button>
           <button class="nav-btn" id="navPractice">PRACTICE</button>
-          <button class="nav-btn" id="navLeaderboard">HALL OF FAME</button>
+          <button class="nav-btn" id="navLeaderboard">LEADERBOARD</button>
         </nav>
 
         <div class="nav-divider"></div>
 
-        <!-- High-Precision Battle Telemetry HUD -->
+        <!-- Precision Telemetry HUD -->
         <div class="header-stats-group">
-          <!-- Limit Streak -->
-          <div class="stat-unit ff-stat-box" id="hudComboContainer">
-            <span class="stat-unit-label">CHAIN</span>
-            <span class="stat-unit-val ff-gold" id="hudStreak">0</span>
+          <!-- Streak -->
+          <div class="stat-unit" id="hudComboContainer">
+            <span class="stat-unit-label">STREAK</span>
+            <span class="stat-unit-val stat-val-gold" id="hudStreak">0</span>
           </div>
 
-          <!-- WPM Telemetry -->
-          <div class="stat-unit ff-stat-box">
-            <span class="stat-unit-label">SPEED</span>
-            <span class="stat-unit-val ff-cyan" id="hudWpm">0</span>
+          <!-- WPM -->
+          <div class="stat-unit">
+            <span class="stat-unit-label">WPM</span>
+            <span class="stat-unit-val stat-val-cyan" id="hudWpm">0</span>
           </div>
 
-          <!-- Accuracy Telemetry -->
-          <div class="stat-unit ff-stat-box">
-            <span class="stat-unit-label">SYNC</span>
-            <span class="stat-unit-val ff-emerald" id="hudAcc">100%</span>
+          <!-- Accuracy -->
+          <div class="stat-unit">
+            <span class="stat-unit-label">ACC</span>
+            <span class="stat-unit-val" id="hudAcc">100%</span>
           </div>
 
-          <!-- Score Telemetry -->
-          <div class="stat-unit ff-stat-box score-unit">
-            <span class="stat-unit-label">POINTS</span>
-            <span class="stat-unit-val ff-platinum" id="hudScore">0</span>
+          <!-- Score -->
+          <div class="stat-unit score-unit">
+            <span class="stat-unit-label">SCORE</span>
+            <span class="stat-unit-val" id="hudScore">0</span>
           </div>
         </div>
 
-        <!-- Settings Command Button -->
-        <button class="settings-btn ff-corner-btn" id="btnSettings" title="Track & Audio Settings [ESC]" aria-label="Settings">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Settings Button -->
+        <button class="settings-btn" id="btnSettings" title="Track & Audio Settings [ESC]" aria-label="Settings">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"></circle>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
           </svg>
@@ -99,10 +93,10 @@
     </header>
 
     <!-- PRACTICE MODE BANNER -->
-    <div class="practice-banner ff-window" id="practiceBanner" style="display: none;">
+    <div class="practice-banner glass-card" id="practiceBanner" style="display: none;">
       <div class="practice-banner-content">
-        <span class="practice-tag">❖ BATTLE DRILL ❖</span>
-        <span class="practice-msg">Practice lyrical cadence at variable tempo without penalties. Press [TAB] to loop line.</span>
+        <span class="practice-tag">PRACTICE MODE</span>
+        <span class="practice-msg">Practice lines at variable tempo without penalties. Press [TAB] to loop line.</span>
         <div class="practice-controls">
           <button class="practice-speed-btn" data-speed="0.75">0.75x</button>
           <button class="practice-speed-btn active" data-speed="1.0">1.00x</button>
@@ -111,10 +105,10 @@
       </div>
     </div>
 
-    <!-- CENTER STAGE (Lyrics Command Stage & Final Fantasy Keycaps) -->
+    <!-- CENTER STAGE (Lyrics Display & Mechanical Keyboard) -->
     <main class="center-stage">
-      <!-- Final Fantasy Dialogue & Lyric Frame -->
-      <section class="lyrics-panel ff-window" id="lyricsContainer" aria-live="polite">
+      <!-- Monospace Lyrics Display -->
+      <section class="lyrics-panel glass-card" id="lyricsContainer" aria-live="polite">
         <div class="judgment-overlay" id="judgmentOverlay"></div>
 
         <div class="lyric-stream">
@@ -138,77 +132,74 @@
           </div>
         </div>
 
-        <!-- ATB / Limit Gauge Line Progress Tracker -->
-        <div class="atb-track-container">
-          <span class="atb-label">ATB GAUGE</span>
-          <div class="line-progress-track">
-            <div class="line-progress-bar" id="lineProgressBar" style="width: 0%;"></div>
-          </div>
+        <!-- Line Progress Tracker -->
+        <div class="line-progress-track">
+          <div class="line-progress-bar" id="lineProgressBar" style="width: 0%;"></div>
         </div>
       </section>
 
-      <!-- Final Fantasy Crystalline Mechanical Keycaps -->
-      <section class="keyboard-panel ff-window" id="virtualKeyboard" aria-label="Virtual Keyboard">
+      <!-- Precision Mechanical Keyboard (Deep Sapphire & Slate Archetype) -->
+      <section class="keyboard-panel glass-card" id="virtualKeyboard" aria-label="Virtual Keyboard">
         <!-- Row 1: Q W E R T Y U I O P (10 Keys) -->
         <div class="kb-row kb-row-1">
-          <button class="key key-3d key-ff key-ff-mako" data-key="q">Q</button>
-          <button class="key key-3d key-ff key-ff-sapphire" data-key="w">W</button>
-          <button class="key key-3d key-ff key-ff-materia" data-key="e">E</button>
-          <button class="key key-3d key-ff key-ff-ruby" data-key="r">R</button>
-          <button class="key key-3d key-ff key-ff-gold" data-key="t">T</button>
-          <button class="key key-3d key-ff key-ff-mako" data-key="y">Y</button>
-          <button class="key key-3d key-ff key-ff-sapphire" data-key="u">U</button>
-          <button class="key key-3d key-ff key-ff-materia" data-key="i">I</button>
-          <button class="key key-3d key-ff key-ff-ruby" data-key="o">O</button>
-          <button class="key key-3d key-ff key-ff-gold" data-key="p">P</button>
+          <button class="key key-3d key-alpha" data-key="q">Q</button>
+          <button class="key key-3d key-alpha" data-key="w">W</button>
+          <button class="key key-3d key-alpha" data-key="e">E</button>
+          <button class="key key-3d key-alpha" data-key="r">R</button>
+          <button class="key key-3d key-alpha" data-key="t">T</button>
+          <button class="key key-3d key-alpha" data-key="y">Y</button>
+          <button class="key key-3d key-alpha" data-key="u">U</button>
+          <button class="key key-3d key-alpha" data-key="i">I</button>
+          <button class="key key-3d key-alpha" data-key="o">O</button>
+          <button class="key key-3d key-alpha" data-key="p">P</button>
         </div>
 
-        <!-- Row 2: A S D F G H J K L (9 Keys with F & J Crystal Nibs) -->
+        <!-- Row 2: A S D F G H J K L (9 Keys with F & J Tactile Nibs) -->
         <div class="kb-row kb-row-2">
-          <button class="key key-3d key-ff key-ff-sapphire" data-key="a">A</button>
-          <button class="key key-3d key-ff key-ff-materia" data-key="s">S</button>
-          <button class="key key-3d key-ff key-ff-ruby" data-key="d">D</button>
-          <button class="key key-3d key-ff key-ff-mako key-home" data-key="f">F<span class="home-nib"></span></button>
-          <button class="key key-3d key-ff key-ff-gold" data-key="g">G</button>
-          <button class="key key-3d key-ff key-ff-sapphire" data-key="h">H</button>
-          <button class="key key-3d key-ff key-ff-mako key-home" data-key="j">J<span class="home-nib"></span></button>
-          <button class="key key-3d key-ff key-ff-materia" data-key="k">K</button>
-          <button class="key key-3d key-ff key-ff-ruby" data-key="l">L</button>
+          <button class="key key-3d key-alpha" data-key="a">A</button>
+          <button class="key key-3d key-alpha" data-key="s">S</button>
+          <button class="key key-3d key-alpha" data-key="d">D</button>
+          <button class="key key-3d key-alpha key-home" data-key="f">F<span class="home-nib"></span></button>
+          <button class="key key-3d key-alpha" data-key="g">G</button>
+          <button class="key key-3d key-alpha" data-key="h">H</button>
+          <button class="key key-3d key-alpha key-home" data-key="j">J<span class="home-nib"></span></button>
+          <button class="key key-3d key-alpha" data-key="k">K</button>
+          <button class="key key-3d key-alpha" data-key="l">L</button>
         </div>
 
         <!-- Row 3: Z X C V B N M (7 Keys) -->
         <div class="kb-row kb-row-3">
-          <button class="key key-3d key-ff key-ff-gold" data-key="z">Z</button>
-          <button class="key key-3d key-ff key-ff-sapphire" data-key="x">X</button>
-          <button class="key key-3d key-ff key-ff-materia" data-key="c">C</button>
-          <button class="key key-3d key-ff key-ff-mako" data-key="v">V</button>
-          <button class="key key-3d key-ff key-ff-ruby" data-key="b">B</button>
-          <button class="key key-3d key-ff key-ff-gold" data-key="n">N</button>
-          <button class="key key-3d key-ff key-ff-sapphire" data-key="m">M</button>
+          <button class="key key-3d key-alpha" data-key="z">Z</button>
+          <button class="key key-3d key-alpha" data-key="x">X</button>
+          <button class="key key-3d key-alpha" data-key="c">C</button>
+          <button class="key key-3d key-alpha" data-key="v">V</button>
+          <button class="key key-3d key-alpha" data-key="b">B</button>
+          <button class="key key-3d key-alpha" data-key="n">N</button>
+          <button class="key key-3d key-alpha" data-key="m">M</button>
         </div>
 
-        <!-- Row 4: Shift Modifier, SPACEBAR (Limit Core), Backspace Modifier -->
+        <!-- Row 4: Shift Modifier, SPACEBAR, Backspace Modifier -->
         <div class="kb-row kb-row-4">
-          <button class="key key-3d key-ff key-ff-mod" data-key="Shift" aria-label="Shift">SHIFT</button>
-          <button class="key key-3d key-ff key-ff-space" data-key=" ">✦ SPACEBAR ✦</button>
-          <button class="key key-3d key-ff key-ff-mod" data-key="Backspace" aria-label="Backspace">BKSP</button>
+          <button class="key key-3d key-mod" data-key="Shift" aria-label="Shift">SHIFT</button>
+          <button class="key key-3d key-space" data-key=" ">SPACE</button>
+          <button class="key key-3d key-mod" data-key="Backspace" aria-label="Backspace">BKSP</button>
         </div>
       </section>
     </main>
 
-    <!-- BOTTOM FOOTER / COMMAND BAR -->
-    <footer class="ui-footer ff-window">
+    <!-- BOTTOM FOOTER / TRANSPORT DOCK -->
+    <footer class="ui-footer glass-card">
       <!-- Left: Restart & SFX Controls -->
       <div class="footer-left">
-        <button class="footer-btn ff-subbtn" id="btnRestart" title="Restart Track [TAB]">
+        <button class="footer-btn" id="btnRestart" title="Restart Track [TAB]">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
             <path d="M3 3v5h5"></path>
           </svg>
-          <span>RETRY</span>
+          <span>RESTART</span>
         </button>
 
-        <button class="footer-btn ff-subbtn sfx-btn active" id="btnToggleSfx" title="Toggle Mechanical Audio Feedback">
+        <button class="footer-btn sfx-btn active" id="btnToggleSfx" title="Toggle Mechanical Audio Feedback">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -217,14 +208,14 @@
         </button>
       </div>
 
-      <!-- Center: Play/Pause Crystal Core Trigger -->
+      <!-- Center: Play/Pause Transport Trigger -->
       <div class="footer-center">
-        <button class="play-btn-circle ff-crystal-play" id="btnPlayPause" aria-label="Play or Pause Track [SPACE]">
+        <button class="play-btn-circle" id="btnPlayPause" aria-label="Play or Pause Track [SPACE]">
           <div class="play-icon-inner">
-            <svg id="playIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+            <svg id="playIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
               <polygon points="5 3 19 12 5 21 5 3"></polygon>
             </svg>
-            <svg id="pauseIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <svg id="pauseIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
               <rect x="6" y="4" width="4" height="16"></rect>
               <rect x="14" y="4" width="4" height="16"></rect>
             </svg>
@@ -236,11 +227,11 @@
       <!-- Right: Speed Selector & Key Hints -->
       <div class="footer-right">
         <div class="keyboard-hints">
-          <span class="hint-pill"><kbd>SPACE</kbd> EXECUTE</span>
+          <span class="hint-pill"><kbd>SPACE</kbd> TOGGLE</span>
           <span class="hint-pill"><kbd>TAB</kbd> RESET</span>
         </div>
 
-        <button class="footer-btn ff-subbtn diff-btn" id="diffHard" title="Toggle Speed Preset">
+        <button class="footer-btn diff-btn" id="diffHard" title="Toggle Speed Preset">
           <span id="diffText">SPEED: 1.0x</span>
         </button>
       </div>
@@ -249,17 +240,17 @@
 
   <!-- ================= SETTINGS & TRACK SELECTION MODAL ================= -->
   <div class="modal-overlay" id="settingsModal" aria-hidden="true">
-    <div class="modal-card ff-window track-settings-card">
+    <div class="modal-card glass-card track-settings-card">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <h2 class="modal-title">❖ CHRONICLE SOUNDTRACK STATION ❖</h2>
-          <span class="modal-subtitle">Configure orchestral synthesizer streams & acoustic velocity</span>
+          <h2 class="modal-title">TRACK & AUDIO SETTINGS</h2>
+          <span class="modal-subtitle">Select soundtrack and configure master acoustic output</span>
         </div>
         <button class="modal-close-btn" id="btnSettingsClose" aria-label="Close Settings">&times;</button>
       </div>
 
       <div class="modal-body">
-        <label class="modal-label">❖ SELECT TRACK ❖</label>
+        <label class="modal-label">SOUNDTRACK PRESETS</label>
         <div class="track-cards-grid" id="trackCardsGrid">
           <!-- Injected dynamically via JavaScript -->
         </div>
@@ -268,8 +259,8 @@
         <div class="settings-row">
           <div class="setting-field">
             <div class="slider-header">
-              <label class="modal-label" for="volumeSlider">MASTER ACOUSTIC VOLUME</label>
-              <span class="slider-val ff-cyan" id="volumeVal">85%</span>
+              <label class="modal-label" for="volumeSlider">MASTER VOLUME</label>
+              <span class="slider-val" id="volumeVal">85%</span>
             </div>
             <input type="range" id="volumeSlider" class="modal-slider" min="0" max="100" value="85" />
           </div>
@@ -277,10 +268,10 @@
 
         <!-- Custom Track Input -->
         <details class="custom-track-details" id="customTrackDetails">
-          <summary class="custom-track-summary">❖ CUSTOM LRC & STREAM UPLOAD ❖</summary>
+          <summary class="custom-track-summary">CUSTOM LRC & AUDIO STREAM</summary>
           <div class="custom-fields" id="customFields">
             <label class="modal-label" for="customTitleInput">TRACK TITLE & ARTIST</label>
-            <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. One-Winged Angel - Nobuo Uematsu" />
+            <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. Midnight City - M83" />
 
             <label class="modal-label" for="customAudioUrl">STREAM URL (OPTIONAL MP3)</label>
             <input type="url" id="customAudioUrl" class="modal-input" placeholder="https://...mp3 (Leave empty for procedural synth)" />
@@ -293,18 +284,18 @@
 
       <div class="modal-footer">
         <button class="btn btn-secondary" id="btnSettingsCancel">CANCEL</button>
-        <button class="btn btn-primary" id="btnSettingsApply">CONFIRM</button>
+        <button class="btn btn-primary" id="btnSettingsApply">APPLY</button>
       </div>
     </div>
   </div>
 
   <!-- ================= LEADERBOARD MODAL ================= -->
   <div class="modal-overlay" id="leaderboardModal" aria-hidden="true">
-    <div class="modal-card ff-window leaderboard-card">
+    <div class="modal-card glass-card leaderboard-card">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <h2 class="modal-title">❖ HALL OF FAME RECORDS ❖</h2>
-          <span class="modal-subtitle">Chronicle keystroke telemetry & champion records</span>
+          <h2 class="modal-title">LEADERBOARD RECORDS</h2>
+          <span class="modal-subtitle">Verified high-score keystroke telemetry</span>
         </div>
         <button class="modal-close-btn" id="btnLeaderboardClose" aria-label="Close Leaderboard">&times;</button>
       </div>
@@ -315,10 +306,10 @@
             <thead>
               <tr>
                 <th>RANK</th>
-                <th>WARRIOR</th>
+                <th>OPERATOR</th>
                 <th>TRACK</th>
-                <th>SPEED</th>
-                <th>SYNC</th>
+                <th>WPM</th>
+                <th>ACC</th>
                 <th>SCORE</th>
               </tr>
             </thead>
@@ -330,7 +321,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" id="btnLeaderboardReset">CLEAR RECORDS</button>
+        <button class="btn btn-secondary" id="btnLeaderboardReset">CLEAR LOCAL SCORES</button>
         <button class="btn btn-primary" id="btnLeaderboardClose2">CLOSE</button>
       </div>
     </div>
@@ -338,41 +329,39 @@
 
   <!-- ================= RESULTS MODAL ================= -->
   <div class="modal-overlay" id="resultsModal" aria-hidden="true">
-    <div class="modal-card ff-window results-card">
-      <div class="results-hologram">
-        <div class="results-badge ff-gold" id="resultsGradeBadge">RANK S</div>
-      </div>
-      <h2 class="results-title">VICTORY FANFARE</h2>
-      <p class="results-subtitle" id="resultsTrackInfo">Midnight City ❖ M83</p>
+    <div class="modal-card glass-card results-card">
+      <div class="results-badge" id="resultsGradeBadge">RANK S</div>
+      <h2 class="results-title">SESSION COMPLETE</h2>
+      <p class="results-subtitle" id="resultsTrackInfo">Midnight City / M83</p>
 
       <div class="results-grid">
         <div class="result-box">
-          <span class="res-label">TOTAL EXP / SCORE</span>
-          <span class="res-val ff-gold" id="resScore">12,400</span>
+          <span class="res-label">TOTAL SCORE</span>
+          <span class="res-val stat-val-gold" id="resScore">12,400</span>
         </div>
         <div class="result-box">
-          <span class="res-label">AGILITY / WPM</span>
-          <span class="res-val ff-cyan" id="resWpm">74 WPM</span>
+          <span class="res-label">TYPING SPEED</span>
+          <span class="res-val stat-val-cyan" id="resWpm">74 WPM</span>
         </div>
         <div class="result-box">
-          <span class="res-label">PRECISION / ACC</span>
-          <span class="res-val ff-emerald" id="resAcc">98%</span>
+          <span class="res-label">ACCURACY</span>
+          <span class="res-val" id="resAcc">98%</span>
         </div>
         <div class="result-box">
-          <span class="res-label">MAX CHAIN</span>
-          <span class="res-val ff-ruby" id="resCombo">52 HITS</span>
+          <span class="res-label">PEAK STREAK</span>
+          <span class="res-val" id="resCombo">52 KEYS</span>
         </div>
       </div>
 
       <!-- Save Record Section -->
       <div class="save-score-section">
-        <input type="text" id="playerNameInput" class="modal-input player-input" placeholder="ENTER WARRIOR NAME" maxlength="16" />
-        <button class="btn btn-secondary save-score-btn" id="btnSaveScore">INSCRIBE RECORD</button>
+        <input type="text" id="playerNameInput" class="modal-input player-input" placeholder="ENTER OPERATOR NAME" maxlength="16" />
+        <button class="btn btn-secondary save-score-btn" id="btnSaveScore">SAVE RECORD</button>
       </div>
 
       <div class="modal-footer results-footer">
-        <button class="btn btn-secondary" id="btnResultsTracks">CHANGE TRACK</button>
-        <button class="btn btn-primary" id="btnResultsRestart">REPLAY</button>
+        <button class="btn btn-secondary" id="btnResultsTracks">SELECT TRACK</button>
+        <button class="btn btn-primary" id="btnResultsRestart">PLAY AGAIN</button>
       </div>
     </div>
   </div>

@@ -1,56 +1,52 @@
 /* ==========================================================================
-   RHYTHM KEYS // FINAL FANTASY INSPIRED CRYSTAL CHRONICLE UI
-   Crystalline Glass Windows // Materia & Command Keycaps // ATB Battle Gauges
+   RHYTHM KEYS // HIGH-END PRECISION MECHANICAL KEYBOARD & UI SYSTEM
+   Linear-Grade Double-Bezel Glass // Uniform Slate Keycaps // Precision Telemetry
    ========================================================================== */
 
-/* --- 1. FINAL FANTASY DESIGN SYSTEM TOKENS --- */
+/* --- 1. DESIGN TOKENS --- */
 :root {
-  /* Final Fantasy Signature Palette */
-  --ff-deep-void: #030712;
-  --ff-window-bg: linear-gradient(180deg, rgba(10, 25, 55, 0.88) 0%, rgba(4, 11, 26, 0.94) 100%);
-  --ff-window-elevated: linear-gradient(180deg, rgba(15, 36, 76, 0.92) 0%, rgba(6, 16, 38, 0.96) 100%);
-  --ff-subwindow-bg: rgba(6, 17, 38, 0.7);
+  /* Rich Deep Obsidian & Sapphire Canvas */
+  --bg-canvas: #060911;
+  --bg-card: rgba(13, 18, 30, 0.82);
+  --bg-card-elevated: rgba(18, 25, 42, 0.9);
+  --bg-subtle: rgba(255, 255, 255, 0.03);
 
-  /* Crystalline Borders & Highlights */
-  --ff-border-crystal: 1px solid rgba(147, 197, 253, 0.35);
-  --ff-border-gold: 1px solid rgba(251, 191, 36, 0.5);
-  --ff-border-bright: 1px solid rgba(255, 255, 255, 0.6);
-  --ff-inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 15px rgba(56, 189, 248, 0.08);
-  --ff-window-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 165, 233, 0.15);
+  /* Borders & Highlights */
+  --border-glass: 1px solid rgba(255, 255, 255, 0.08);
+  --border-glass-strong: 1px solid rgba(255, 255, 255, 0.16);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
 
   /* Typography */
-  --font-ff-title: 'Cinzel', serif;
-  --font-ff-ui: 'Space Grotesk', -apple-system, sans-serif;
-  --font-ff-mono: 'JetBrains Mono', monospace;
+  --font-brand: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  /* Calibrated Harmonic Final Fantasy Contrast Colors */
-  --mako-cyan: #38bdf8;
-  --mako-cyan-glow: rgba(56, 189, 248, 0.5);
-  --crystal-sapphire: #60a5fa;
-  --materia-emerald: #34d399;
-  --materia-glow: rgba(52, 211, 153, 0.45);
-  --limit-gold: #fbbf24;
-  --limit-gold-glow: rgba(251, 191, 36, 0.5);
-  --phoenix-ruby: #f43f5e;
-  --phoenix-glow: rgba(244, 63, 94, 0.5);
+  /* Strict Contrast Color Palette */
+  --color-cyan: #38bdf8;
+  --color-cyan-glow: rgba(56, 189, 248, 0.35);
+  --color-gold: #fbbf24;
+  --color-ruby: #f43f5e;
   
-  --text-platinum: #ffffff;
+  --text-white: #ffffff;
+  --text-bright: #f1f5f9;
   --text-silver: #cbd5e1;
-  --text-mako: #bae6fd;
   --text-muted: #64748b;
 
-  /* Keycap Dimensions */
+  /* Mechanical Keycap Architecture */
   --key-radius: 6px;
-  --key-height: 45px;
+  --key-height: 44px;
   --key-width: 48px;
   --key-depth: 4px;
+  --key-bg: #161b26;
+  --key-border: 1px solid rgba(255, 255, 255, 0.08);
+  --key-shadow: 0 var(--key-depth) 0 #0a0d14, 0 6px 12px rgba(0, 0, 0, 0.4);
 
-  /* Transitions */
-  --trans-instant: 0.06s ease-out;
+  /* Smooth Fluid Motion */
+  --trans-press: 0.05s ease-out;
   --trans-smooth: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* --- 2. GLOBAL RESET & BASE --- */
+/* --- 2. BASE RESET --- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -62,15 +58,15 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: var(--ff-deep-void) !important;
-  font-family: var(--font-ff-ui);
-  color: var(--text-platinum);
+  background: var(--bg-canvas) !important;
+  font-family: var(--font-brand);
+  color: var(--text-bright);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==========================================================================
-   1. 3D CRYSTAL COSMOS CANVAS (EDGE-TO-EDGE)
+   1. 3D COSMOS CANVAS (EDGE-TO-EDGE)
    ========================================================================== */
 .three-space-canvas {
   position: fixed;
@@ -83,7 +79,7 @@ html, body {
 }
 
 /* ==========================================================================
-   2. FINAL FANTASY WINDOW FRAME ARCHITECTURE
+   2. APPLICATION SHELL & DOUBLE-BEZEL CONTAINERS
    ========================================================================== */
 .app-ui-container {
   position: relative;
@@ -97,33 +93,20 @@ html, body {
   gap: 12px;
 }
 
-/* Iconic Final Fantasy Blue Gradient Window */
-.ff-window {
-  background: var(--ff-window-bg);
-  border: var(--ff-border-crystal);
-  box-shadow: var(--ff-window-shadow), var(--ff-inner-glow);
-  border-radius: 8px;
+/* High-End Double-Bezel Glass Card */
+.glass-card {
+  background: var(--bg-card);
+  border: var(--border-glass);
+  box-shadow: var(--card-shadow), var(--card-highlight);
+  border-radius: 10px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: relative;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  transition: border-color var(--trans-smooth), box-shadow var(--trans-smooth);
+  transition: border-color var(--trans-smooth);
 }
 
-.ff-window::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
-  pointer-events: none;
-}
-
-.ff-subwindow {
-  background: var(--ff-subwindow-bg);
-  border: 1px solid rgba(147, 197, 253, 0.2);
-  border-radius: 6px;
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 /* --- TOP HEADER --- */
@@ -136,63 +119,34 @@ html, body {
   flex-shrink: 0;
 }
 
-/* Brand Crest & Crystal Core */
+/* Brand */
 .header-left {
   display: flex;
   align-items: center;
 }
 
-.ff-brand-badge {
+.brand-badge {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
-.crystal-core-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.brand-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-cyan);
+  box-shadow: 0 0 8px var(--color-cyan);
 }
 
-.crystal-diamond {
-  width: 12px;
-  height: 12px;
-  background: linear-gradient(135deg, #ffffff 0%, var(--mako-cyan) 100%);
-  transform: rotate(45deg);
-  box-shadow: 0 0 12px var(--mako-cyan);
-  animation: crystalGlow 2.5s infinite alternate;
-}
-
-@keyframes crystalGlow {
-  0% { transform: rotate(45deg) scale(0.9); box-shadow: 0 0 8px var(--mako-cyan); }
-  100% { transform: rotate(45deg) scale(1.15); box-shadow: 0 0 18px var(--mako-cyan), 0 0 25px #ffffff; }
-}
-
-.brand-text-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.ff-brand-title {
-  font-family: var(--font-ff-title);
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: #ffffff;
-  text-shadow: 0 0 12px rgba(186, 230, 253, 0.6);
-}
-
-.ff-system-tag {
-  font-family: var(--font-ff-mono);
-  font-size: 0.62rem;
+.brand-name {
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--mako-cyan);
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
+  color: var(--text-white);
 }
 
-/* Center: Track Metadata & Spectrum */
+/* Center Track Info & Spectrum */
 .header-center {
   display: flex;
   align-items: center;
@@ -206,42 +160,32 @@ html, body {
   gap: 3px;
   cursor: pointer;
   padding: 4px 14px;
-  transition: all var(--trans-smooth);
+  border-radius: 6px;
+  transition: background var(--trans-smooth);
 }
 
 .track-header-block:hover {
-  background: rgba(14, 165, 233, 0.15);
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .track-meta-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 0.85rem;
 }
 
-.ff-icon-note {
-  color: var(--limit-gold);
-  font-size: 0.9rem;
-}
-
 .track-title-text {
-  font-family: var(--font-ff-title);
   font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 .track-sep {
-  color: var(--mako-cyan);
-  font-size: 0.7rem;
+  color: var(--text-muted);
 }
 
 .track-artist-text {
-  font-size: 0.8rem;
-  color: var(--text-mako);
+  color: var(--text-silver);
 }
 
 .visualizer-container {
@@ -251,46 +195,45 @@ html, body {
 }
 
 .spectrum-canvas {
-  width: 150px;
-  height: 16px;
+  width: 140px;
+  height: 14px;
 }
 
 .track-bpm-badge {
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--limit-gold);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-  background: rgba(251, 191, 36, 0.08);
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0 5px;
   border-radius: 3px;
 }
 
-/* Header Battle Telemetry HUD */
+/* Header Telemetry HUD */
 .header-right {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.ff-nav-group {
+.header-nav {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(3, 8, 22, 0.6);
-  padding: 3px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px;
   border-radius: 6px;
-  border: 1px solid rgba(147, 197, 253, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .nav-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-family: var(--font-ff-ui);
-  font-size: 0.75rem;
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.8px;
-  padding: 4px 12px;
+  letter-spacing: 0.6px;
+  padding: 4px 11px;
   border-radius: 4px;
   cursor: pointer;
   transition: all var(--trans-smooth);
@@ -302,15 +245,14 @@ html, body {
 
 .nav-btn.active {
   color: #ffffff;
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.4) 0%, rgba(59, 130, 246, 0.4) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.6);
-  box-shadow: 0 0 12px var(--mako-cyan-glow);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .nav-divider {
   width: 1px;
-  height: 20px;
-  background: rgba(147, 197, 253, 0.2);
+  height: 18px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .header-stats-group {
@@ -319,15 +261,15 @@ html, body {
   gap: 6px;
 }
 
-.ff-stat-box {
+.stat-unit {
   display: flex;
   align-items: baseline;
   gap: 5px;
-  background: rgba(6, 17, 38, 0.6);
-  padding: 3px 9px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 3px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(147, 197, 253, 0.18);
-  font-family: var(--font-ff-mono);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono);
 }
 
 .stat-unit-label {
@@ -338,22 +280,19 @@ html, body {
 }
 
 .stat-unit-val {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 700;
 }
 
-.ff-gold { color: var(--limit-gold); text-shadow: 0 0 10px var(--limit-gold-glow); }
-.ff-cyan { color: var(--mako-cyan); text-shadow: 0 0 10px var(--mako-cyan-glow); }
-.ff-emerald { color: var(--materia-emerald); text-shadow: 0 0 10px var(--materia-glow); }
-.ff-ruby { color: var(--phoenix-ruby); text-shadow: 0 0 10px var(--phoenix-glow); }
-.ff-platinum { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+.stat-val-cyan { color: var(--color-cyan); }
+.stat-val-gold { color: var(--color-gold); }
 
 .settings-btn {
-  background: rgba(6, 17, 38, 0.6);
-  border: 1px solid rgba(147, 197, 253, 0.25);
-  color: var(--text-mako);
-  width: 34px;
-  height: 34px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-silver);
+  width: 32px;
+  height: 32px;
   border-radius: 6px;
   cursor: pointer;
   display: flex;
@@ -364,37 +303,37 @@ html, body {
 
 .settings-btn:hover {
   color: #ffffff;
-  border-color: var(--mako-cyan);
-  box-shadow: 0 0 12px var(--mako-cyan-glow);
-  transform: rotate(45deg);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Practice Banner */
 .practice-banner {
-  padding: 8px 18px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--ff-window-elevated);
+  background: var(--bg-card-elevated);
 }
 
 .practice-banner-content {
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 0.82rem;
+  gap: 12px;
+  font-size: 0.8rem;
 }
 
 .practice-tag {
-  font-family: var(--font-ff-title);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  color: var(--limit-gold);
-  letter-spacing: 1px;
+  color: var(--color-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.08);
+  padding: 1px 6px;
+  border-radius: 4px;
 }
 
 .practice-msg {
-  color: var(--text-mako);
+  color: var(--text-silver);
 }
 
 .practice-controls {
@@ -403,27 +342,25 @@ html, body {
 }
 
 .practice-speed-btn {
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid rgba(147, 197, 253, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-silver);
-  font-family: var(--font-ff-mono);
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  border-radius: 3px;
   cursor: pointer;
-  transition: all var(--trans-instant);
 }
 
 .practice-speed-btn.active, .practice-speed-btn:hover {
-  background: var(--mako-cyan);
-  color: #030712;
-  font-weight: 800;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 700;
   border-color: #ffffff;
-  box-shadow: 0 0 10px var(--mako-cyan-glow);
 }
 
 /* ==========================================================================
-   3. LYRICS COMMAND STAGE & ATB GAUGE
+   3. LYRICS STAGE & FLOATING JUDGMENT
    ========================================================================== */
 .center-stage {
   flex: 1;
@@ -439,7 +376,7 @@ html, body {
 
 .lyrics-panel {
   width: 100%;
-  padding: 22px 32px 14px;
+  padding: 24px 32px 16px;
   min-height: 155px;
   display: flex;
   flex-direction: column;
@@ -451,33 +388,32 @@ html, body {
 
 .judgment-overlay {
   position: absolute;
-  top: 12px;
-  right: 22px;
+  top: 10px;
+  right: 20px;
   pointer-events: none;
 }
 
 .judgment-bubble {
-  font-family: var(--font-ff-title);
-  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   font-weight: 800;
-  letter-spacing: 1px;
-  animation: ffDamageFloat 0.55s ease-out forwards;
+  letter-spacing: 0.5px;
+  animation: cleanFadeUp 0.5s ease-out forwards;
 }
 
 .judgment-perfect {
-  color: var(--limit-gold);
-  text-shadow: 0 0 14px var(--limit-gold-glow);
+  color: var(--color-cyan);
+  text-shadow: 0 0 10px var(--color-cyan-glow);
 }
 
 .judgment-miss {
-  color: var(--phoenix-ruby);
-  text-shadow: 0 0 14px var(--phoenix-glow);
+  color: var(--color-ruby);
 }
 
-@keyframes ffDamageFloat {
-  0% { opacity: 0; transform: translateY(6px) scale(0.85); }
-  25% { opacity: 1; transform: translateY(0) scale(1.1); }
-  100% { opacity: 0; transform: translateY(-14px) scale(0.95); }
+@keyframes cleanFadeUp {
+  0% { opacity: 0; transform: translateY(4px); }
+  25% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-8px); }
 }
 
 .lyric-stream {
@@ -485,13 +421,13 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .lyric-line {
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-feature-settings: "liga" 0;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0;
@@ -499,9 +435,9 @@ html, body {
 }
 
 .lyric-prev {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .lyric-active {
@@ -523,77 +459,57 @@ html, body {
   text-align: center;
   white-space: pre;
   position: relative;
-  transition: color 0.05s ease;
 }
 
 .char-correct {
-  color: var(--mako-cyan);
-  text-shadow: 0 0 10px var(--mako-cyan-glow);
+  color: var(--color-cyan);
+  text-shadow: 0 0 8px var(--color-cyan-glow);
 }
 
 .char-cursor {
-  color: #030712;
-  background: var(--limit-gold);
+  color: #000000;
+  background: #ffffff;
   border-radius: 2px;
-  box-shadow: 0 0 10px var(--limit-gold-glow);
 }
 
 .char-error {
   color: #ffffff;
-  background: var(--phoenix-ruby);
+  background: var(--color-ruby);
   border-radius: 2px;
   padding: 0 1px;
-  box-shadow: 0 0 10px var(--phoenix-glow);
 }
 
 .char-pending {
-  color: var(--text-mako);
+  color: var(--text-silver);
 }
 
 .lyric-next {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
-  opacity: 0.7;
-}
-
-/* ATB / Limit Gauge Track */
-.atb-track-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.atb-label {
-  font-family: var(--font-ff-mono);
-  font-size: 0.58rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--mako-cyan);
+  opacity: 0.6;
 }
 
 .line-progress-track {
-  flex: 1;
-  height: 4px;
-  background: rgba(3, 8, 22, 0.8);
-  border: 1px solid rgba(147, 197, 253, 0.25);
-  border-radius: 2px;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 1px;
   overflow: hidden;
 }
 
 .line-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--mako-cyan) 0%, var(--limit-gold) 100%);
-  box-shadow: 0 0 10px var(--mako-cyan-glow);
+  background: var(--color-cyan);
+  box-shadow: 0 0 8px var(--color-cyan-glow);
   transition: width 0.06s ease-out;
 }
 
 /* ==========================================================================
-   4. FINAL FANTASY COMMAND & MATERIA KEYBOARD
+   4. PRECISION MECHANICAL KEYBOARD (CUSTOM SLATE ARCHETYPE)
    ========================================================================== */
 .keyboard-panel {
   width: 100%;
-  max-width: 710px;
+  max-width: 690px;
   padding: 14px 18px;
   display: flex;
   flex-direction: column;
@@ -604,17 +520,17 @@ html, body {
 .kb-row {
   display: flex;
   justify-content: center;
-  gap: 7px;
+  gap: 6px;
   width: 100%;
 }
 
-/* Final Fantasy 3D Sculpted Keycaps */
+/* 3D Tactile Mechanical Keycaps */
 .key-3d {
   appearance: none;
   border: none;
-  font-family: var(--font-ff-mono);
-  font-size: 0.92rem;
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
   height: var(--key-height);
   width: var(--key-width);
   border-radius: var(--key-radius);
@@ -624,144 +540,84 @@ html, body {
   justify-content: center;
   text-align: center;
   position: relative;
-  transition: transform var(--trans-instant), box-shadow var(--trans-instant), filter var(--trans-instant);
+  transition: transform var(--trans-press), box-shadow var(--trans-press), background var(--trans-press);
 }
 
 .key-3d:hover {
-  transform: translateY(-1.5px);
-  filter: brightness(1.15);
+  transform: translateY(-1px);
 }
 
 .key-3d:active, .key-3d.key-pressed {
-  transform: translateY(2.5px) !important;
+  transform: translateY(2px) !important;
 }
 
-/* --- Final Fantasy Materia & Class Colorways --- */
-
-/* 1. Mako Cyan Keycap */
-.key-ff-mako {
-  background: linear-gradient(180deg, #103454 0%, #081d33 100%);
-  color: #e0f2fe;
-  border: 1px solid rgba(56, 189, 248, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #04101e, 0 6px 12px rgba(0, 0, 0, 0.4);
-  text-shadow: 0 0 8px var(--mako-cyan-glow);
+/* Uniform High-End Slate Keycaps */
+.key-alpha {
+  background: var(--key-bg);
+  color: var(--text-bright);
+  border: var(--key-border);
+  box-shadow: var(--key-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
-.key-ff-mako:active, .key-ff-mako.key-pressed {
-  box-shadow: 0 1px 0 #04101e, 0 0 16px var(--mako-cyan-glow);
-  background: var(--mako-cyan);
+
+.key-alpha:active, .key-alpha.key-pressed {
+  box-shadow: 0 1px 0 #0a0d14, 0 0 12px var(--color-cyan-glow);
+  background: var(--color-cyan);
   color: #030712;
+  border-color: #ffffff;
 }
 
-/* 2. Royal Sapphire Keycap */
-.key-ff-sapphire {
-  background: linear-gradient(180deg, #162a56 0%, #0d1a38 100%);
-  color: #dbeafe;
-  border: 1px solid rgba(96, 165, 250, 0.55);
-  box-shadow: 0 var(--key-depth) 0 #060e22, 0 6px 12px rgba(0, 0, 0, 0.4);
-  text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
-}
-.key-ff-sapphire:active, .key-ff-sapphire.key-pressed {
-  box-shadow: 0 1px 0 #060e22, 0 0 16px rgba(96, 165, 250, 0.8);
-  background: #60a5fa;
-  color: #030712;
-}
-
-/* 3. Materia Emerald Keycap */
-.key-ff-materia {
-  background: linear-gradient(180deg, #0d382b 0%, #06221a 100%);
-  color: #d1fae5;
-  border: 1px solid rgba(52, 211, 153, 0.55);
-  box-shadow: 0 var(--key-depth) 0 #03140f, 0 6px 12px rgba(0, 0, 0, 0.4);
-  text-shadow: 0 0 8px var(--materia-glow);
-}
-.key-ff-materia:active, .key-ff-materia.key-pressed {
-  box-shadow: 0 1px 0 #03140f, 0 0 16px var(--materia-glow);
-  background: var(--materia-emerald);
-  color: #030712;
-}
-
-/* 4. Limit Gold Keycap */
-.key-ff-gold {
-  background: linear-gradient(180deg, #382c0b 0%, #221b06 100%);
-  color: #fef08a;
-  border: 1px solid rgba(251, 191, 36, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #130f03, 0 6px 12px rgba(0, 0, 0, 0.4);
-  text-shadow: 0 0 8px var(--limit-gold-glow);
-}
-.key-ff-gold:active, .key-ff-gold.key-pressed {
-  box-shadow: 0 1px 0 #130f03, 0 0 16px var(--limit-gold-glow);
-  background: var(--limit-gold);
-  color: #030712;
-}
-
-/* 5. Phoenix Ruby Keycap */
-.key-ff-ruby {
-  background: linear-gradient(180deg, #3d1222 0%, #260814 100%);
-  color: #ffe4e6;
-  border: 1px solid rgba(244, 63, 94, 0.55);
-  box-shadow: 0 var(--key-depth) 0 #16040b, 0 6px 12px rgba(0, 0, 0, 0.4);
-  text-shadow: 0 0 8px var(--phoenix-glow);
-}
-.key-ff-ruby:active, .key-ff-ruby.key-pressed {
-  box-shadow: 0 1px 0 #16040b, 0 0 16px var(--phoenix-glow);
-  background: var(--phoenix-ruby);
-  color: #030712;
-}
-
-/* Home-row nib indicators on F & J */
+/* Home-row nibs on F & J */
 .key-home {
   position: relative;
 }
 
 .home-nib {
   position: absolute;
-  bottom: 5px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
   width: 10px;
   height: 2px;
-  background: #ffffff;
-  box-shadow: 0 0 6px #ffffff;
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 1px;
 }
 
 /* Modifiers */
-.key-ff-mod {
-  width: 56px;
-  font-size: 0.78rem;
-  background: linear-gradient(180deg, #131c2e 0%, #0a101b 100%);
-  color: var(--text-silver);
-  border: 1px solid rgba(147, 197, 253, 0.3);
-  box-shadow: 0 var(--key-depth) 0 #05080e;
+.key-mod {
+  width: 54px;
+  font-size: 0.75rem;
+  background: #10141f;
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 var(--key-depth) 0 #07090f;
 }
 
-.key-ff-mod:active, .key-ff-mod.key-pressed {
-  box-shadow: 0 1px 0 #05080e, 0 0 12px rgba(255, 255, 255, 0.5);
-  background: #25334d;
+.key-mod:active, .key-mod.key-pressed {
+  box-shadow: 0 1px 0 #07090f;
   color: #ffffff;
+  background: #1f2738;
 }
 
-/* Spacebar (Crystal Core) */
-.key-ff-space {
+/* Spacebar */
+.key-space {
   flex: 1;
-  max-width: 370px;
-  background: linear-gradient(180deg, #103454 0%, #0d253d 100%);
-  color: #e0f2fe;
-  font-family: var(--font-ff-title);
-  font-size: 0.8rem;
+  max-width: 360px;
+  background: var(--key-bg);
+  color: var(--text-muted);
+  font-size: 0.75rem;
   letter-spacing: 2px;
-  border: 1px solid rgba(56, 189, 248, 0.7);
-  box-shadow: 0 var(--key-depth) 0 #04101e, 0 0 14px rgba(56, 189, 248, 0.25);
+  border: var(--key-border);
+  box-shadow: var(--key-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.key-ff-space:active, .key-ff-space.key-pressed {
-  box-shadow: 0 1px 0 #04101e, 0 0 20px var(--mako-cyan-glow);
-  background: var(--mako-cyan);
+.key-space:active, .key-space.key-pressed {
+  box-shadow: 0 1px 0 #0a0d14, 0 0 16px var(--color-cyan-glow);
   color: #030712;
+  background: var(--color-cyan);
 }
 
 /* ==========================================================================
-   5. BOTTOM FOOTER & COMMAND BAR
+   5. BOTTOM FOOTER & TRANSPORT DOCK
    ========================================================================== */
 .ui-footer {
   display: flex;
@@ -778,33 +634,32 @@ html, body {
   gap: 8px;
 }
 
-.ff-subbtn {
-  background: rgba(6, 17, 38, 0.6);
-  border: 1px solid rgba(147, 197, 253, 0.25);
-  color: var(--text-mako);
+.footer-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-silver);
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-ff-ui);
+  font-family: var(--font-brand);
   font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.5px;
   padding: 6px 14px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all var(--trans-smooth);
 }
 
-.ff-subbtn:hover {
+.footer-btn:hover {
   color: #ffffff;
-  border-color: var(--mako-cyan);
-  background: rgba(14, 165, 233, 0.18);
-  box-shadow: 0 0 12px var(--mako-cyan-glow);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .sfx-btn.active {
-  color: var(--materia-emerald);
-  border-color: rgba(52, 211, 153, 0.4);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .footer-center {
@@ -826,19 +681,19 @@ html, body {
 }
 
 .play-btn-circle:hover {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .play-icon-inner {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ffffff 0%, var(--mako-cyan) 100%);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #030712;
-  box-shadow: 0 0 16px var(--mako-cyan-glow);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
 }
 
 .transport-svg {
@@ -846,11 +701,11 @@ html, body {
 }
 
 .play-btn-label {
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--text-mako);
+  letter-spacing: 0.5px;
+  color: var(--text-silver);
 }
 
 .footer-right {
@@ -866,7 +721,7 @@ html, body {
 }
 
 .hint-pill {
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--text-muted);
   display: flex;
@@ -875,28 +730,28 @@ html, body {
 }
 
 .hint-pill kbd {
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid rgba(147, 197, 253, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 3px;
   padding: 1px 4px;
-  color: var(--text-mako);
+  color: var(--text-silver);
 }
 
 /* ==========================================================================
-   6. MODALS: TRACK STATION, HALL OF FAME & VICTORY FANFARE
+   6. MODALS: TRACK STATION, LEADERBOARD & RESULTS
    ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(2, 6, 18, 0.88);
-  backdrop-filter: blur(10px);
+  background: rgba(3, 5, 12, 0.88);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease-out;
+  transition: opacity 0.18s ease-out;
 }
 
 .modal-overlay.active {
@@ -906,7 +761,7 @@ html, body {
 
 .modal-card {
   width: 92%;
-  max-width: 530px;
+  max-width: 520px;
   padding: 22px;
   display: flex;
   flex-direction: column;
@@ -917,7 +772,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid rgba(147, 197, 253, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 10px;
 }
 
@@ -928,24 +783,22 @@ html, body {
 }
 
 .modal-title {
-  font-family: var(--font-ff-title);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(186, 230, 253, 0.5);
+  letter-spacing: 0.5px;
+  color: var(--text-white);
 }
 
 .modal-subtitle {
-  font-size: 0.74rem;
-  color: var(--text-mako);
+  font-size: 0.72rem;
+  color: var(--text-muted);
 }
 
 .modal-close-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   cursor: pointer;
   line-height: 1;
 }
@@ -966,8 +819,8 @@ html, body {
 }
 
 .track-card {
-  background: rgba(6, 17, 38, 0.6);
-  border: 1px solid rgba(147, 197, 253, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 10px;
   cursor: pointer;
@@ -978,32 +831,30 @@ html, body {
 }
 
 .track-card:hover {
-  background: rgba(14, 165, 233, 0.15);
-  border-color: var(--mako-cyan);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .track-card.active {
-  background: rgba(14, 165, 233, 0.25);
+  background: rgba(255, 255, 255, 0.08);
   border-color: #ffffff;
-  box-shadow: 0 0 14px var(--mako-cyan-glow);
 }
 
 .track-card-title {
-  font-family: var(--font-ff-title);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #ffffff;
 }
 
 .track-card-artist {
   font-size: 0.72rem;
-  color: var(--text-mako);
+  color: var(--text-muted);
 }
 
 .track-card-genre {
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-size: 0.62rem;
-  color: var(--limit-gold);
+  color: var(--text-muted);
   margin-top: 2px;
 }
 
@@ -1014,23 +865,22 @@ html, body {
 }
 
 .slider-val {
-  font-family: var(--font-ff-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-white);
 }
 
 .custom-track-details {
-  background: rgba(3, 8, 22, 0.6);
-  border: 1px solid rgba(147, 197, 253, 0.15);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 6px;
   padding: 8px 12px;
 }
 
 .custom-track-summary {
-  font-family: var(--font-ff-title);
   font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-mako);
+  font-weight: 600;
+  color: var(--text-silver);
   cursor: pointer;
 }
 
@@ -1042,31 +892,30 @@ html, body {
 }
 
 .modal-label {
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-size: 0.68rem;
-  color: var(--text-mako);
+  color: var(--text-muted);
   letter-spacing: 0.5px;
 }
 
 .modal-input, .modal-textarea {
-  background: rgba(3, 8, 22, 0.9);
-  border: 1px solid rgba(147, 197, 253, 0.25);
+  background: #07090e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 4px;
   padding: 8px 10px;
   color: #fff;
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   outline: none;
 }
 
 .modal-input:focus, .modal-textarea:focus {
-  border-color: var(--mako-cyan);
-  box-shadow: 0 0 10px var(--mako-cyan-glow);
+  border-color: #ffffff;
 }
 
 .modal-slider {
   width: 100%;
-  accent-color: var(--mako-cyan);
+  accent-color: #ffffff;
   margin-top: 4px;
 }
 
@@ -1074,40 +923,38 @@ html, body {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  border-top: 1px solid rgba(147, 197, 253, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 10px;
 }
 
 .btn {
   padding: 6px 16px;
   border-radius: 4px;
-  font-family: var(--font-ff-ui);
+  font-family: var(--font-brand);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   cursor: pointer;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   transition: all var(--trans-smooth);
 }
 
 .btn-secondary {
-  background: rgba(6, 17, 38, 0.6);
-  border: 1px solid rgba(147, 197, 253, 0.3);
-  color: var(--text-mako);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-silver);
 }
-.btn-secondary:hover { background: rgba(14, 165, 233, 0.2); color: #fff; }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--mako-cyan) 0%, #2563eb 100%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  box-shadow: 0 0 14px var(--mako-cyan-glow);
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: #000000;
 }
 .btn-primary:hover {
-  filter: brightness(1.15);
-  box-shadow: 0 0 20px var(--mako-cyan-glow);
+  background: #e2e8f0;
 }
 
-/* Hall of Fame Table */
+/* Leaderboard Table */
 .leaderboard-table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -1116,55 +963,53 @@ html, body {
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: var(--font-ff-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
 }
 
 .leaderboard-table th {
   text-align: left;
   padding: 6px 8px;
-  color: var(--text-mako);
-  font-size: 0.68rem;
-  border-bottom: 1px solid rgba(147, 197, 253, 0.2);
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .leaderboard-table td {
   padding: 8px;
-  border-bottom: 1px solid rgba(147, 197, 253, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   color: var(--text-silver);
 }
 
 .rank-badge-cell {
   font-weight: 800;
-  color: var(--limit-gold);
+  color: #ffffff;
 }
 
-/* Victory Fanfare Card */
+/* Results Card */
 .results-card {
   text-align: center;
   align-items: center;
-  max-width: 450px;
+  max-width: 440px;
   padding: 26px;
 }
 
 .results-badge {
-  font-family: var(--font-ff-title);
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: 900;
   letter-spacing: 2px;
+  color: #ffffff;
 }
 
 .results-title {
-  font-family: var(--font-ff-title);
-  font-size: 1.25rem;
-  letter-spacing: 1.5px;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
   color: #ffffff;
-  text-shadow: 0 0 14px rgba(251, 191, 36, 0.5);
 }
 
 .results-subtitle {
-  font-size: 0.8rem;
-  color: var(--text-mako);
+  font-size: 0.78rem;
+  color: var(--text-muted);
   margin-bottom: 6px;
 }
 
@@ -1177,8 +1022,8 @@ html, body {
 }
 
 .result-box {
-  background: rgba(6, 17, 38, 0.6);
-  border: 1px solid rgba(147, 197, 253, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 10px;
   border-radius: 6px;
   display: flex;
@@ -1187,15 +1032,16 @@ html, body {
 }
 
 .res-label {
-  font-family: var(--font-ff-mono);
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   color: var(--text-muted);
 }
 
 .res-val {
-  font-family: var(--font-ff-mono);
-  font-size: 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
   font-weight: 800;
+  color: #ffffff;
 }
 
 .save-score-section {
@@ -1218,11 +1064,11 @@ html, body {
    ========================================================================== */
 @media (max-width: 900px) {
   :root {
-    --key-height: 39px;
-    --key-width: 39px;
+    --key-height: 38px;
+    --key-width: 38px;
     --key-radius: 5px;
   }
-  .key-3d { font-size: 0.82rem; }
+  .key-3d { font-size: 0.8rem; }
   .lyric-active { font-size: 1.2rem; }
   .track-cards-grid { grid-template-columns: 1fr; }
 }
@@ -1230,13 +1076,13 @@ html, body {
 @media (max-width: 650px) {
   .app-ui-container { padding: 8px 10px; }
   :root {
-    --key-height: 33px;
-    --key-width: 29px;
+    --key-height: 32px;
+    --key-width: 28px;
     --key-radius: 4px;
     --key-depth: 3px;
   }
-  .key-3d { font-size: 0.72rem; }
-  .keyboard-hints, .ff-system-tag { display: none; }
+  .key-3d { font-size: 0.7rem; }
+  .keyboard-hints { display: none; }
   .lyrics-panel { padding: 14px 12px; min-height: 120px; }
   .lyric-prev, .lyric-next { font-size: 0.8rem; }
   .lyric-active { font-size: 1.05rem; }

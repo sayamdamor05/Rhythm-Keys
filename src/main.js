@@ -160,16 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 4. FLOATING FINAL FANTASY JUDGMENT EFFECT ---
+  // --- 4. FLOATING JUDGMENT EFFECT ---
   function showJudgmentEffect(type, points) {
     if (!judgmentOverlay) return;
     const el = document.createElement('div');
     el.className = `judgment-bubble ${type === 'PERFECT' ? 'judgment-perfect' : 'judgment-miss'}`;
-    el.textContent = type === 'PERFECT' ? `CRITICAL +${points}` : 'MISS';
+    el.textContent = type === 'PERFECT' ? `PERFECT +${points}` : 'MISS';
     judgmentOverlay.appendChild(el);
     setTimeout(() => {
       if (el.parentNode) el.parentNode.removeChild(el);
-    }, 550);
+    }, 450);
   }
 
   // --- 5. POPULATE TRACK SELECTION CARDS ---

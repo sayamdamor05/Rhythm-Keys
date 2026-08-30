@@ -96,11 +96,11 @@ export class SpaceScene {
    * Creates volumetric nebula clouds in deep space
    */
   createCosmicNebulaLayers() {
-    const nebulaGeo = new THREE.PlaneGeometry(150, 100);
+    const nebulaGeo = new THREE.PlaneGeometry(160, 110);
     const nebulaColors = [
-      { color1: 'rgba(56, 189, 248, 0.25)', color2: 'rgba(14, 28, 64, 0.4)' },
-      { color1: 'rgba(59, 130, 246, 0.2)', color2: 'rgba(4, 10, 28, 0.45)' },
-      { color1: 'rgba(52, 211, 153, 0.15)', color2: 'rgba(6, 18, 42, 0.3)' }
+      { color1: 'rgba(56, 189, 248, 0.08)', color2: 'rgba(10, 18, 38, 0.3)' },
+      { color1: 'rgba(30, 58, 138, 0.12)', color2: 'rgba(4, 8, 20, 0.35)' },
+      { color1: 'rgba(15, 23, 42, 0.15)', color2: 'rgba(2, 6, 14, 0.4)' }
     ];
 
     nebulaColors.forEach((cfg, idx) => {
@@ -136,7 +136,7 @@ export class SpaceScene {
   }
 
   /**
-   * Creates 3D particle starfield with Mako Lifestream & crystal sparkles
+   * Creates 3D particle starfield with clean starlight
    */
   create3DStarfield() {
     const canvas = document.createElement('canvas');
@@ -145,8 +145,8 @@ export class SpaceScene {
     const ctx = canvas.getContext('2d');
     const radGrad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     radGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    radGrad.addColorStop(0.3, 'rgba(56, 189, 248, 0.85)');
-    radGrad.addColorStop(0.7, 'rgba(52, 211, 153, 0.4)');
+    radGrad.addColorStop(0.3, 'rgba(226, 232, 240, 0.7)');
+    radGrad.addColorStop(0.7, 'rgba(56, 189, 248, 0.25)');
     radGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = radGrad;
     ctx.beginPath();
@@ -162,10 +162,10 @@ export class SpaceScene {
 
     const palette = [
       new THREE.Color(0xffffff),
-      new THREE.Color(0x38bdf8), // Mako Cyan
-      new THREE.Color(0x60a5fa), // Royal Sapphire
-      new THREE.Color(0x34d399), // Materia Emerald
-      new THREE.Color(0xfbbf24)  // Limit Gold
+      new THREE.Color(0xf1f5f9),
+      new THREE.Color(0xe2e8f0),
+      new THREE.Color(0x93c5fd),
+      new THREE.Color(0x60a5fa)
     ];
 
     for (let i = 0; i < this.starCount; i++) {
@@ -179,18 +179,18 @@ export class SpaceScene {
       colors[i3 + 1] = col.g;
       colors[i3 + 2] = col.b;
 
-      velocities[i] = Math.random() * 0.6 + 0.5;
+      velocities[i] = Math.random() * 0.5 + 0.4;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 1.8,
+      size: 1.5,
       map: starTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.8,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
