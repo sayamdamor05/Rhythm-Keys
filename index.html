@@ -3,43 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rhythm Keys // Precision Rhythm-Typing Engine</title>
+  <title>Rhythm Keys // Cosmic Melody Adventure</title>
   
-  <!-- Typography: Space Grotesk & JetBrains Mono -->
+  <!-- Typography: Fredoka, Quicksand & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet" />
   
   <!-- Three.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
-  <!-- ================= 1. FULLSCREEN 3D SPACE CANVAS ================= -->
+  <!-- ================= 1. FULLSCREEN 3D PASTEL COSMOS CANVAS ================= -->
   <canvas id="spaceCanvas" class="three-space-canvas"></canvas>
 
-  <!-- ================= 2. FOREGROUND FLOATING APPLICATION ================= -->
+  <!-- ================= 2. FOREGROUND FLOATING CANDY COSMIC UI ================= -->
   <div class="app-ui-container" id="app">
     <!-- TOP HEADER -->
-    <header class="ui-header glass-card">
+    <header class="ui-header puffy-card">
       <!-- Left: Brand -->
       <div class="header-left">
         <div class="brand-badge">
-          <span class="brand-status-dot"></span>
-          <span class="brand-name">RHYTHM KEYS</span>
+          <span class="brand-star-icon">⭐</span>
+          <div class="brand-text-wrap">
+            <span class="brand-name">Rhythm Keys</span>
+            <span class="brand-subtitle">Cosmic Melody</span>
+          </div>
         </div>
       </div>
 
-      <!-- Center: Track Info & Real-Time Spectrum -->
+      <!-- Center: Track Info & Rainbow Spectrum -->
       <div class="header-center">
         <div class="track-header-block" id="btnHeaderTrackPicker" role="button" tabindex="0" title="Click to Change Track">
           <div class="track-meta-row">
+            <span class="music-icon-bubble">🎵</span>
             <span class="track-title-text" id="currentTrackTitle">Midnight City</span>
-            <span class="track-sep">/</span>
+            <span class="track-sep">✦</span>
             <span class="track-artist-text" id="currentTrackArtist">M83</span>
           </div>
           <div class="visualizer-container">
-            <canvas id="headerSpectrumCanvas" width="140" height="14" class="spectrum-canvas"></canvas>
+            <canvas id="headerSpectrumCanvas" width="140" height="16" class="spectrum-canvas"></canvas>
             <span class="track-bpm-badge" id="trackBpmBadge">105 BPM</span>
           </div>
         </div>
@@ -48,43 +52,43 @@
       <!-- Right: Navigation, Telemetry HUD & Settings -->
       <div class="header-right">
         <nav class="header-nav" aria-label="Modes">
-          <button class="nav-btn active" id="navPlay">PLAY</button>
-          <button class="nav-btn" id="navPractice">PRACTICE</button>
-          <button class="nav-btn" id="navLeaderboard">LEADERBOARD</button>
+          <button class="nav-btn active" id="navPlay">Play</button>
+          <button class="nav-btn" id="navPractice">Practice</button>
+          <button class="nav-btn" id="navLeaderboard">Rankings</button>
         </nav>
 
         <div class="nav-divider"></div>
 
-        <!-- Precision Telemetry HUD -->
+        <!-- Cute Puffy Telemetry HUD -->
         <div class="header-stats-group">
           <!-- Streak -->
-          <div class="stat-unit" id="hudComboContainer">
-            <span class="stat-unit-label">STREAK</span>
-            <span class="stat-unit-val stat-val-gold" id="hudStreak">0</span>
+          <div class="stat-unit stat-unit-streak" id="hudComboContainer">
+            <span class="stat-icon">🔥</span>
+            <span class="stat-unit-val" id="hudStreak">0</span>
           </div>
 
           <!-- WPM -->
-          <div class="stat-unit">
+          <div class="stat-unit stat-unit-wpm">
             <span class="stat-unit-label">WPM</span>
-            <span class="stat-unit-val stat-val-cyan" id="hudWpm">0</span>
+            <span class="stat-unit-val" id="hudWpm">0</span>
           </div>
 
           <!-- Accuracy -->
-          <div class="stat-unit">
+          <div class="stat-unit stat-unit-acc">
             <span class="stat-unit-label">ACC</span>
             <span class="stat-unit-val" id="hudAcc">100%</span>
           </div>
 
           <!-- Score -->
-          <div class="stat-unit score-unit">
-            <span class="stat-unit-label">SCORE</span>
+          <div class="stat-unit stat-unit-score score-unit">
+            <span class="stat-icon">⭐</span>
             <span class="stat-unit-val" id="hudScore">0</span>
           </div>
         </div>
 
         <!-- Settings Button -->
         <button class="settings-btn" id="btnSettings" title="Track & Audio Settings [ESC]" aria-label="Settings">
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"></circle>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
           </svg>
@@ -93,10 +97,10 @@
     </header>
 
     <!-- PRACTICE MODE BANNER -->
-    <div class="practice-banner glass-card" id="practiceBanner" style="display: none;">
+    <div class="practice-banner puffy-card" id="practiceBanner" style="display: none;">
       <div class="practice-banner-content">
-        <span class="practice-tag">PRACTICE MODE</span>
-        <span class="practice-msg">Practice lines at variable tempo without penalties. Press [TAB] to loop line.</span>
+        <span class="practice-tag">⭐ Practice Zone</span>
+        <span class="practice-msg">Practice lines at your own tempo without pressure! Press [TAB] to loop line.</span>
         <div class="practice-controls">
           <button class="practice-speed-btn" data-speed="0.75">0.75x</button>
           <button class="practice-speed-btn active" data-speed="1.0">1.00x</button>
@@ -105,10 +109,10 @@
       </div>
     </div>
 
-    <!-- CENTER STAGE (Lyrics Display & Mechanical Keyboard) -->
+    <!-- CENTER STAGE (Lyrics Display & Candy Mechanical Keyboard) -->
     <main class="center-stage">
-      <!-- Monospace Lyrics Display -->
-      <section class="lyrics-panel glass-card" id="lyricsContainer" aria-live="polite">
+      <!-- Puffy Cloud Lyrics Display -->
+      <section class="lyrics-panel puffy-card" id="lyricsContainer" aria-live="polite">
         <div class="judgment-overlay" id="judgmentOverlay"></div>
 
         <div class="lyric-stream">
@@ -117,7 +121,7 @@
             <span class="line-text" id="lyricPrevText">Waiting for the sun to rise</span>
           </div>
 
-          <!-- Line 2: Active Target Line with High-Contrast Character Highlighting -->
+          <!-- Line 2: Active Target Line with Sweet Pastel Character Highlighting -->
           <div class="lyric-line lyric-active" id="lyricActive">
             <div class="active-chars-container" id="activeChars">
               <span class="char char-correct">The city is </span>
@@ -132,14 +136,14 @@
           </div>
         </div>
 
-        <!-- Line Progress Tracker -->
+        <!-- Rainbow Progress Tracker -->
         <div class="line-progress-track">
           <div class="line-progress-bar" id="lineProgressBar" style="width: 0%;"></div>
         </div>
       </section>
 
-      <!-- Multi-Color Precision Mechanical Keyboard -->
-      <section class="keyboard-panel glass-card" id="virtualKeyboard" aria-label="Virtual Keyboard">
+      <!-- Glossy 3D Candy Mechanical Keyboard -->
+      <section class="keyboard-panel puffy-card" id="virtualKeyboard" aria-label="Virtual Keyboard">
         <!-- Row 1: Q W E R T Y U I O P (10 Keys) -->
         <div class="kb-row kb-row-1">
           <button class="key key-3d key-cyan" data-key="q">Q</button>
@@ -148,15 +152,15 @@
           <button class="key key-3d key-ruby" data-key="r">R</button>
           <button class="key key-3d key-gold" data-key="t">T</button>
           <button class="key key-3d key-purple" data-key="y">Y</button>
-          <button class="key key-3d key-cyan" data-key="u">U</button>
-          <button class="key key-3d key-sapphire" data-key="i">I</button>
-          <button class="key key-3d key-emerald" data-key="o">O</button>
-          <button class="key key-3d key-ruby" data-key="p">P</button>
+          <button class="key key-3d key-pink" data-key="u">U</button>
+          <button class="key key-3d key-cyan" data-key="i">I</button>
+          <button class="key key-3d key-sapphire" data-key="o">O</button>
+          <button class="key key-3d key-emerald" data-key="p">P</button>
         </div>
 
-        <!-- Row 2: A S D F G H J K L (9 Keys with F & J Tactile Nibs) -->
+        <!-- Row 2: A S D F G H J K L (9 Keys with F & J Tactile Star Nibs) -->
         <div class="kb-row kb-row-2">
-          <button class="key key-3d key-sapphire" data-key="a">A</button>
+          <button class="key key-3d key-pink" data-key="a">A</button>
           <button class="key key-3d key-emerald" data-key="s">S</button>
           <button class="key key-3d key-ruby" data-key="d">D</button>
           <button class="key key-3d key-cyan key-home" data-key="f">F<span class="home-nib"></span></button>
@@ -164,60 +168,57 @@
           <button class="key key-3d key-purple" data-key="h">H</button>
           <button class="key key-3d key-cyan key-home" data-key="j">J<span class="home-nib"></span></button>
           <button class="key key-3d key-emerald" data-key="k">K</button>
-          <button class="key key-3d key-ruby" data-key="l">L</button>
+          <button class="key key-3d key-sapphire" data-key="l">L</button>
         </div>
 
         <!-- Row 3: Z X C V B N M (7 Keys) -->
         <div class="kb-row kb-row-3">
           <button class="key key-3d key-gold" data-key="z">Z</button>
           <button class="key key-3d key-purple" data-key="x">X</button>
-          <button class="key key-3d key-sapphire" data-key="c">C</button>
+          <button class="key key-3d key-pink" data-key="c">C</button>
           <button class="key key-3d key-cyan" data-key="v">V</button>
           <button class="key key-3d key-emerald" data-key="b">B</button>
           <button class="key key-3d key-gold" data-key="n">N</button>
-          <button class="key key-3d key-sapphire" data-key="m">M</button>
+          <button class="key key-3d key-ruby" data-key="m">M</button>
         </div>
 
         <!-- Row 4: Shift Modifier, SPACEBAR, Backspace Modifier -->
         <div class="kb-row kb-row-4">
-          <button class="key key-3d key-mod" data-key="Shift" aria-label="Shift">SHIFT</button>
-          <button class="key key-3d key-space" data-key=" ">SPACEBAR</button>
-          <button class="key key-3d key-mod" data-key="Backspace" aria-label="Backspace">BKSP</button>
+          <button class="key key-3d key-mod key-pink" data-key="Shift" aria-label="Shift">SHIFT</button>
+          <button class="key key-3d key-space key-rainbow" data-key=" ">✦ SPACEBAR ✦</button>
+          <button class="key key-3d key-mod key-purple" data-key="Backspace" aria-label="Backspace">BKSP</button>
         </div>
       </section>
     </main>
 
-    <!-- BOTTOM FOOTER / TRANSPORT DOCK -->
-    <footer class="ui-footer glass-card">
+    <!-- BOTTOM FOOTER / JELLY TRANSPORT DOCK -->
+    <footer class="ui-footer puffy-card">
       <!-- Left: Restart & SFX Controls -->
       <div class="footer-left">
         <button class="footer-btn" id="btnRestart" title="Restart Track [TAB]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
             <path d="M3 3v5h5"></path>
           </svg>
-          <span>RESTART</span>
+          <span>Restart</span>
         </button>
 
-        <button class="footer-btn sfx-btn active" id="btnToggleSfx" title="Toggle Mechanical Audio Feedback">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
+        <button class="footer-btn sfx-btn active" id="btnToggleSfx" title="Toggle Audio SFX">
+          <span class="btn-sfx-icon">🔊</span>
           <span id="sfxLabel">SFX ON</span>
         </button>
       </div>
 
-      <!-- Center: Play/Pause Transport Trigger -->
+      <!-- Center: Play/Pause Big Jelly Button -->
       <div class="footer-center">
         <button class="play-btn-circle" id="btnPlayPause" aria-label="Play or Pause Track [SPACE]">
           <div class="play-icon-inner">
-            <svg id="playIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+            <svg id="playIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
               <polygon points="5 3 19 12 5 21 5 3"></polygon>
             </svg>
-            <svg id="pauseIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
+            <svg id="pauseIconSvg" class="transport-svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1.5"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1.5"></rect>
             </svg>
           </div>
           <span class="play-btn-label" id="playButtonText">PAUSE</span>
@@ -227,12 +228,12 @@
       <!-- Right: Speed Selector & Key Hints -->
       <div class="footer-right">
         <div class="keyboard-hints">
-          <span class="hint-pill"><kbd>SPACE</kbd> TOGGLE</span>
-          <span class="hint-pill"><kbd>TAB</kbd> RESET</span>
+          <span class="hint-pill"><kbd>SPACE</kbd> Play</span>
+          <span class="hint-pill"><kbd>TAB</kbd> Reset</span>
         </div>
 
         <button class="footer-btn diff-btn" id="diffHard" title="Toggle Speed Preset">
-          <span id="diffText">SPEED: 1.0x</span>
+          <span id="diffText">Speed: 1.0x</span>
         </button>
       </div>
     </footer>
@@ -240,17 +241,17 @@
 
   <!-- ================= SETTINGS & TRACK SELECTION MODAL ================= -->
   <div class="modal-overlay" id="settingsModal" aria-hidden="true">
-    <div class="modal-card glass-card track-settings-card">
+    <div class="modal-card puffy-card track-settings-card">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <h2 class="modal-title">TRACK & AUDIO SETTINGS</h2>
-          <span class="modal-subtitle">Select soundtrack and configure master acoustic output</span>
+          <h2 class="modal-title">🎵 Track & Sound Station</h2>
+          <span class="modal-subtitle">Choose a catchy tune or upload your own lyrics</span>
         </div>
         <button class="modal-close-btn" id="btnSettingsClose" aria-label="Close Settings">&times;</button>
       </div>
 
       <div class="modal-body">
-        <label class="modal-label">SOUNDTRACK PRESETS</label>
+        <label class="modal-label">⭐ SOUNDTRACK ADVENTURES</label>
         <div class="track-cards-grid" id="trackCardsGrid">
           <!-- Injected dynamically via JavaScript -->
         </div>
@@ -268,7 +269,7 @@
 
         <!-- Custom Track Input -->
         <details class="custom-track-details" id="customTrackDetails">
-          <summary class="custom-track-summary">CUSTOM LRC & AUDIO STREAM</summary>
+          <summary class="custom-track-summary">✨ Custom Audio & Sync LRC</summary>
           <div class="custom-fields" id="customFields">
             <label class="modal-label" for="customTitleInput">TRACK TITLE & ARTIST</label>
             <input type="text" id="customTitleInput" class="modal-input" placeholder="e.g. Midnight City - M83" />
@@ -283,19 +284,19 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" id="btnSettingsCancel">CANCEL</button>
-        <button class="btn btn-primary" id="btnSettingsApply">APPLY</button>
+        <button class="btn btn-secondary" id="btnSettingsCancel">Cancel</button>
+        <button class="btn btn-primary" id="btnSettingsApply">Apply</button>
       </div>
     </div>
   </div>
 
   <!-- ================= LEADERBOARD MODAL ================= -->
   <div class="modal-overlay" id="leaderboardModal" aria-hidden="true">
-    <div class="modal-card glass-card leaderboard-card">
+    <div class="modal-card puffy-card leaderboard-card">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <h2 class="modal-title">LEADERBOARD RECORDS</h2>
-          <span class="modal-subtitle">Verified high-score keystroke telemetry</span>
+          <h2 class="modal-title">🏆 Top Cosmic Players</h2>
+          <span class="modal-subtitle">High-score keystroke telemetry & stars</span>
         </div>
         <button class="modal-close-btn" id="btnLeaderboardClose" aria-label="Close Leaderboard">&times;</button>
       </div>
@@ -306,7 +307,7 @@
             <thead>
               <tr>
                 <th>RANK</th>
-                <th>OPERATOR</th>
+                <th>PLAYER</th>
                 <th>TRACK</th>
                 <th>WPM</th>
                 <th>ACC</th>
@@ -321,47 +322,83 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" id="btnLeaderboardReset">CLEAR LOCAL SCORES</button>
-        <button class="btn btn-primary" id="btnLeaderboardClose2">CLOSE</button>
+        <button class="btn btn-secondary" id="btnLeaderboardReset">Clear Scores</button>
+        <button class="btn btn-primary" id="btnLeaderboardClose2">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= RESULTS MODAL ================= -->
+  <!-- ================= RESULTS MODAL (PUFFY CLOUD & 3D STARS AS IN IMAGE) ================= -->
   <div class="modal-overlay" id="resultsModal" aria-hidden="true">
-    <div class="modal-card glass-card results-card">
-      <div class="results-badge" id="resultsGradeBadge">RANK S</div>
-      <h2 class="results-title">SESSION COMPLETE</h2>
-      <p class="results-subtitle" id="resultsTrackInfo">Midnight City / M83</p>
-
-      <div class="results-grid">
-        <div class="result-box">
-          <span class="res-label">TOTAL SCORE</span>
-          <span class="res-val stat-val-gold" id="resScore">12,400</span>
-        </div>
-        <div class="result-box">
-          <span class="res-label">TYPING SPEED</span>
-          <span class="res-val stat-val-cyan" id="resWpm">74 WPM</span>
-        </div>
-        <div class="result-box">
-          <span class="res-label">ACCURACY</span>
-          <span class="res-val" id="resAcc">98%</span>
-        </div>
-        <div class="result-box">
-          <span class="res-label">PEAK STREAK</span>
-          <span class="res-val" id="resCombo">52 KEYS</span>
-        </div>
+    <div class="modal-card puffy-cloud-card results-card">
+      <!-- 3D Puffy Golden Stars Header (As seen in the provided image) -->
+      <div class="cloud-stars-header">
+        <span class="star-float star-left">⭐</span>
+        <span class="star-float star-center">⭐</span>
+        <span class="star-float star-right">⭐</span>
       </div>
 
-      <!-- Save Record Section -->
-      <div class="save-score-section">
-        <input type="text" id="playerNameInput" class="modal-input player-input" placeholder="ENTER OPERATOR NAME" maxlength="16" />
-        <button class="btn btn-secondary save-score-btn" id="btnSaveScore">SAVE RECORD</button>
-      </div>
+      <div class="results-inner-card">
+        <span class="results-score-label">Score</span>
+        <h2 class="results-score-display" id="resScore">22,000</h2>
+        
+        <p class="results-track-info" id="resultsTrackInfo">Midnight City / M83</p>
 
-      <div class="modal-footer results-footer">
-        <button class="btn btn-secondary" id="btnResultsTracks">SELECT TRACK</button>
-        <button class="btn btn-primary" id="btnResultsRestart">PLAY AGAIN</button>
+        <div class="results-rewards-row">
+          <div class="reward-pill"><span class="reward-icon">🪙</span> <span class="reward-text">x35</span></div>
+          <div class="reward-pill"><span class="reward-icon">🌟</span> <span class="reward-text">x35</span></div>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-box">
+            <span class="res-label">SPEED</span>
+            <span class="res-val" id="resWpm">74 WPM</span>
+          </div>
+          <div class="result-box">
+            <span class="res-label">ACCURACY</span>
+            <span class="res-val" id="resAcc">98%</span>
+          </div>
+          <div class="result-box">
+            <span class="res-label">MAX STREAK</span>
+            <span class="res-val" id="resCombo">52 KEYS</span>
+          </div>
+          <div class="result-box">
+            <span class="res-label">RANK</span>
+            <span class="res-val rank-val" id="resultsGradeBadge">RANK S</span>
+          </div>
+        </div>
+
+        <!-- Save Record Section -->
+        <div class="save-score-section">
+          <input type="text" id="playerNameInput" class="modal-input player-input" placeholder="Enter your name" maxlength="16" />
+          <button class="btn btn-secondary save-score-btn" id="btnSaveScore">Save</button>
+        </div>
+
+        <!-- Round Action Buttons as in Provided Image -->
+        <div class="results-actions-row">
+          <button class="round-action-btn menu-btn" id="btnResultsTracks" title="Track Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+          </button>
+          <button class="round-action-btn replay-btn" id="btnResultsRestart" title="Play Again">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+          </button>
+          <button class="round-action-btn next-btn" id="btnResultsNext" title="Next Song">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="5" x2="19" y2="19"></line>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>

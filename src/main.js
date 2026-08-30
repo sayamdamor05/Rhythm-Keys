@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 8. MAKO CRYSTAL AUDIO SPECTRUM VISUALIZER & SYNC LOOP ---
+  // --- 8. PASTEL RAINBOW AUDIO SPECTRUM VISUALIZER & SYNC LOOP ---
   function drawSpectrum() {
     if (!specCtx || !headerSpectrumCanvas) return;
     const freqData = audio.getFrequencyData();
@@ -388,18 +388,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const barWidth = Math.floor(width / barCount) - 2;
     const step = Math.floor(freqData.length / barCount);
 
+    const rainbowColors = [
+      '#f472b6', '#fb7185', '#fde047', '#4ade80', '#38bdf8', '#c084fc'
+    ];
+
     for (let i = 0; i < barCount; i++) {
       const val = audio.isPlaying ? freqData[i * step] : 10;
-      const barHeight = Math.max(2, (val / 255) * height);
+      const barHeight = Math.max(3, (val / 255) * height);
       const x = i * (barWidth + 2);
       const y = height - barHeight;
 
-      const grad = specCtx.createLinearGradient(0, y, 0, height);
-      grad.addColorStop(0, '#38bdf8'); // Mako Cyan
-      grad.addColorStop(1, '#1d4ed8'); // Deep Royal Sapphire
-
-      specCtx.fillStyle = grad;
-      specCtx.fillRect(x, y, barWidth, barHeight);
+      specCtx.fillStyle = rainbowColors[i % rainbowColors.length];
+      specCtx.beginPath();
+      specCtx.roundRect ? specCtx.roundRect(x, y, barWidth, barHeight, 3) : specCtx.rect(x, y, barWidth, barHeight);
+      specCtx.fill();
     }
   }
 
@@ -602,6 +604,20 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.play();
     updatePlayButtonState(true);
   });
+
+  const btnResultsNext = document.getElementById('btnResultsNext');
+  if (btnResultsNext) {
+    btnResultsNext.addEventListener('click', () => {
+      resultsModal.classList.remove('active');
+      resultsModal.setAttribute('aria-hidden', 'true');
+      const songIds = Object.keys(SONG_DATABASE);
+      const currentIdx = songIds.indexOf(currentSong.id);
+      const nextId = songIds[(currentIdx + 1) % songIds.length];
+      loadTrack(nextId);
+      audio.play();
+      updatePlayButtonState(true);
+    });
+  }
 
   // Keyboard Shortcuts & Typing Event Listeners
   window.addEventListener('keydown', (e) => {

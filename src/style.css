@@ -1,49 +1,50 @@
 /* ==========================================================================
-   RHYTHM KEYS // HIGH-END PRECISION MECHANICAL KEYBOARD & UI SYSTEM
-   Linear-Grade Double-Bezel Glass // Uniform Slate Keycaps // Precision Telemetry
+   RHYTHM KEYS // WHIMSICAL PASTEL COSMOS & JELLY CANDY DESIGN SYSTEM
+   Claymorphic Pillows // Glossy 3D Candy Keys // Pastel Cosmic Dreamscape
    ========================================================================== */
 
 /* --- 1. DESIGN TOKENS --- */
 :root {
-  /* Rich Deep Obsidian & Sapphire Canvas */
-  --bg-canvas: #060911;
-  --bg-card: rgba(13, 18, 30, 0.82);
-  --bg-card-elevated: rgba(18, 25, 42, 0.9);
-  --bg-subtle: rgba(255, 255, 255, 0.03);
-
-  /* Borders & Highlights */
-  --border-glass: 1px solid rgba(255, 255, 255, 0.08);
-  --border-glass-strong: 1px solid rgba(255, 255, 255, 0.16);
-  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --card-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+  /* Pastel Cosmic Canvas */
+  --bg-cosmos: #0f1123;
+  --card-puffy-bg: rgba(255, 255, 255, 0.12);
+  --card-puffy-border: 2px solid rgba(255, 255, 255, 0.28);
+  --card-puffy-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.45);
+  --card-radius: 22px;
 
   /* Typography */
-  --font-brand: 'Space Grotesk', -apple-system, sans-serif;
+  --font-brand: 'Fredoka', 'Quicksand', -apple-system, sans-serif;
+  --font-body: 'Quicksand', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Strict Contrast Color Palette */
-  --color-cyan: #38bdf8;
-  --color-cyan-glow: rgba(56, 189, 248, 0.35);
-  --color-gold: #fbbf24;
-  --color-ruby: #f43f5e;
-  
+  /* Delicious Pastel Candy Palette (Matching Image Reference) */
+  --candy-pink: #f472b6;
+  --candy-pink-glow: rgba(244, 114, 182, 0.6);
+  --candy-sky: #38bdf8;
+  --candy-sky-glow: rgba(56, 189, 248, 0.6);
+  --candy-mint: #4ade80;
+  --candy-mint-glow: rgba(74, 222, 128, 0.6);
+  --candy-gold: #fde047;
+  --candy-gold-glow: rgba(253, 224, 71, 0.6);
+  --candy-purple: #c084fc;
+  --candy-purple-glow: rgba(192, 132, 252, 0.6);
+  --candy-coral: #fb7185;
+  --candy-coral-glow: rgba(251, 113, 133, 0.6);
+
   --text-white: #ffffff;
-  --text-bright: #f1f5f9;
-  --text-silver: #cbd5e1;
-  --text-muted: #64748b;
+  --text-cream: #fdf4ff;
+  --text-pastel-blue: #bae6fd;
+  --text-muted: #94a3b8;
 
-  /* Mechanical Keycap Architecture */
-  --key-radius: 6px;
-  --key-height: 44px;
+  /* 3D Keycap Geometry */
+  --key-radius: 12px;
+  --key-height: 48px;
   --key-width: 48px;
-  --key-depth: 4px;
-  --key-bg: #161b26;
-  --key-border: 1px solid rgba(255, 255, 255, 0.08);
-  --key-shadow: 0 var(--key-depth) 0 #0a0d14, 0 6px 12px rgba(0, 0, 0, 0.4);
+  --key-depth: 5px;
 
-  /* Smooth Fluid Motion */
-  --trans-press: 0.05s ease-out;
-  --trans-smooth: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Bouncy Claymorphic Physics */
+  --trans-bounce: 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --trans-smooth: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* --- 2. BASE RESET --- */
@@ -58,15 +59,15 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: var(--bg-canvas) !important;
+  background: var(--bg-cosmos) !important;
   font-family: var(--font-brand);
-  color: var(--text-bright);
+  color: var(--text-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==========================================================================
-   1. 3D COSMOS CANVAS (EDGE-TO-EDGE)
+   1. 3D PASTEL SPACE CANVAS (BACKGROUND)
    ========================================================================== */
 .three-space-canvas {
   position: fixed;
@@ -79,7 +80,7 @@ html, body {
 }
 
 /* ==========================================================================
-   2. APPLICATION SHELL & DOUBLE-BEZEL CONTAINERS
+   2. PUFFY CLAYMORPHIC / JELLY APPLICATION CONTAINERS
    ========================================================================== */
 .app-ui-container {
   position: relative;
@@ -93,20 +94,20 @@ html, body {
   gap: 12px;
 }
 
-/* High-End Double-Bezel Glass Card */
-.glass-card {
-  background: var(--bg-card);
-  border: var(--border-glass);
-  box-shadow: var(--card-shadow), var(--card-highlight);
-  border-radius: 10px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* Puffy Frosted Glass Cards (As seen in the image) */
+.puffy-card {
+  background: var(--card-puffy-bg);
+  border: var(--card-puffy-border);
+  box-shadow: var(--card-puffy-shadow);
+  border-radius: var(--card-radius);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   position: relative;
-  transition: border-color var(--trans-smooth);
+  transition: transform var(--trans-smooth), box-shadow var(--trans-smooth);
 }
 
-.glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+.puffy-card:hover {
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.45), inset 0 2px 5px rgba(255, 255, 255, 0.6);
 }
 
 /* --- TOP HEADER --- */
@@ -114,8 +115,8 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 18px;
-  min-height: 56px;
+  padding: 8px 22px;
+  min-height: 60px;
   flex-shrink: 0;
 }
 
@@ -128,25 +129,43 @@ html, body {
 .brand-badge {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.brand-status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-cyan);
-  box-shadow: 0 0 8px var(--color-cyan);
+.brand-star-icon {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.8));
+  animation: starPulse 2s infinite alternate;
+}
+
+@keyframes starPulse {
+  0% { transform: scale(1) rotate(-5deg); }
+  100% { transform: scale(1.15) rotate(10deg); }
+}
+
+.brand-text-wrap {
+  display: flex;
+  flex-direction: column;
 }
 
 .brand-name {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  color: var(--text-white);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #ffffff 0%, #fbcfe8 50%, #bae6fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-/* Center Track Info & Spectrum */
+.brand-subtitle {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--candy-pink);
+  letter-spacing: 0.5px;
+}
+
+/* Center Track Info & Rainbow Spectrum */
 .header-center {
   display: flex;
   align-items: center;
@@ -159,33 +178,41 @@ html, body {
   align-items: center;
   gap: 3px;
   cursor: pointer;
-  padding: 4px 14px;
-  border-radius: 6px;
-  transition: background var(--trans-smooth);
+  padding: 4px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all var(--trans-smooth);
 }
 
 .track-header-block:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(1.02);
 }
 
 .track-meta-row {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.music-icon-bubble {
+  font-size: 0.95rem;
 }
 
 .track-title-text {
-  font-weight: 700;
   color: var(--text-white);
 }
 
 .track-sep {
-  color: var(--text-muted);
+  color: var(--candy-pink);
+  font-size: 0.7rem;
 }
 
 .track-artist-text {
-  color: var(--text-silver);
+  color: var(--candy-sky);
 }
 
 .visualizer-container {
@@ -196,16 +223,18 @@ html, body {
 
 .spectrum-canvas {
   width: 140px;
-  height: 14px;
+  height: 16px;
 }
 
 .track-bpm-badge {
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0 5px;
-  border-radius: 3px;
+  font-weight: 700;
+  color: var(--candy-gold);
+  border: 1px solid rgba(253, 224, 71, 0.4);
+  background: rgba(253, 224, 71, 0.15);
+  padding: 1px 6px;
+  border-radius: 10px;
 }
 
 /* Header Telemetry HUD */
@@ -219,10 +248,10 @@ html, body {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 2px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .nav-btn {
@@ -230,11 +259,10 @@ html, body {
   border: none;
   color: var(--text-muted);
   font-family: var(--font-brand);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.6px;
-  padding: 4px 11px;
-  border-radius: 4px;
+  padding: 4px 14px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all var(--trans-smooth);
 }
@@ -245,55 +273,59 @@ html, body {
 
 .nav-btn.active {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(135deg, var(--candy-pink) 0%, var(--candy-purple) 100%);
+  box-shadow: 0 4px 12px var(--candy-pink-glow);
 }
 
 .nav-divider {
-  width: 1px;
-  height: 18px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 2px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
 }
 
 .header-stats-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .stat-unit {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 5px;
-  background: rgba(255, 255, 255, 0.02);
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-brand);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .stat-unit-label {
-  font-size: 0.62rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
   color: var(--text-muted);
-  letter-spacing: 0.5px;
 }
 
 .stat-unit-val {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
 }
 
-.stat-val-cyan { color: var(--color-cyan); }
-.stat-val-gold { color: var(--color-gold); }
+.stat-unit-streak .stat-unit-val { color: var(--candy-coral); }
+.stat-unit-wpm .stat-unit-val { color: var(--candy-sky); }
+.stat-unit-acc .stat-unit-val { color: var(--candy-mint); }
+.stat-unit-score .stat-unit-val { color: var(--candy-gold); }
 
 .settings-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-silver);
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -302,65 +334,69 @@ html, body {
 }
 
 .settings-btn:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(45deg) scale(1.05);
+  background: var(--candy-purple);
+  box-shadow: 0 0 14px var(--candy-purple-glow);
 }
 
 /* Practice Banner */
 .practice-banner {
-  padding: 8px 16px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-card-elevated);
+  background: linear-gradient(135deg, rgba(192, 132, 252, 0.25) 0%, rgba(56, 189, 248, 0.25) 100%);
 }
 
 .practice-banner-content {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.8rem;
+  gap: 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
 }
 
 .practice-tag {
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  color: var(--color-cyan);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  background: rgba(56, 189, 248, 0.08);
-  padding: 1px 6px;
-  border-radius: 4px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--candy-pink) 0%, var(--candy-purple) 100%);
+  padding: 3px 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--candy-pink-glow);
 }
 
 .practice-msg {
-  color: var(--text-silver);
+  color: var(--text-cream);
 }
 
 .practice-controls {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .practice-speed-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-silver);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  padding: 2px 6px;
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: var(--text-white);
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all var(--trans-bounce);
 }
 
 .practice-speed-btn.active, .practice-speed-btn:hover {
   background: #ffffff;
   color: #000000;
-  font-weight: 700;
   border-color: #ffffff;
+  transform: scale(1.06);
 }
 
 /* ==========================================================================
-   3. LYRICS STAGE & FLOATING JUDGMENT
+   3. LYRICS STAGE & FLOATING CANDY JUDGMENTS
    ========================================================================== */
 .center-stage {
   flex: 1;
@@ -368,52 +404,54 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  max-width: 820px;
+  gap: 14px;
+  max-width: 840px;
   width: 100%;
   margin: 0 auto;
 }
 
 .lyrics-panel {
   width: 100%;
-  padding: 24px 32px 16px;
-  min-height: 155px;
+  padding: 26px 36px 18px;
+  min-height: 165px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   position: relative;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 100%);
 }
 
 .judgment-overlay {
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 12px;
+  right: 24px;
   pointer-events: none;
 }
 
 .judgment-bubble {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-family: var(--font-brand);
+  font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0.5px;
-  animation: cleanFadeUp 0.5s ease-out forwards;
+  animation: candyFloatUp 0.55s ease-out forwards;
 }
 
 .judgment-perfect {
-  color: var(--color-cyan);
-  text-shadow: 0 0 10px var(--color-cyan-glow);
+  color: var(--candy-gold);
+  text-shadow: 0 0 12px var(--candy-gold-glow), 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .judgment-miss {
-  color: var(--color-ruby);
+  color: var(--candy-coral);
+  text-shadow: 0 0 12px var(--candy-coral-glow);
 }
 
-@keyframes cleanFadeUp {
-  0% { opacity: 0; transform: translateY(4px); }
-  25% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-8px); }
+@keyframes candyFloatUp {
+  0% { opacity: 0; transform: translateY(8px) scale(0.85); }
+  25% { opacity: 1; transform: translateY(0) scale(1.15); }
+  100% { opacity: 0; transform: translateY(-14px) scale(0.95); }
 }
 
 .lyric-stream {
@@ -436,13 +474,12 @@ html, body {
 
 .lyric-prev {
   font-size: 0.95rem;
-  color: var(--text-muted);
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .lyric-active {
-  font-size: 1.45rem;
-  font-weight: 700;
+  font-size: 1.55rem;
+  font-weight: 800;
   line-height: 1.6;
 }
 
@@ -462,74 +499,77 @@ html, body {
 }
 
 .char-correct {
-  color: var(--color-cyan);
-  text-shadow: 0 0 8px var(--color-cyan-glow);
+  color: var(--candy-gold);
+  text-shadow: 0 0 10px var(--candy-gold-glow);
 }
 
 .char-cursor {
-  color: #000000;
+  color: #030712;
   background: #ffffff;
-  border-radius: 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 12px #ffffff;
 }
 
 .char-error {
   color: #ffffff;
-  background: var(--color-ruby);
-  border-radius: 2px;
-  padding: 0 1px;
+  background: var(--candy-coral);
+  border-radius: 4px;
+  padding: 0 2px;
+  box-shadow: 0 0 12px var(--candy-coral-glow);
 }
 
 .char-pending {
-  color: var(--text-silver);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .lyric-next {
   font-size: 0.95rem;
-  color: var(--text-muted);
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .line-progress-track {
   width: 100%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 1px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .line-progress-bar {
   height: 100%;
-  background: var(--color-cyan);
-  box-shadow: 0 0 8px var(--color-cyan-glow);
+  background: linear-gradient(90deg, var(--candy-pink) 0%, var(--candy-purple) 35%, var(--candy-sky) 70%, var(--candy-gold) 100%);
+  box-shadow: 0 0 10px var(--candy-pink-glow);
   transition: width 0.06s ease-out;
+  border-radius: 10px;
 }
 
 /* ==========================================================================
-   4. PRECISION MECHANICAL KEYBOARD (CUSTOM SLATE ARCHETYPE)
+   4. GLOSSY 3D CANDY MECHANICAL KEYBOARD
    ========================================================================== */
 .keyboard-panel {
   width: 100%;
-  max-width: 690px;
-  padding: 14px 18px;
+  max-width: 720px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 }
 
 .kb-row {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 7px;
   width: 100%;
 }
 
-/* 3D Tactile Mechanical Keycaps */
+/* Glossy 3D Candy Keycaps */
 .key-3d {
   appearance: none;
   border: none;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-family: var(--font-brand);
+  font-size: 1.05rem;
   font-weight: 800;
   height: var(--key-height);
   width: var(--key-width);
@@ -540,199 +580,191 @@ html, body {
   justify-content: center;
   text-align: center;
   position: relative;
-  transition: transform var(--trans-press), box-shadow var(--trans-press), filter var(--trans-press), background var(--trans-press);
+  transition: transform var(--trans-bounce), box-shadow var(--trans-bounce), filter var(--trans-bounce);
 }
 
 .key-3d:hover {
-  transform: translateY(-1.5px);
-  filter: brightness(1.15);
+  transform: translateY(-2px) scale(1.03);
+  filter: brightness(1.12);
 }
 
 .key-3d:active, .key-3d.key-pressed {
-  transform: translateY(2.5px) !important;
+  transform: translateY(3px) scale(0.96) !important;
 }
 
-/* --- Multi-Color Keycap Colorways --- */
+/* --- Candy Colorways (Glossy Claymorphism) --- */
 
-/* 1. Mako Cyan Keycap */
+/* 1. Glossy Sky Blue */
 .key-cyan {
-  background: linear-gradient(180deg, #103854 0%, #082136 100%);
-  color: #e0f2fe;
-  border: 1px solid rgba(56, 189, 248, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #04121f, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+  color: #ffffff;
+  box-shadow: 0 var(--key-depth) 0 #0369a1, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .key-cyan:active, .key-cyan.key-pressed {
-  box-shadow: 0 1px 0 #04121f, 0 0 16px rgba(56, 189, 248, 0.7);
+  box-shadow: 0 1px 0 #0369a1, 0 0 18px var(--candy-sky-glow);
   background: #38bdf8;
-  color: #030712;
 }
 
-/* 2. Royal Sapphire Keycap */
+/* 2. Glossy Sapphire Lilac */
 .key-sapphire {
-  background: linear-gradient(180deg, #162c5a 0%, #0c1c3d 100%);
-  color: #dbeafe;
-  border: 1px solid rgba(96, 165, 250, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #060f24, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+  background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%);
+  color: #ffffff;
+  box-shadow: 0 var(--key-depth) 0 #3730a3, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .key-sapphire:active, .key-sapphire.key-pressed {
-  box-shadow: 0 1px 0 #060f24, 0 0 16px rgba(96, 165, 250, 0.8);
-  background: #60a5fa;
-  color: #030712;
+  box-shadow: 0 1px 0 #3730a3, 0 0 18px rgba(99, 102, 241, 0.8);
+  background: #818cf8;
 }
 
-/* 3. Emerald Keycap */
+/* 3. Glossy Mint Emerald */
 .key-emerald {
-  background: linear-gradient(180deg, #0d3d2e 0%, #06261d 100%);
-  color: #d1fae5;
-  border: 1px solid rgba(52, 211, 153, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #031610, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  text-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+  background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);
+  color: #ffffff;
+  box-shadow: 0 var(--key-depth) 0 #15803d, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .key-emerald:active, .key-emerald.key-pressed {
-  box-shadow: 0 1px 0 #031610, 0 0 16px rgba(52, 211, 153, 0.7);
-  background: #34d399;
-  color: #030712;
+  box-shadow: 0 1px 0 #15803d, 0 0 18px var(--candy-mint-glow);
+  background: #4ade80;
 }
 
-/* 4. Limit Gold Keycap */
+/* 4. Glossy Buttercup Sunshine */
 .key-gold {
-  background: linear-gradient(180deg, #3d300b 0%, #241d06 100%);
-  color: #fef08a;
-  border: 1px solid rgba(251, 191, 36, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #141003, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+  background: linear-gradient(180deg, #fde047 0%, #eab308 100%);
+  color: #713f12;
+  box-shadow: 0 var(--key-depth) 0 #ca8a04, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 .key-gold:active, .key-gold.key-pressed {
-  box-shadow: 0 1px 0 #141003, 0 0 16px rgba(251, 191, 36, 0.8);
-  background: #fbbf24;
-  color: #030712;
+  box-shadow: 0 1px 0 #ca8a04, 0 0 18px var(--candy-gold-glow);
+  background: #fde047;
 }
 
-/* 5. Ruby Keycap */
+/* 5. Glossy Berry Coral */
 .key-ruby {
-  background: linear-gradient(180deg, #421325 0%, #290916 100%);
-  color: #ffe4e6;
-  border: 1px solid rgba(244, 63, 94, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #17040c, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  text-shadow: 0 0 8px rgba(244, 63, 94, 0.5);
+  background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%);
+  color: #ffffff;
+  box-shadow: 0 var(--key-depth) 0 #be123c, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .key-ruby:active, .key-ruby.key-pressed {
-  box-shadow: 0 1px 0 #17040c, 0 0 16px rgba(244, 63, 94, 0.8);
-  background: #f43f5e;
-  color: #030712;
+  box-shadow: 0 1px 0 #be123c, 0 0 18px var(--candy-coral-glow);
+  background: #fb7185;
 }
 
-/* 6. Purple Keycap */
+/* 6. Glossy Lavender Purple */
 .key-purple {
-  background: linear-gradient(180deg, #32184d 0%, #1c0c2e 100%);
-  color: #f3e8ff;
-  border: 1px solid rgba(192, 132, 252, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #10061c, 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  text-shadow: 0 0 8px rgba(192, 132, 252, 0.5);
+  background: linear-gradient(180deg, #c084fc 0%, #9333ea 100%);
+  color: #ffffff;
+  box-shadow: 0 var(--key-depth) 0 #7e22ce, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .key-purple:active, .key-purple.key-pressed {
-  box-shadow: 0 1px 0 #10061c, 0 0 16px rgba(192, 132, 252, 0.8);
+  box-shadow: 0 1px 0 #7e22ce, 0 0 18px var(--candy-purple-glow);
   background: #c084fc;
-  color: #030712;
 }
 
-/* Home-row nibs on F & J */
+/* 7. Glossy Bubblegum Pink */
+.key-pink {
+  background: linear-gradient(180deg, #f472b6 0%, #db2777 100%);
+  color: #ffffff;
+  box-shadow: 0 var(--key-depth) 0 #be185d, 0 8px 16px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.key-pink:active, .key-pink.key-pressed {
+  box-shadow: 0 1px 0 #be185d, 0 0 18px var(--candy-pink-glow);
+  background: #f472b6;
+}
+
+/* Home-row tactile nibs on F & J */
 .key-home {
   position: relative;
 }
 
 .home-nib {
   position: absolute;
-  bottom: 5px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 10px;
-  height: 2px;
+  width: 12px;
+  height: 3px;
   background: #ffffff;
   box-shadow: 0 0 6px #ffffff;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 /* Modifiers */
 .key-mod {
-  width: 56px;
-  font-size: 0.75rem;
-  background: linear-gradient(180deg, #141c2c 0%, #0a0f1a 100%);
-  color: var(--text-silver);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 var(--key-depth) 0 #05080e, 0 6px 12px rgba(0, 0, 0, 0.4);
+  width: 60px;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
 }
 
-.key-mod:active, .key-mod.key-pressed {
-  box-shadow: 0 1px 0 #05080e, 0 0 12px rgba(255, 255, 255, 0.5);
-  color: #ffffff;
-  background: #25334d;
-}
-
-/* Spacebar */
-.key-space {
+/* Rainbow Jelly Spacebar */
+.key-space.key-rainbow {
   flex: 1;
-  max-width: 370px;
-  background: linear-gradient(180deg, #103854 0%, #082136 100%);
-  color: #e0f2fe;
-  font-size: 0.75rem;
+  max-width: 380px;
+  background: linear-gradient(90deg, #f472b6 0%, #c084fc 25%, #38bdf8 50%, #4ade80 75%, #fde047 100%);
+  color: #ffffff;
+  font-size: 0.88rem;
   letter-spacing: 2px;
-  border: 1px solid rgba(56, 189, 248, 0.6);
-  box-shadow: 0 var(--key-depth) 0 #04121f, 0 0 12px rgba(56, 189, 248, 0.2);
+  box-shadow: 0 var(--key-depth) 0 #7e22ce, 0 8px 18px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-.key-space:active, .key-space.key-pressed {
-  box-shadow: 0 1px 0 #04121f, 0 0 20px rgba(56, 189, 248, 0.8);
-  color: #030712;
-  background: #38bdf8;
+.key-space.key-rainbow:active, .key-space.key-rainbow.key-pressed {
+  box-shadow: 0 1px 0 #7e22ce, 0 0 24px rgba(244, 114, 182, 0.9);
+  filter: brightness(1.2);
 }
 
 /* ==========================================================================
-   5. BOTTOM FOOTER & TRANSPORT DOCK
+   5. BOTTOM FOOTER & BIG JELLY TRANSPORT DOCK
    ========================================================================== */
 .ui-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 18px;
-  min-height: 52px;
+  padding: 8px 22px;
+  min-height: 56px;
   flex-shrink: 0;
 }
 
 .footer-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .footer-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-silver);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: var(--font-brand);
   font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.5px;
-  padding: 6px 14px;
-  border-radius: 6px;
+  font-size: 0.82rem;
+  padding: 6px 16px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all var(--trans-smooth);
 }
 
 .footer-btn:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.16);
+  transform: scale(1.04);
+}
+
+.btn-sfx-icon {
+  font-size: 0.95rem;
 }
 
 .sfx-btn.active {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--candy-mint);
+  box-shadow: 0 0 10px var(--candy-mint-glow);
 }
 
 .footer-center {
@@ -747,26 +779,27 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   cursor: pointer;
   outline: none;
-  transition: transform var(--trans-smooth);
+  transition: transform var(--trans-bounce);
 }
 
 .play-btn-circle:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
+/* Big Jelly Transport Button */
 .play-icon-inner {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #ffffff;
+  background: linear-gradient(135deg, var(--candy-sky) 0%, var(--candy-purple) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #030712;
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: 0 6px 16px var(--candy-sky-glow), inset 0 2px 3px rgba(255, 255, 255, 0.8);
 }
 
 .transport-svg {
@@ -774,28 +807,28 @@ html, body {
 }
 
 .play-btn-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.5px;
-  color: var(--text-silver);
+  color: var(--text-white);
 }
 
 .footer-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .keyboard-hints {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .hint-pill {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
   color: var(--text-muted);
   display: flex;
   align-items: center;
@@ -803,28 +836,29 @@ html, body {
 }
 
 .hint-pill kbd {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 3px;
-  padding: 1px 4px;
-  color: var(--text-silver);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 2px 6px;
+  color: var(--text-white);
+  font-weight: 700;
 }
 
 /* ==========================================================================
-   6. MODALS: TRACK STATION, LEADERBOARD & RESULTS
+   6. MODALS: TRACK STATION, LEADERBOARD & PUFFY CLOUD RESULTS (FROM IMAGE)
    ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(3, 5, 12, 0.88);
-  backdrop-filter: blur(8px);
+  background: rgba(8, 10, 24, 0.85);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease-out;
+  transition: opacity 0.2s ease-out;
 }
 
 .modal-overlay.active {
@@ -835,7 +869,7 @@ html, body {
 .modal-card {
   width: 92%;
   max-width: 520px;
-  padding: 22px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -845,8 +879,8 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 12px;
 }
 
 .modal-title-wrap {
@@ -856,22 +890,22 @@ html, body {
 }
 
 .modal-title {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 800;
   letter-spacing: 0.5px;
   color: var(--text-white);
 }
 
 .modal-subtitle {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.78rem;
+  color: var(--candy-sky);
 }
 
 .modal-close-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
   line-height: 1;
 }
@@ -888,14 +922,14 @@ html, body {
 .track-cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
 }
 
 .track-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 12px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -904,30 +938,32 @@ html, body {
 }
 
 .track-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.02);
 }
 
 .track-card.active {
-  background: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.35) 0%, rgba(192, 132, 252, 0.35) 100%);
   border-color: #ffffff;
+  box-shadow: 0 0 16px var(--candy-pink-glow);
 }
 
 .track-card-title {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 800;
   color: #ffffff;
 }
 
 .track-card-artist {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.78rem;
+  color: var(--text-cream);
 }
 
 .track-card-genre {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  color: var(--text-muted);
+  font-family: var(--font-brand);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--candy-gold);
   margin-top: 2px;
 }
 
@@ -938,22 +974,23 @@ html, body {
 }
 
 .slider-val {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-white);
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--candy-gold);
 }
 
 .custom-track-details {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 6px;
-  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 10px 14px;
 }
 
 .custom-track-summary {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-silver);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--candy-sky);
   cursor: pointer;
 }
 
@@ -965,156 +1002,201 @@ html, body {
 }
 
 .modal-label {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-muted);
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--candy-gold);
   letter-spacing: 0.5px;
 }
 
 .modal-input, .modal-textarea {
-  background: #07090e;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
-  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
   color: #fff;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
   outline: none;
 }
 
 .modal-input:focus, .modal-textarea:focus {
-  border-color: #ffffff;
+  border-color: var(--candy-pink);
+  box-shadow: 0 0 12px var(--candy-pink-glow);
 }
 
 .modal-slider {
   width: 100%;
-  accent-color: #ffffff;
+  accent-color: var(--candy-pink);
   margin-top: 4px;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 10px;
+  gap: 10px;
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
 }
 
 .btn {
-  padding: 6px 16px;
-  border-radius: 4px;
+  padding: 8px 18px;
+  border-radius: 12px;
   font-family: var(--font-brand);
-  font-weight: 700;
-  font-size: 0.78rem;
+  font-weight: 800;
+  font-size: 0.85rem;
   cursor: pointer;
-  letter-spacing: 0.5px;
   transition: all var(--trans-smooth);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text-silver);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
 }
-.btn-secondary:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.18); transform: scale(1.03); }
 
 .btn-primary {
-  background: #ffffff;
-  border: 1px solid #ffffff;
-  color: #000000;
+  background: linear-gradient(135deg, var(--candy-pink) 0%, var(--candy-purple) 100%);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 4px 14px var(--candy-pink-glow);
 }
 .btn-primary:hover {
-  background: #e2e8f0;
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px var(--candy-pink-glow);
 }
 
-/* Leaderboard Table */
-.leaderboard-table-wrap {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.leaderboard-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
-.leaderboard-table th {
-  text-align: left;
-  padding: 6px 8px;
-  color: var(--text-muted);
-  font-size: 0.65rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.leaderboard-table td {
-  padding: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  color: var(--text-silver);
-}
-
-.rank-badge-cell {
-  font-weight: 800;
-  color: #ffffff;
-}
-
-/* Results Card */
-.results-card {
+/* ==========================================================================
+   PUFFY CLOUD RESULTS MODAL (MATCHING UPLOADED REFERENCE IMAGE)
+   ========================================================================== */
+.puffy-cloud-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 60%, #fae8ff 100%);
+  border-radius: 32px;
+  border: 4px solid #ffffff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 2px 6px rgba(255, 255, 255, 0.9);
+  padding: 20px 24px;
+  max-width: 380px;
+  position: relative;
   text-align: center;
-  align-items: center;
-  max-width: 440px;
-  padding: 26px;
+  color: #1e1b4b;
 }
 
-.results-badge {
+/* 3D Floating Gold Stars on Top of Cloud Header */
+.cloud-stars-header {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: -38px;
+  margin-bottom: 8px;
+}
+
+.star-float {
+  font-size: 2.8rem;
+  filter: drop-shadow(0 6px 14px rgba(234, 179, 8, 0.8));
+  animation: starFloatAnim 2.5s infinite alternate ease-in-out;
+}
+
+.star-center {
+  font-size: 3.6rem;
+  animation-delay: 0.3s;
+}
+
+.star-left {
+  transform: rotate(-15deg);
+  animation-delay: 0.1s;
+}
+
+.star-right {
+  transform: rotate(15deg);
+  animation-delay: 0.5s;
+}
+
+@keyframes starFloatAnim {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.results-inner-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.results-score-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f43f5e;
+}
+
+.results-score-display {
   font-size: 2.4rem;
   font-weight: 900;
-  letter-spacing: 2px;
-  color: #ffffff;
-}
-
-.results-title {
-  font-size: 1.2rem;
   letter-spacing: 1px;
-  color: #ffffff;
+  color: #f43f5e;
+  line-height: 1;
 }
 
-.results-subtitle {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-bottom: 6px;
+.results-track-info {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748b;
 }
+
+.results-rewards-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.reward-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.reward-icon { font-size: 1rem; }
+.reward-text { font-size: 0.78rem; font-weight: 800; color: #475569; }
 
 .results-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
   width: 100%;
-  margin: 10px 0;
+  margin: 6px 0;
 }
 
 .result-box {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 10px;
-  border-radius: 6px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  padding: 8px;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
 .res-label {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #64748b;
 }
 
 .res-val {
-  font-family: var(--font-mono);
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #1e1b4b;
+}
+
+.rank-val {
+  color: #ec4899;
 }
 
 .save-score-section {
@@ -1126,10 +1208,89 @@ html, body {
 
 .player-input {
   flex: 1;
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
 }
 
 .save-score-btn {
   white-space: nowrap;
+}
+
+/* Round Jelly Action Buttons (As seen in the 3rd mockup of user image) */
+.results-actions-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.round-action-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff;
+  transition: transform var(--trans-bounce), box-shadow var(--trans-bounce);
+}
+
+.round-action-btn:hover {
+  transform: scale(1.12);
+}
+
+.menu-btn {
+  background: linear-gradient(135deg, #a3e635 0%, #65a30d 100%);
+  box-shadow: 0 6px 14px rgba(101, 163, 13, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.7);
+}
+
+.replay-btn {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.next-btn {
+  background: linear-gradient(135deg, #a3e635 0%, #65a30d 100%);
+  box-shadow: 0 6px 14px rgba(101, 163, 13, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.7);
+}
+
+/* Leaderboard Table */
+.leaderboard-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
+}
+
+.leaderboard-table th {
+  text-align: left;
+  padding: 6px 8px;
+  color: var(--candy-gold);
+  font-size: 0.72rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.leaderboard-table td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-white);
+  font-weight: 700;
+}
+
+.rank-badge-cell {
+  font-weight: 900;
+  color: var(--candy-pink);
 }
 
 /* ==========================================================================
@@ -1137,28 +1298,28 @@ html, body {
    ========================================================================== */
 @media (max-width: 900px) {
   :root {
-    --key-height: 38px;
-    --key-width: 38px;
-    --key-radius: 5px;
+    --key-height: 42px;
+    --key-width: 40px;
+    --key-radius: 10px;
   }
-  .key-3d { font-size: 0.8rem; }
-  .lyric-active { font-size: 1.2rem; }
+  .key-3d { font-size: 0.95rem; }
+  .lyric-active { font-size: 1.3rem; }
   .track-cards-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 650px) {
   .app-ui-container { padding: 8px 10px; }
   :root {
-    --key-height: 32px;
-    --key-width: 28px;
-    --key-radius: 4px;
+    --key-height: 36px;
+    --key-width: 30px;
+    --key-radius: 8px;
     --key-depth: 3px;
   }
-  .key-3d { font-size: 0.7rem; }
+  .key-3d { font-size: 0.85rem; }
   .keyboard-hints { display: none; }
-  .lyrics-panel { padding: 14px 12px; min-height: 120px; }
-  .lyric-prev, .lyric-next { font-size: 0.8rem; }
-  .lyric-active { font-size: 1.05rem; }
+  .lyrics-panel { padding: 16px 14px; min-height: 130px; }
+  .lyric-prev, .lyric-next { font-size: 0.85rem; }
+  .lyric-active { font-size: 1.15rem; }
   .stat-unit.score-unit { display: none; }
 }
 
