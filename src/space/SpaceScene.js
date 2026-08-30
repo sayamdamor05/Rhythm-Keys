@@ -96,11 +96,11 @@ export class SpaceScene {
    * Creates volumetric nebula clouds in deep space
    */
   createCosmicNebulaLayers() {
-    const nebulaGeo = new THREE.PlaneGeometry(140, 95);
+    const nebulaGeo = new THREE.PlaneGeometry(150, 100);
     const nebulaColors = [
-      { color1: 'rgba(255, 255, 255, 0.08)', color2: 'rgba(15, 23, 42, 0.3)' },
-      { color1: 'rgba(148, 163, 184, 0.06)', color2: 'rgba(2, 6, 23, 0.4)' },
-      { color1: 'rgba(203, 213, 225, 0.05)', color2: 'rgba(15, 23, 42, 0.2)' }
+      { color1: 'rgba(56, 189, 248, 0.25)', color2: 'rgba(14, 28, 64, 0.4)' },
+      { color1: 'rgba(59, 130, 246, 0.2)', color2: 'rgba(4, 10, 28, 0.45)' },
+      { color1: 'rgba(52, 211, 153, 0.15)', color2: 'rgba(6, 18, 42, 0.3)' }
     ];
 
     nebulaColors.forEach((cfg, idx) => {
@@ -136,7 +136,7 @@ export class SpaceScene {
   }
 
   /**
-   * Creates 3D particle starfield with clean monochrome starlight
+   * Creates 3D particle starfield with Mako Lifestream & crystal sparkles
    */
   create3DStarfield() {
     const canvas = document.createElement('canvas');
@@ -145,9 +145,9 @@ export class SpaceScene {
     const ctx = canvas.getContext('2d');
     const radGrad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     radGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    radGrad.addColorStop(0.3, 'rgba(226, 232, 240, 0.8)');
-    radGrad.addColorStop(0.7, 'rgba(148, 163, 184, 0.3)');
-    radGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    radGrad.addColorStop(0.3, 'rgba(56, 189, 248, 0.85)');
+    radGrad.addColorStop(0.7, 'rgba(52, 211, 153, 0.4)');
+    radGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = radGrad;
     ctx.beginPath();
     ctx.arc(32, 32, 32, 0, Math.PI * 2);
@@ -162,10 +162,10 @@ export class SpaceScene {
 
     const palette = [
       new THREE.Color(0xffffff),
-      new THREE.Color(0xf1f5f9),
-      new THREE.Color(0xe2e8f0),
-      new THREE.Color(0xcbd5e1),
-      new THREE.Color(0x94a3b8)
+      new THREE.Color(0x38bdf8), // Mako Cyan
+      new THREE.Color(0x60a5fa), // Royal Sapphire
+      new THREE.Color(0x34d399), // Materia Emerald
+      new THREE.Color(0xfbbf24)  // Limit Gold
     ];
 
     for (let i = 0; i < this.starCount; i++) {
@@ -186,11 +186,11 @@ export class SpaceScene {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 1.6,
+      size: 1.8,
       map: starTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.9,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -210,36 +210,33 @@ export class SpaceScene {
     canvas.height = 1024;
     const ctx = canvas.getContext('2d');
 
-    if (type === 'yellow-saturn' || type === 'lunar-slate') {
+    if (type === 'yellow-saturn' || type === 'lunar-slate' || type === 'crystal-mako') {
       const grad = ctx.createLinearGradient(0, 0, 0, 1024);
-      grad.addColorStop(0.0, '#ffffff');
-      grad.addColorStop(0.2, '#e2e8f0');
-      grad.addColorStop(0.45, '#94a3b8');
-      grad.addColorStop(0.65, '#64748b');
-      grad.addColorStop(0.85, '#334155');
-      grad.addColorStop(1.0, '#1e293b');
+      grad.addColorStop(0.0, '#38bdf8');
+      grad.addColorStop(0.25, '#0ea5e9');
+      grad.addColorStop(0.5, '#0369a1');
+      grad.addColorStop(0.75, '#0c4a6e');
+      grad.addColorStop(1.0, '#082f49');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-      for (let y = 100; y < 1024; y += 90) {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      for (let y = 80; y < 1024; y += 90) {
         ctx.fillRect(0, y, 1024, 20);
       }
-    } else if (type === 'pink-craters' || type === 'cratered-moon') {
+    } else if (type === 'pink-craters' || type === 'cratered-moon' || type === 'materia-emerald') {
       const grad = ctx.createRadialGradient(400, 400, 50, 512, 512, 512);
-      grad.addColorStop(0.0, '#e2e8f0');
-      grad.addColorStop(0.45, '#94a3b8');
-      grad.addColorStop(0.85, '#475569');
-      grad.addColorStop(1.0, '#0f172a');
+      grad.addColorStop(0.0, '#34d399');
+      grad.addColorStop(0.45, '#059669');
+      grad.addColorStop(0.85, '#064e3b');
+      grad.addColorStop(1.0, '#022c22');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
 
       const craters = [
-        { x: 300, y: 350, r: 65, color1: '#1e293b', color2: '#334155' },
-        { x: 700, y: 400, r: 85, color1: '#1e293b', color2: '#334155' },
-        { x: 450, y: 750, r: 75, color1: '#1e293b', color2: '#334155' },
-        { x: 800, y: 800, r: 50, color1: '#1e293b', color2: '#334155' },
-        { x: 200, y: 700, r: 40, color1: '#1e293b', color2: '#334155' }
+        { x: 300, y: 350, r: 65, color1: '#064e3b', color2: '#059669' },
+        { x: 700, y: 400, r: 85, color1: '#064e3b', color2: '#059669' },
+        { x: 450, y: 750, r: 75, color1: '#064e3b', color2: '#059669' }
       ];
 
       craters.forEach(c => {
@@ -253,27 +250,12 @@ export class SpaceScene {
         ctx.arc(c.x - c.r * 0.15, c.y - c.r * 0.15, c.r * 0.8, 0, Math.PI * 2);
         ctx.fill();
       });
-    } else if (type === 'blue-swirl' || type === 'obsidian-bands') {
-      const grad = ctx.createLinearGradient(0, 0, 1024, 1024);
-      grad.addColorStop(0.0, '#cbd5e1');
-      grad.addColorStop(0.3, '#64748b');
-      grad.addColorStop(0.65, '#334155');
-      grad.addColorStop(1.0, '#0f172a');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1024, 1024);
-
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-      for (let y = 80; y < 1024; y += 140) {
-        ctx.beginPath();
-        ctx.ellipse(512, y, 512, 45, 0, 0, Math.PI * 2);
-        ctx.fill();
-      }
     } else {
       const grad = ctx.createRadialGradient(350, 350, 40, 512, 512, 512);
-      grad.addColorStop(0.0, '#f8fafc');
-      grad.addColorStop(0.4, '#94a3b8');
-      grad.addColorStop(0.85, '#334155');
-      grad.addColorStop(1.0, '#020617');
+      grad.addColorStop(0.0, '#60a5fa');
+      grad.addColorStop(0.4, '#2563eb');
+      grad.addColorStop(0.85, '#1e3a8a');
+      grad.addColorStop(1.0, '#0f172a');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1024, 1024);
     }

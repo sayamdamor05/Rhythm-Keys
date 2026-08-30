@@ -160,16 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 4. FLOATING JUDGMENT EFFECT ---
+  // --- 4. FLOATING FINAL FANTASY JUDGMENT EFFECT ---
   function showJudgmentEffect(type, points) {
     if (!judgmentOverlay) return;
     const el = document.createElement('div');
     el.className = `judgment-bubble ${type === 'PERFECT' ? 'judgment-perfect' : 'judgment-miss'}`;
-    el.textContent = type === 'PERFECT' ? `[ PERFECT +${points} ]` : '[ MISS ]';
+    el.textContent = type === 'PERFECT' ? `CRITICAL +${points}` : 'MISS';
     judgmentOverlay.appendChild(el);
     setTimeout(() => {
       if (el.parentNode) el.parentNode.removeChild(el);
-    }, 500);
+    }, 550);
   }
 
   // --- 5. POPULATE TRACK SELECTION CARDS ---
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 8. MONOCHROME AUDIO SPECTRUM VISUALIZER & SYNC LOOP ---
+  // --- 8. MAKO CRYSTAL AUDIO SPECTRUM VISUALIZER & SYNC LOOP ---
   function drawSpectrum() {
     if (!specCtx || !headerSpectrumCanvas) return;
     const freqData = audio.getFrequencyData();
@@ -384,17 +384,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     specCtx.clearRect(0, 0, width, height);
 
-    const barCount = 16;
+    const barCount = 18;
     const barWidth = Math.floor(width / barCount) - 2;
     const step = Math.floor(freqData.length / barCount);
 
     for (let i = 0; i < barCount; i++) {
-      const val = audio.isPlaying ? freqData[i * step] : 8;
+      const val = audio.isPlaying ? freqData[i * step] : 10;
       const barHeight = Math.max(2, (val / 255) * height);
       const x = i * (barWidth + 2);
       const y = height - barHeight;
 
-      specCtx.fillStyle = val > 140 ? '#ffffff' : 'rgba(255, 255, 255, 0.45)';
+      const grad = specCtx.createLinearGradient(0, y, 0, height);
+      grad.addColorStop(0, '#38bdf8'); // Mako Cyan
+      grad.addColorStop(1, '#1d4ed8'); // Deep Royal Sapphire
+
+      specCtx.fillStyle = grad;
       specCtx.fillRect(x, y, barWidth, barHeight);
     }
   }

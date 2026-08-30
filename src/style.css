@@ -1,44 +1,53 @@
 /* ==========================================================================
-   RHYTHM KEYS // PURE MONOCHROME TECHNICAL DESIGN SYSTEM
-   Utilitarian Monospace Typography // GMK Monochrome Keycaps // Precision Grid
+   RHYTHM KEYS // FINAL FANTASY INSPIRED CRYSTAL CHRONICLE UI
+   Crystalline Glass Windows // Materia & Command Keycaps // ATB Battle Gauges
    ========================================================================== */
 
-/* --- 1. DESIGN TOKENS & SYSTEM VARIABLES --- */
+/* --- 1. FINAL FANTASY DESIGN SYSTEM TOKENS --- */
 :root {
-  /* Strict Monochrome Hierarchy */
-  --mono-canvas: #07080b;
-  --mono-surface: #0e1117;
-  --mono-surface-elevated: #151922;
-  --mono-surface-key: #1c202c;
-  --mono-surface-mod: #12151e;
-  
-  --mono-border: 1px solid rgba(255, 255, 255, 0.08);
-  --mono-border-strong: 1px solid rgba(255, 255, 255, 0.18);
-  --mono-border-focus: 1px solid #ffffff;
+  /* Final Fantasy Signature Palette */
+  --ff-deep-void: #030712;
+  --ff-window-bg: linear-gradient(180deg, rgba(10, 25, 55, 0.88) 0%, rgba(4, 11, 26, 0.94) 100%);
+  --ff-window-elevated: linear-gradient(180deg, rgba(15, 36, 76, 0.92) 0%, rgba(6, 16, 38, 0.96) 100%);
+  --ff-subwindow-bg: rgba(6, 17, 38, 0.7);
+
+  /* Crystalline Borders & Highlights */
+  --ff-border-crystal: 1px solid rgba(147, 197, 253, 0.35);
+  --ff-border-gold: 1px solid rgba(251, 191, 36, 0.5);
+  --ff-border-bright: 1px solid rgba(255, 255, 255, 0.6);
+  --ff-inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 15px rgba(56, 189, 248, 0.08);
+  --ff-window-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 165, 233, 0.15);
 
   /* Typography */
-  --font-brand: 'Space Grotesk', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --font-ff-title: 'Cinzel', serif;
+  --font-ff-ui: 'Space Grotesk', -apple-system, sans-serif;
+  --font-ff-mono: 'JetBrains Mono', monospace;
 
-  /* Monochromatic Contrast Scale */
-  --text-white: #ffffff;
-  --text-bright: #f1f5f9;
+  /* Calibrated Harmonic Final Fantasy Contrast Colors */
+  --mako-cyan: #38bdf8;
+  --mako-cyan-glow: rgba(56, 189, 248, 0.5);
+  --crystal-sapphire: #60a5fa;
+  --materia-emerald: #34d399;
+  --materia-glow: rgba(52, 211, 153, 0.45);
+  --limit-gold: #fbbf24;
+  --limit-gold-glow: rgba(251, 191, 36, 0.5);
+  --phoenix-ruby: #f43f5e;
+  --phoenix-glow: rgba(244, 63, 94, 0.5);
+  
+  --text-platinum: #ffffff;
   --text-silver: #cbd5e1;
+  --text-mako: #bae6fd;
   --text-muted: #64748b;
-  --text-dark: #334155;
 
-  /* Semantic Highlights (Strictly Muted & Non-AI) */
-  --semantic-error: #ef4444;
-
-  /* Mechanical Key Dimensions */
+  /* Keycap Dimensions */
   --key-radius: 6px;
-  --key-height: 44px;
-  --key-width: 46px;
+  --key-height: 45px;
+  --key-width: 48px;
   --key-depth: 4px;
 
-  /* Snappy Tactile Timing */
-  --trans-instant: 0.05s ease-out;
-  --trans-smooth: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Transitions */
+  --trans-instant: 0.06s ease-out;
+  --trans-smooth: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* --- 2. GLOBAL RESET & BASE --- */
@@ -53,15 +62,15 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: var(--mono-canvas) !important;
-  font-family: var(--font-mono);
-  color: var(--text-bright);
+  background: var(--ff-deep-void) !important;
+  font-family: var(--font-ff-ui);
+  color: var(--text-platinum);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==========================================================================
-   1. THREE.JS 3D CANVAS BACKGROUND (EDGE-TO-EDGE)
+   1. 3D CRYSTAL COSMOS CANVAS (EDGE-TO-EDGE)
    ========================================================================== */
 .three-space-canvas {
   position: fixed;
@@ -74,7 +83,7 @@ html, body {
 }
 
 /* ==========================================================================
-   2. MONOCHROMATIC CONTAINERS & WIREFRAME PANELS
+   2. FINAL FANTASY WINDOW FRAME ARCHITECTURE
    ========================================================================== */
 .app-ui-container {
   position: relative;
@@ -84,21 +93,37 @@ html, body {
   justify-content: space-between;
   width: 100%;
   height: 100vh;
-  padding: 18px 32px;
-  gap: 14px;
+  padding: 16px 28px;
+  gap: 12px;
 }
 
-/* Crisp Technical Panel */
-.mono-panel {
-  background: var(--mono-surface);
-  border: var(--mono-border);
-  border-radius: 10px;
+/* Iconic Final Fantasy Blue Gradient Window */
+.ff-window {
+  background: var(--ff-window-bg);
+  border: var(--ff-border-crystal);
+  box-shadow: var(--ff-window-shadow), var(--ff-inner-glow);
+  border-radius: 8px;
   position: relative;
-  transition: border-color var(--trans-smooth);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color var(--trans-smooth), box-shadow var(--trans-smooth);
 }
 
-.mono-panel:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+.ff-window::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+.ff-subwindow {
+  background: var(--ff-subwindow-bg);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  border-radius: 6px;
 }
 
 /* --- TOP HEADER --- */
@@ -106,49 +131,68 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 8px 18px;
   min-height: 56px;
   flex-shrink: 0;
 }
 
-/* Brand Badge */
+/* Brand Crest & Crystal Core */
 .header-left {
   display: flex;
   align-items: center;
 }
 
-.brand-badge {
+.ff-brand-badge {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.status-indicator-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+.crystal-core-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.brand-title {
-  font-family: var(--font-brand);
-  font-size: 1.05rem;
+.crystal-diamond {
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--mako-cyan) 100%);
+  transform: rotate(45deg);
+  box-shadow: 0 0 12px var(--mako-cyan);
+  animation: crystalGlow 2.5s infinite alternate;
+}
+
+@keyframes crystalGlow {
+  0% { transform: rotate(45deg) scale(0.9); box-shadow: 0 0 8px var(--mako-cyan); }
+  100% { transform: rotate(45deg) scale(1.15); box-shadow: 0 0 18px var(--mako-cyan), 0 0 25px #ffffff; }
+}
+
+.brand-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.ff-brand-title {
+  font-family: var(--font-ff-title);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(186, 230, 253, 0.6);
+}
+
+.ff-system-tag {
+  font-family: var(--font-ff-mono);
+  font-size: 0.62rem;
   font-weight: 700;
+  color: var(--mako-cyan);
   letter-spacing: 1px;
-  color: var(--text-white);
 }
 
-.brand-system-tag {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 1px 5px;
-  border-radius: 4px;
-}
-
-/* Track Metadata & Spectrum */
+/* Center: Track Metadata & Spectrum */
 .header-center {
   display: flex;
   align-items: center;
@@ -161,33 +205,43 @@ html, body {
   align-items: center;
   gap: 3px;
   cursor: pointer;
-  padding: 4px 12px;
-  border-radius: 6px;
-  transition: background var(--trans-smooth);
+  padding: 4px 14px;
+  transition: all var(--trans-smooth);
 }
 
 .track-header-block:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
 }
 
 .track-meta-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 0.85rem;
 }
 
+.ff-icon-note {
+  color: var(--limit-gold);
+  font-size: 0.9rem;
+}
+
 .track-title-text {
+  font-family: var(--font-ff-title);
   font-weight: 700;
-  color: var(--text-white);
+  letter-spacing: 0.5px;
+  color: #ffffff;
 }
 
 .track-sep {
-  color: var(--text-muted);
+  color: var(--mako-cyan);
+  font-size: 0.7rem;
 }
 
 .track-artist-text {
-  color: var(--text-silver);
+  font-size: 0.8rem;
+  color: var(--text-mako);
 }
 
 .visualizer-container {
@@ -197,44 +251,46 @@ html, body {
 }
 
 .spectrum-canvas {
-  width: 140px;
-  height: 14px;
+  width: 150px;
+  height: 16px;
 }
 
 .track-bpm-badge {
+  font-family: var(--font-ff-mono);
   font-size: 0.65rem;
-  color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0 4px;
+  color: var(--limit-gold);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  background: rgba(251, 191, 36, 0.08);
+  padding: 0 5px;
   border-radius: 3px;
 }
 
-/* Header Telemetry HUD */
+/* Header Battle Telemetry HUD */
 .header-right {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.header-nav {
+.ff-nav-group {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 2px;
+  background: rgba(3, 8, 22, 0.6);
+  padding: 3px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(147, 197, 253, 0.2);
 }
 
 .nav-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-ff-ui);
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 4px 10px;
+  letter-spacing: 0.8px;
+  padding: 4px 12px;
   border-radius: 4px;
   cursor: pointer;
   transition: all var(--trans-smooth);
@@ -245,15 +301,16 @@ html, body {
 }
 
 .nav-btn.active {
-  color: #000000;
-  background: #ffffff;
-  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.4) 0%, rgba(59, 130, 246, 0.4) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 12px var(--mako-cyan-glow);
 }
 
 .nav-divider {
   width: 1px;
-  height: 18px;
-  background: rgba(255, 255, 255, 0.1);
+  height: 20px;
+  background: rgba(147, 197, 253, 0.2);
 }
 
 .header-stats-group {
@@ -262,14 +319,15 @@ html, body {
   gap: 6px;
 }
 
-.stat-unit {
+.ff-stat-box {
   display: flex;
   align-items: baseline;
   gap: 5px;
-  background: rgba(255, 255, 255, 0.02);
-  padding: 3px 8px;
+  background: rgba(6, 17, 38, 0.6);
+  padding: 3px 9px;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(147, 197, 253, 0.18);
+  font-family: var(--font-ff-mono);
 }
 
 .stat-unit-label {
@@ -280,17 +338,22 @@ html, body {
 }
 
 .stat-unit-val {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  color: var(--text-white);
 }
 
+.ff-gold { color: var(--limit-gold); text-shadow: 0 0 10px var(--limit-gold-glow); }
+.ff-cyan { color: var(--mako-cyan); text-shadow: 0 0 10px var(--mako-cyan-glow); }
+.ff-emerald { color: var(--materia-emerald); text-shadow: 0 0 10px var(--materia-glow); }
+.ff-ruby { color: var(--phoenix-ruby); text-shadow: 0 0 10px var(--phoenix-glow); }
+.ff-platinum { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+
 .settings-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-muted);
-  width: 32px;
-  height: 32px;
+  background: rgba(6, 17, 38, 0.6);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  color: var(--text-mako);
+  width: 34px;
+  height: 34px;
   border-radius: 6px;
   cursor: pointer;
   display: flex;
@@ -301,36 +364,37 @@ html, body {
 
 .settings-btn:hover {
   color: #ffffff;
-  border-color: #ffffff;
+  border-color: var(--mako-cyan);
+  box-shadow: 0 0 12px var(--mako-cyan-glow);
+  transform: rotate(45deg);
 }
 
 /* Practice Banner */
 .practice-banner {
-  padding: 8px 16px;
+  padding: 8px 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--mono-surface-elevated);
+  background: var(--ff-window-elevated);
 }
 
 .practice-banner-content {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.8rem;
+  gap: 14px;
+  font-size: 0.82rem;
 }
 
 .practice-tag {
-  font-size: 0.68rem;
+  font-family: var(--font-ff-title);
+  font-size: 0.72rem;
   font-weight: 800;
-  color: var(--text-white);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 1px 6px;
-  border-radius: 4px;
+  color: var(--limit-gold);
+  letter-spacing: 1px;
 }
 
 .practice-msg {
-  color: var(--text-silver);
+  color: var(--text-mako);
 }
 
 .practice-controls {
@@ -339,24 +403,27 @@ html, body {
 }
 
 .practice-speed-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  padding: 2px 6px;
-  border-radius: 3px;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  color: var(--text-silver);
+  font-family: var(--font-ff-mono);
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: all var(--trans-instant);
 }
 
 .practice-speed-btn.active, .practice-speed-btn:hover {
-  background: #ffffff;
-  color: #000000;
+  background: var(--mako-cyan);
+  color: #030712;
+  font-weight: 800;
   border-color: #ffffff;
+  box-shadow: 0 0 10px var(--mako-cyan-glow);
 }
 
 /* ==========================================================================
-   3. TYPING STAGE & MONOSPACE LYRICS
+   3. LYRICS COMMAND STAGE & ATB GAUGE
    ========================================================================== */
 .center-stage {
   flex: 1;
@@ -372,7 +439,7 @@ html, body {
 
 .lyrics-panel {
   width: 100%;
-  padding: 24px 32px 16px;
+  padding: 22px 32px 14px;
   min-height: 155px;
   display: flex;
   flex-direction: column;
@@ -384,30 +451,33 @@ html, body {
 
 .judgment-overlay {
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 12px;
+  right: 22px;
   pointer-events: none;
 }
 
 .judgment-bubble {
-  font-size: 0.85rem;
+  font-family: var(--font-ff-title);
+  font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 1px;
-  animation: monoFadeUp 0.5s ease-out forwards;
+  animation: ffDamageFloat 0.55s ease-out forwards;
 }
 
 .judgment-perfect {
-  color: #ffffff;
+  color: var(--limit-gold);
+  text-shadow: 0 0 14px var(--limit-gold-glow);
 }
 
 .judgment-miss {
-  color: var(--semantic-error);
+  color: var(--phoenix-ruby);
+  text-shadow: 0 0 14px var(--phoenix-glow);
 }
 
-@keyframes monoFadeUp {
-  0% { opacity: 0; transform: translateY(4px); }
-  30% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-8px); }
+@keyframes ffDamageFloat {
+  0% { opacity: 0; transform: translateY(6px) scale(0.85); }
+  25% { opacity: 1; transform: translateY(0) scale(1.1); }
+  100% { opacity: 0; transform: translateY(-14px) scale(0.95); }
 }
 
 .lyric-stream {
@@ -415,13 +485,13 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .lyric-line {
-  font-family: var(--font-mono);
+  font-family: var(--font-ff-mono);
   font-feature-settings: "liga" 0;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0;
@@ -429,12 +499,13 @@ html, body {
 }
 
 .lyric-prev {
-  font-size: 0.95rem;
-  color: var(--text-dark);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  opacity: 0.7;
 }
 
 .lyric-active {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 700;
   line-height: 1.6;
 }
@@ -452,77 +523,98 @@ html, body {
   text-align: center;
   white-space: pre;
   position: relative;
+  transition: color 0.05s ease;
 }
 
 .char-correct {
-  color: #ffffff;
+  color: var(--mako-cyan);
+  text-shadow: 0 0 10px var(--mako-cyan-glow);
 }
 
 .char-cursor {
-  color: #000000;
-  background: #ffffff;
+  color: #030712;
+  background: var(--limit-gold);
   border-radius: 2px;
+  box-shadow: 0 0 10px var(--limit-gold-glow);
 }
 
 .char-error {
   color: #ffffff;
-  background: var(--semantic-error);
+  background: var(--phoenix-ruby);
   border-radius: 2px;
   padding: 0 1px;
+  box-shadow: 0 0 10px var(--phoenix-glow);
 }
 
 .char-pending {
-  color: var(--text-muted);
+  color: var(--text-mako);
 }
 
 .lyric-next {
-  font-size: 0.95rem;
-  color: var(--text-dark);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* ATB / Limit Gauge Track */
+.atb-track-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.atb-label {
+  font-family: var(--font-ff-mono);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--mako-cyan);
 }
 
 .line-progress-track {
-  width: 100%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 1px;
+  flex: 1;
+  height: 4px;
+  background: rgba(3, 8, 22, 0.8);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  border-radius: 2px;
   overflow: hidden;
 }
 
 .line-progress-bar {
   height: 100%;
-  background: #ffffff;
+  background: linear-gradient(90deg, var(--mako-cyan) 0%, var(--limit-gold) 100%);
+  box-shadow: 0 0 10px var(--mako-cyan-glow);
   transition: width 0.06s ease-out;
 }
 
 /* ==========================================================================
-   4. MECHANICAL KEYBOARD (GMK MONOCHROME ARCHETYPE)
+   4. FINAL FANTASY COMMAND & MATERIA KEYBOARD
    ========================================================================== */
 .keyboard-panel {
   width: 100%;
-  max-width: 680px;
+  max-width: 710px;
   padding: 14px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 7px;
-  background: #0b0d13;
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .kb-row {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 7px;
   width: 100%;
 }
 
-/* Mechanical 3D Keycaps */
+/* Final Fantasy 3D Sculpted Keycaps */
 .key-3d {
   appearance: none;
   border: none;
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-family: var(--font-ff-mono);
+  font-size: 0.92rem;
+  font-weight: 800;
   height: var(--key-height);
   width: var(--key-width);
   border-radius: var(--key-radius);
@@ -532,86 +624,150 @@ html, body {
   justify-content: center;
   text-align: center;
   position: relative;
-  transition: transform var(--trans-instant), box-shadow var(--trans-instant);
+  transition: transform var(--trans-instant), box-shadow var(--trans-instant), filter var(--trans-instant);
 }
 
 .key-3d:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
+  filter: brightness(1.15);
 }
 
 .key-3d:active, .key-3d.key-pressed {
-  transform: translateY(2px) !important;
+  transform: translateY(2.5px) !important;
 }
 
-/* Alpha Keys (Dark Carbon Slate with Crisp White Legend) */
-.key-alpha {
-  background: var(--mono-surface-key);
-  color: var(--text-bright);
-  box-shadow: 0 var(--key-depth) 0 #0d0f16;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+/* --- Final Fantasy Materia & Class Colorways --- */
+
+/* 1. Mako Cyan Keycap */
+.key-ff-mako {
+  background: linear-gradient(180deg, #103454 0%, #081d33 100%);
+  color: #e0f2fe;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #04101e, 0 6px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 8px var(--mako-cyan-glow);
+}
+.key-ff-mako:active, .key-ff-mako.key-pressed {
+  box-shadow: 0 1px 0 #04101e, 0 0 16px var(--mako-cyan-glow);
+  background: var(--mako-cyan);
+  color: #030712;
 }
 
-.key-alpha:active, .key-alpha.key-pressed {
-  box-shadow: 0 1px 0 #0d0f16, 0 0 12px rgba(255, 255, 255, 0.4);
-  background: #ffffff;
-  color: #000000;
+/* 2. Royal Sapphire Keycap */
+.key-ff-sapphire {
+  background: linear-gradient(180deg, #162a56 0%, #0d1a38 100%);
+  color: #dbeafe;
+  border: 1px solid rgba(96, 165, 250, 0.55);
+  box-shadow: 0 var(--key-depth) 0 #060e22, 0 6px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+}
+.key-ff-sapphire:active, .key-ff-sapphire.key-pressed {
+  box-shadow: 0 1px 0 #060e22, 0 0 16px rgba(96, 165, 250, 0.8);
+  background: #60a5fa;
+  color: #030712;
 }
 
-/* Home-row tactile nibs */
+/* 3. Materia Emerald Keycap */
+.key-ff-materia {
+  background: linear-gradient(180deg, #0d382b 0%, #06221a 100%);
+  color: #d1fae5;
+  border: 1px solid rgba(52, 211, 153, 0.55);
+  box-shadow: 0 var(--key-depth) 0 #03140f, 0 6px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 8px var(--materia-glow);
+}
+.key-ff-materia:active, .key-ff-materia.key-pressed {
+  box-shadow: 0 1px 0 #03140f, 0 0 16px var(--materia-glow);
+  background: var(--materia-emerald);
+  color: #030712;
+}
+
+/* 4. Limit Gold Keycap */
+.key-ff-gold {
+  background: linear-gradient(180deg, #382c0b 0%, #221b06 100%);
+  color: #fef08a;
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  box-shadow: 0 var(--key-depth) 0 #130f03, 0 6px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 8px var(--limit-gold-glow);
+}
+.key-ff-gold:active, .key-ff-gold.key-pressed {
+  box-shadow: 0 1px 0 #130f03, 0 0 16px var(--limit-gold-glow);
+  background: var(--limit-gold);
+  color: #030712;
+}
+
+/* 5. Phoenix Ruby Keycap */
+.key-ff-ruby {
+  background: linear-gradient(180deg, #3d1222 0%, #260814 100%);
+  color: #ffe4e6;
+  border: 1px solid rgba(244, 63, 94, 0.55);
+  box-shadow: 0 var(--key-depth) 0 #16040b, 0 6px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 8px var(--phoenix-glow);
+}
+.key-ff-ruby:active, .key-ff-ruby.key-pressed {
+  box-shadow: 0 1px 0 #16040b, 0 0 16px var(--phoenix-glow);
+  background: var(--phoenix-ruby);
+  color: #030712;
+}
+
+/* Home-row nib indicators on F & J */
 .key-home {
   position: relative;
 }
 
 .home-nib {
   position: absolute;
-  bottom: 6px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   width: 10px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.35);
+  background: #ffffff;
+  box-shadow: 0 0 6px #ffffff;
   border-radius: 1px;
 }
 
 /* Modifiers */
-.key-mod {
-  width: 54px;
-  font-size: 0.75rem;
-  background: var(--mono-surface-mod);
-  color: var(--text-muted);
-  box-shadow: 0 var(--key-depth) 0 #08090d;
+.key-ff-mod {
+  width: 56px;
+  font-size: 0.78rem;
+  background: linear-gradient(180deg, #131c2e 0%, #0a101b 100%);
+  color: var(--text-silver);
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  box-shadow: 0 var(--key-depth) 0 #05080e;
 }
 
-.key-mod:active, .key-mod.key-pressed {
-  box-shadow: 0 1px 0 #08090d;
+.key-ff-mod:active, .key-ff-mod.key-pressed {
+  box-shadow: 0 1px 0 #05080e, 0 0 12px rgba(255, 255, 255, 0.5);
+  background: #25334d;
   color: #ffffff;
-  background: #232838;
 }
 
-.key-space {
+/* Spacebar (Crystal Core) */
+.key-ff-space {
   flex: 1;
-  max-width: 360px;
-  background: var(--mono-surface-key);
-  color: var(--text-muted);
-  font-size: 0.75rem;
+  max-width: 370px;
+  background: linear-gradient(180deg, #103454 0%, #0d253d 100%);
+  color: #e0f2fe;
+  font-family: var(--font-ff-title);
+  font-size: 0.8rem;
   letter-spacing: 2px;
-  box-shadow: 0 var(--key-depth) 0 #0d0f16;
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  box-shadow: 0 var(--key-depth) 0 #04101e, 0 0 14px rgba(56, 189, 248, 0.25);
 }
 
-.key-space:active, .key-space.key-pressed {
-  box-shadow: 0 1px 0 #0d0f16;
-  color: #000000;
-  background: #ffffff;
+.key-ff-space:active, .key-ff-space.key-pressed {
+  box-shadow: 0 1px 0 #04101e, 0 0 20px var(--mako-cyan-glow);
+  background: var(--mako-cyan);
+  color: #030712;
 }
 
 /* ==========================================================================
-   5. BOTTOM FOOTER / TRANSPORT DOCK
+   5. BOTTOM FOOTER & COMMAND BAR
    ========================================================================== */
 .ui-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px;
+  padding: 8px 18px;
   min-height: 52px;
   flex-shrink: 0;
 }
@@ -622,32 +778,33 @@ html, body {
   gap: 8px;
 }
 
-.footer-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-silver);
+.ff-subbtn {
+  background: rgba(6, 17, 38, 0.6);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  color: var(--text-mako);
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-ff-ui);
   font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.5px;
   padding: 6px 14px;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all var(--trans-smooth);
 }
 
-.footer-btn:hover {
+.ff-subbtn:hover {
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--mako-cyan);
+  background: rgba(14, 165, 233, 0.18);
+  box-shadow: 0 0 12px var(--mako-cyan-glow);
 }
 
 .sfx-btn.active {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--materia-emerald);
+  border-color: rgba(52, 211, 153, 0.4);
 }
 
 .footer-center {
@@ -669,18 +826,19 @@ html, body {
 }
 
 .play-btn-circle:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .play-icon-inner {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, var(--mako-cyan) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000000;
+  color: #030712;
+  box-shadow: 0 0 16px var(--mako-cyan-glow);
 }
 
 .transport-svg {
@@ -688,11 +846,11 @@ html, body {
 }
 
 .play-btn-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-ff-mono);
   font-size: 0.65rem;
   font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--text-silver);
+  letter-spacing: 0.8px;
+  color: var(--text-mako);
 }
 
 .footer-right {
@@ -708,6 +866,7 @@ html, body {
 }
 
 .hint-pill {
+  font-family: var(--font-ff-mono);
   font-size: 0.65rem;
   color: var(--text-muted);
   display: flex;
@@ -716,28 +875,28 @@ html, body {
 }
 
 .hint-pill kbd {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(147, 197, 253, 0.25);
   border-radius: 3px;
   padding: 1px 4px;
-  color: var(--text-silver);
+  color: var(--text-mako);
 }
 
 /* ==========================================================================
-   6. MODALS: TRACK STATION, LEADERBOARD & RESULTS
+   6. MODALS: TRACK STATION, HALL OF FAME & VICTORY FANFARE
    ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(3, 4, 7, 0.88);
-  backdrop-filter: blur(8px);
+  background: rgba(2, 6, 18, 0.88);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease-out;
+  transition: opacity 0.2s ease-out;
 }
 
 .modal-overlay.active {
@@ -747,12 +906,8 @@ html, body {
 
 .modal-card {
   width: 92%;
-  max-width: 520px;
-  background: #0d1017;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  max-width: 530px;
   padding: 22px;
-  border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -762,7 +917,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.2);
   padding-bottom: 10px;
 }
 
@@ -773,23 +928,24 @@ html, body {
 }
 
 .modal-title {
-  font-family: var(--font-brand);
-  font-size: 1.1rem;
+  font-family: var(--font-ff-title);
+  font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--text-white);
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(186, 230, 253, 0.5);
 }
 
 .modal-subtitle {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.74rem;
+  color: var(--text-mako);
 }
 
 .modal-close-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   cursor: pointer;
   line-height: 1;
 }
@@ -810,8 +966,8 @@ html, body {
 }
 
 .track-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(6, 17, 38, 0.6);
+  border: 1px solid rgba(147, 197, 253, 0.2);
   border-radius: 6px;
   padding: 10px;
   cursor: pointer;
@@ -822,29 +978,32 @@ html, body {
 }
 
 .track-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(14, 165, 233, 0.15);
+  border-color: var(--mako-cyan);
 }
 
 .track-card.active {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(14, 165, 233, 0.25);
   border-color: #ffffff;
+  box-shadow: 0 0 14px var(--mako-cyan-glow);
 }
 
 .track-card-title {
-  font-size: 0.85rem;
+  font-family: var(--font-ff-title);
+  font-size: 0.88rem;
   font-weight: 700;
   color: #ffffff;
 }
 
 .track-card-artist {
   font-size: 0.72rem;
-  color: var(--text-muted);
+  color: var(--text-mako);
 }
 
 .track-card-genre {
+  font-family: var(--font-ff-mono);
   font-size: 0.62rem;
-  color: var(--text-muted);
+  color: var(--limit-gold);
   margin-top: 2px;
 }
 
@@ -855,21 +1014,23 @@ html, body {
 }
 
 .slider-val {
-  font-size: 0.75rem;
-  color: var(--text-white);
+  font-family: var(--font-ff-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .custom-track-details {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(3, 8, 22, 0.6);
+  border: 1px solid rgba(147, 197, 253, 0.15);
   border-radius: 6px;
   padding: 8px 12px;
 }
 
 .custom-track-summary {
+  font-family: var(--font-ff-title);
   font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-silver);
+  font-weight: 700;
+  color: var(--text-mako);
   cursor: pointer;
 }
 
@@ -881,29 +1042,31 @@ html, body {
 }
 
 .modal-label {
+  font-family: var(--font-ff-mono);
   font-size: 0.68rem;
-  color: var(--text-muted);
+  color: var(--text-mako);
   letter-spacing: 0.5px;
 }
 
 .modal-input, .modal-textarea {
-  background: #07090e;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(3, 8, 22, 0.9);
+  border: 1px solid rgba(147, 197, 253, 0.25);
   border-radius: 4px;
   padding: 8px 10px;
   color: #fff;
-  font-family: var(--font-mono);
+  font-family: var(--font-ff-mono);
   font-size: 0.78rem;
   outline: none;
 }
 
 .modal-input:focus, .modal-textarea:focus {
-  border-color: #ffffff;
+  border-color: var(--mako-cyan);
+  box-shadow: 0 0 10px var(--mako-cyan-glow);
 }
 
 .modal-slider {
   width: 100%;
-  accent-color: #ffffff;
+  accent-color: var(--mako-cyan);
   margin-top: 4px;
 }
 
@@ -911,38 +1074,40 @@ html, body {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(147, 197, 253, 0.2);
   padding-top: 10px;
 }
 
 .btn {
   padding: 6px 16px;
   border-radius: 4px;
-  font-family: var(--font-mono);
+  font-family: var(--font-ff-ui);
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   cursor: pointer;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   transition: all var(--trans-smooth);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text-silver);
+  background: rgba(6, 17, 38, 0.6);
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  color: var(--text-mako);
 }
-.btn-secondary:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.btn-secondary:hover { background: rgba(14, 165, 233, 0.2); color: #fff; }
 
 .btn-primary {
-  background: #ffffff;
-  border: 1px solid #ffffff;
-  color: #000000;
+  background: linear-gradient(135deg, var(--mako-cyan) 0%, #2563eb 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: 0 0 14px var(--mako-cyan-glow);
 }
 .btn-primary:hover {
-  background: #e2e8f0;
+  filter: brightness(1.15);
+  box-shadow: 0 0 20px var(--mako-cyan-glow);
 }
 
-/* Leaderboard Table */
+/* Hall of Fame Table */
 .leaderboard-table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -951,54 +1116,55 @@ html, body {
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.75rem;
+  font-family: var(--font-ff-mono);
+  font-size: 0.78rem;
 }
 
 .leaderboard-table th {
   text-align: left;
   padding: 6px 8px;
-  color: var(--text-muted);
-  font-size: 0.65rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-mako);
+  font-size: 0.68rem;
+  border-bottom: 1px solid rgba(147, 197, 253, 0.2);
 }
 
 .leaderboard-table td {
   padding: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.08);
   color: var(--text-silver);
 }
 
 .rank-badge-cell {
   font-weight: 800;
-  color: #ffffff;
+  color: var(--limit-gold);
 }
 
-/* Results Card */
+/* Victory Fanfare Card */
 .results-card {
   text-align: center;
   align-items: center;
-  max-width: 440px;
+  max-width: 450px;
   padding: 26px;
 }
 
 .results-badge {
-  font-family: var(--font-brand);
-  font-size: 2.4rem;
+  font-family: var(--font-ff-title);
+  font-size: 2.5rem;
   font-weight: 900;
   letter-spacing: 2px;
-  color: #ffffff;
 }
 
 .results-title {
-  font-family: var(--font-brand);
-  font-size: 1.2rem;
-  letter-spacing: 1px;
+  font-family: var(--font-ff-title);
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
   color: #ffffff;
+  text-shadow: 0 0 14px rgba(251, 191, 36, 0.5);
 }
 
 .results-subtitle {
-  font-size: 0.78rem;
-  color: var(--text-muted);
+  font-size: 0.8rem;
+  color: var(--text-mako);
   margin-bottom: 6px;
 }
 
@@ -1011,8 +1177,8 @@ html, body {
 }
 
 .result-box {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(6, 17, 38, 0.6);
+  border: 1px solid rgba(147, 197, 253, 0.2);
   padding: 10px;
   border-radius: 6px;
   display: flex;
@@ -1021,14 +1187,15 @@ html, body {
 }
 
 .res-label {
+  font-family: var(--font-ff-mono);
   font-size: 0.62rem;
   color: var(--text-muted);
 }
 
 .res-val {
-  font-size: 1.15rem;
+  font-family: var(--font-ff-mono);
+  font-size: 1.2rem;
   font-weight: 800;
-  color: #ffffff;
 }
 
 .save-score-section {
@@ -1051,11 +1218,11 @@ html, body {
    ========================================================================== */
 @media (max-width: 900px) {
   :root {
-    --key-height: 38px;
-    --key-width: 38px;
+    --key-height: 39px;
+    --key-width: 39px;
     --key-radius: 5px;
   }
-  .key-3d { font-size: 0.8rem; }
+  .key-3d { font-size: 0.82rem; }
   .lyric-active { font-size: 1.2rem; }
   .track-cards-grid { grid-template-columns: 1fr; }
 }
@@ -1063,13 +1230,13 @@ html, body {
 @media (max-width: 650px) {
   .app-ui-container { padding: 8px 10px; }
   :root {
-    --key-height: 32px;
-    --key-width: 28px;
+    --key-height: 33px;
+    --key-width: 29px;
     --key-radius: 4px;
     --key-depth: 3px;
   }
-  .key-3d { font-size: 0.7rem; }
-  .keyboard-hints, .brand-system-tag { display: none; }
+  .key-3d { font-size: 0.72rem; }
+  .keyboard-hints, .ff-system-tag { display: none; }
   .lyrics-panel { padding: 14px 12px; min-height: 120px; }
   .lyric-prev, .lyric-next { font-size: 0.8rem; }
   .lyric-active { font-size: 1.05rem; }
